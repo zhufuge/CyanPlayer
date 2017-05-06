@@ -7,7 +7,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="log" style={styles.container}>
-        <h1 style={styles.h1}>欢迎</h1>
+        <h1 style={styles.h1}>欢迎进入6ml的世界</h1>
         <p style={styles.description}>
           人生的一切境界，上至高山之巅，下至低谷之地，
         </p>

@@ -3,7 +3,9 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'eval-source-map',
-  entry: __dirname + '/app/index.js',
+  entry: {
+    index: __dirname + '/app/index.js'
+  },
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'public/js')
@@ -24,11 +26,13 @@ module.exports = {
 
   devServer: {
     contentBase: path.join(__dirname, "public"),
-    port: 6000,
-    colors: true,
+    publicPath: "/js/",
+    host: 'localhost',
+    port: 3000,
+    clientLogLevel: "none",
     historyApiFallback: true,
-    inline: true,
-    compress: true
+    clientLogLevel: "none",
+    compress: true,
   },
 
   plugins: [
