@@ -1,5 +1,6 @@
 import React from 'react';
 
+import RaisedButton from 'material-ui/RaisedButton';
 import InputButton from './inputButton';
 
 class Login extends React.Component {
@@ -12,6 +13,7 @@ class Login extends React.Component {
           value="登录"
           type="submit"
           style={styles.submit}/>
+        <RaisedButton label="注册"/>
       </form>
     );
   }
