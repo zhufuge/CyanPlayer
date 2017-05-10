@@ -1,5 +1,5 @@
 import React from 'react';
-import {cyan300} from 'material-ui/styles/colors';
+import {teal300} from 'material-ui/styles/colors';
 
 class RadiusInput extends React.Component {
   constructor(props) {
@@ -30,9 +30,13 @@ class RadiusInput extends React.Component {
   }
 
   render() {
-    const props = this.props;
+    const props = this.props,
+          container = this.state.onClick
+          ? Object.assign({}, styles.container, styles.color)
+          : styles.container;
+
     return (
-      <div style={this.state.onClick ? styles.containerClicked : styles.container}
+      <div style={container}
            onClick={this.handleClick}>
         <input
           name=""
@@ -52,8 +56,7 @@ const styles = {
     width: 300,
     height: 26,
     padding: 10,
-    margin: 12,
-    marginTop: 20,
+    margin: 10,
     borderWidth: 1,
     borderStyle: 'solid',
     borderRadius: 26,
@@ -72,22 +75,8 @@ const styles = {
     width: 200,
     fontSize: 18,
   },
-  containerClicked: {
-    width: 300,
-    height: 26,
-    padding: 10,
-    margin: 12,
-    marginTop: 20,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderRadius: 26,
-    borderColor: "white",
-    borderColor: cyan300,
-    backgroundColor: "transparent",
-
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+  color: {
+    borderColor: teal300,
   },
 };
 
