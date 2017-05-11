@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {teal400} from 'material-ui/styles/colors';
-const assign = Object.assign;
 
 class WelcomeLink extends React.Component {
   constructor(props) {

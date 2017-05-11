@@ -39,11 +39,8 @@ class RadiusInput extends React.Component {
       <div style={container}
            onClick={this.handleClick}>
         <input
-          name=""
+          {...props}
           ref={(ref) => this.Input = ref}
-          type={props.type || "text"}
-          value={props.value}
-          placeholder={props.placeholder}
           onBlur={this.handleBlur}
           style={styles.input}/>
       </div>

@@ -21,6 +21,10 @@ class WelcomeForm extends React.Component {
     this.setState({isSignin: signin});
   }
 
+  handleTouchTap() {
+    alert('touchTap');
+  }
+
   render() {
     const isSignin = this.state.isSignin;
     return (
@@ -32,6 +36,7 @@ class WelcomeForm extends React.Component {
           label={isSignin ? '登录' : '注册'}
           labelStyle={{fontSize: 20}}
           primary={true}
+          onTouchTap={this.handleTouchTap}
           style={assign({margin: 10}, styles.submit) }
           buttonStyle={assign({backgroundColor: teal500}, styles.submit)}
           overlayStyle={styles.submit}/>
