@@ -16,12 +16,8 @@ class App extends React.Component {
         <div>
           <Header />
           <div style={styles.container}>
-            <div style={styles.side}>
-              <AppList />
-            </div>
-            <div style={styles.content}>
-              <AppTabs />
-            </div>
+            <AppList />
+            <AppTabs />
           </div>
         </div>
       </MuiThemeProvider>
@@ -35,19 +31,6 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
   },
-  side: {
-    width: 240,
-    height: 420,
-    marginRight: 16,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: 'rgb(217, 217, 217)',
-  },
-  content: {
-    width: 800,
-    height: 1000,
-    backgroundColor: 'skyblue',
-  }
 };
 
 render(<App />, document.getElementById('root'));

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import FlatButton from 'material-ui/FlatButton';
-import MusicNote from 'material-ui/svg-icons/Image/music-note';
+import MusicNote from 'material-ui/svg-icons/image/music-note';
 import Avatar from 'material-ui/Avatar';
 import DropDown from 'material-ui/svg-icons/Navigation/arrow-drop-down';
 import {cyan500, cyan200} from 'material-ui/styles/colors';
