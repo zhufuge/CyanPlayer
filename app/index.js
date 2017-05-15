@@ -28,6 +28,7 @@ class App extends React.Component {
 const styles = {
   container: {
     margin: '20px 0 0 0',
+    width: '100%',
     display: 'flex',
     justifyContent: 'center',
   },

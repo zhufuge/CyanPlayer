@@ -2,11 +2,15 @@ import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 
 import Recommend from './Recommend';
+import SongSheets from './SongSheets';
+import RankingLists from './RankingLists';
+import SingerList from './SingerList';
+import NewestMusic from './NewestMusic';
 
 class TabsExampleControlled extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: 'a'};
+    this.state = {value: 'e'};
 
     this.handleChange = this.handleChange.bind(this);
   }
@@ -22,27 +26,11 @@ class TabsExampleControlled extends React.Component {
         contentContainerStyle={styles.container}
         tabTemplateStyle={styles.content}
         onChange={this.handleChange}>
-        <Tab label="个性推荐" value="a">
-          <Recommend />
-        </Tab>
-        <Tab label="歌单" value="b">
-          <div>
-            <h2 style={styles.headline}>Controllable Tab B</h2>
-          </div>
-        </Tab>
-        <Tab label="排行榜" value="c">
-          <div>
-            <h2 style={styles.headline}>Controllable Tab C</h2>
-          </div>
-        </Tab>
-        <Tab label="歌手" value="d">
-          <div>
-            <h2 style={styles.headline}>Controllable Tab D</h2>
-          </div>
-        </Tab>
-        <Tab label="最新音乐" value="e">
-          <h2 style={styles.headline}>Controllable Tab E</h2>
-        </Tab>
+        <Tab label="个性推荐" value="a"><Recommend /></Tab>
+        <Tab label="歌单" value="b"><SongSheets /></Tab>
+        <Tab label="排行榜" value="c"><RankingLists /></Tab>
+        <Tab label="歌手" value="d"><SingerList /></Tab>
+        <Tab label="最新音乐" value="e"><NewestMusic /></Tab>
       </Tabs>
     );
   }
@@ -53,7 +41,6 @@ const styles = {
     width: 800,
   },
   content: {
-    marginTop: 16,
     width: 800,
   },
 };

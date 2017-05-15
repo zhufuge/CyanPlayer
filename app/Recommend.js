@@ -16,7 +16,7 @@ class Recommend extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={styles.container}>
         <Subheader title="推荐歌单" />
         <Divider />
         <div style={styles.cards}>
@@ -32,6 +32,9 @@ class Recommend extends React.Component {
 }
 
 const styles = {
+  container: {
+    marginTop: 16,
+  },
   cards: {
     display: 'flex',
     flexWrap: 'wrap',
