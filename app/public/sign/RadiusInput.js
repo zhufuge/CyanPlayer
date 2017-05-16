@@ -5,42 +5,48 @@ class RadiusInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      onClick: false
+      color: 'white',
+      value: '',
     };
 
     this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.warning !== false){
+      this.setState({color: '#FF5722'});
+    }
   }
 
   handleClick() {
     if (this.Input !== null) {
       this.Input.focus();
     }
-    this.setState({onClick: true});
+    this.setState({color: teal300});
+    this.props.switchWarning();
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
   }
 
   handleBlur() {
-    this.setState({onClick: false});
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return (this.state.onClick !== nextState.onClick)
-      ? true
-      : false;
+    this.setState({color: 'white'});
+    this.props.getValue(this.state.value);
   }
 
   render() {
-    const props = this.props,
-          container = this.state.onClick
-          ? Object.assign({}, styles.container, styles.color)
-          : styles.container;
-
+    const props = this.props;
     return (
-      <div style={container}
+      <div style={styles.container(this.state.color)}
            onClick={this.handleClick}>
         <input
-          {...props}
+          type={props.type}
+          placeholder={props.placeholder}
           ref={(ref) => this.Input = ref}
+          onChange={this.handleChange}
           onBlur={this.handleBlur}
           style={styles.input}/>
       </div>
@@ -49,7 +55,7 @@ class RadiusInput extends React.Component {
 }
 
 const styles = {
-  container: {
+  container: (bc) => ({
     width: 300,
     height: 26,
     padding: 10,
@@ -57,13 +63,13 @@ const styles = {
     borderWidth: 1,
     borderStyle: 'solid',
     borderRadius: 26,
-    borderColor: "white",
+    borderColor: bc,
     backgroundColor: "transparent",
 
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-  },
+  }),
   input: {
     backgroundColor: "transparent",
     border: 'none',
@@ -71,9 +77,6 @@ const styles = {
     height: 30,
     width: 200,
     fontSize: 18,
-  },
-  color: {
-    borderColor: teal300,
   },
 };
 

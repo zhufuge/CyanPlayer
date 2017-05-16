@@ -11,28 +11,62 @@ class WelcomeForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSignin: true
+      isSignin: true,
+      username: '',
+      password: '',
+      warning: false,
     };
 
-    this.setSignin = this.setSignin.bind(this);
+    this.handleUsername = this.handleUsername.bind(this);
+    this.handlePassword = this.handlePassword.bind(this);
+    this.switchSign = this.switchSign.bind(this);
+    this.handleTouchTap = this.handleTouchTap.bind(this);
+    this.switchWarning = this.switchWarning.bind(this);
   }
 
-  setSignin(signin) {
+  handleUsername(value) {
+    this.setState({username: value});
+  }
+
+  handlePassword(value) {
+    this.setState({password: value});
+  }
+
+  switchSign(signin) {
     this.setState({isSignin: signin});
   }
 
-  handleTouchTap() {
-    alert('touchTap');
+  handleTouchTap(event) {
+    const username = this.state.username,
+          password = this.state.password;
+    if (username === '123' && password === '123') {
+      window.history.back(-1);
+    } else {
+      this.setState({warning: true});
+    }
+  }
+
+  switchWarning() {
+    this.setState({warning: false});
   }
 
   render() {
-    const isSignin = this.state.isSignin;
+    const state = this.state,
+          isSignin = state.isSignin;
     return (
-      <form action="" style={styles.container}>
-        <RadiusInput placeholder="用户名"/>
-        <RadiusInput placeholder="密码" type="password"/>
+      <div style={styles.container}>
+        <RadiusInput
+          placeholder="用户名"
+          warning={this.state.warning}
+          switchWarning={this.switchWarning}
+          getValue={this.handleUsername}/>
+        <RadiusInput
+          placeholder="密码"
+          type="password"
+          warning={this.state.warning}
+          switchWarning={this.switchWarning}
+          getValue={this.handlePassword}/>
         <RaisedButton
-          type="submit"
           label={isSignin ? '登录' : '注册'}
           labelStyle={{fontSize: 20}}
           primary={true}
@@ -43,9 +77,9 @@ class WelcomeForm extends React.Component {
         <br/>
         <WelcomeLink
           isSignin={isSignin}
-          setSignin={(s) => this.setState({isSignin: s})}
+          switchSign={(s) => this.setState({isSignin: s})}
           />
-      </form>
+      </div>
     );
   }
 }
