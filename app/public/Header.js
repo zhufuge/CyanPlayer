@@ -6,15 +6,11 @@ import Avatar from 'material-ui/Avatar';
 import DropDown from 'material-ui/svg-icons/Navigation/arrow-drop-down';
 import {cyan500, cyan200} from 'material-ui/styles/colors';
 
+import {Link} from 'react-router-dom';
+
 class Header extends React.Component {
   constructor(props) {
     super(props);
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
-    alert("touchTap");
   }
 
   render() {
@@ -29,14 +25,15 @@ class Header extends React.Component {
         </div>
         <div style={styles.side}>
           <Avatar size={32}>L</Avatar>
-          <FlatButton
-            target="_blank"
-            labelPosition="before"
-            label={"Alice"}
-            labelStyle={styles.userName}
-            icon={dropDown}
-            onClick={this.handleClick}
-            />
+          <Link to="/sign">
+            <FlatButton
+              target="_blank"
+              labelPosition="before"
+              label={"未登录"}
+              labelStyle={styles.userName}
+              icon={dropDown}
+              />
+          </Link>
         </div>
       </div>
     );

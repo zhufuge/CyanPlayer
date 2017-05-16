@@ -10,7 +10,7 @@ import NewestMusic from './NewestMusic';
 class TabsExampleControlled extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: 'e'};
+    this.state = {value: 'a'};
 
     this.handleChange = this.handleChange.bind(this);
   }
