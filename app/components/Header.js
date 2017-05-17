@@ -1,6 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {signin} from '../actions';
 
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
 import FlatButton from 'material-ui/FlatButton';
 import MusicNote from 'material-ui/svg-icons/image/music-note';
 import Avatar from 'material-ui/Avatar';
@@ -12,6 +16,13 @@ import {Link} from 'react-router-dom';
 class Header extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      openMenu: false,
+    };
+
+    this.handleInfoButton = this.handleInfoButton.bind(this);
+    this.handleOnRequestChange = this.handleOnRequestChange.bind(this);
+    this.handleQuit = this.handleQuit.bind(this);
   }
 
   signButton() {
@@ -38,12 +49,26 @@ class Header extends React.Component {
         label={this.props.username}
         labelStyle={styles.username}
         icon={dropDown}
+        onTouchTap={this.handleInfoButton}
         />
     );
   }
 
+  handleInfoButton() {
+    this.setState({openMenu: true});
+  }
+
+  handleOnRequestChange(value){
+    this.setState({openMenu: value});
+  }
+
+  handleQuit() {
+    this.props.quit('登录');
+  }
+
   render() {
-    const info = (this.props.username === '登录')
+    const iconButton = <IconButton></IconButton>,
+          info = (this.props.username === '登录')
           ? this.signButton()
           : this.infoButton();
     return (
@@ -57,6 +82,16 @@ class Header extends React.Component {
         <div style={styles.side}>
           <Avatar size={32}>L</Avatar>
           {info}
+          <IconMenu
+            iconButtonElement={iconButton}
+            open={this.state.openMenu}
+            onRequestChange={this.handleOnRequestChange}>
+            <MenuItem value="1" primaryText="其他" />
+            <MenuItem
+              value="quit"
+              onTouchTap={this.handleQuit}
+              primaryText="退出登录" />
+          </IconMenu>
         </div>
       </div>
     );
@@ -65,19 +100,21 @@ class Header extends React.Component {
 
 const styles = {
   container: {
-	  backgroundColor: cyan500,
+    position: 'fixed',
+    top: 0,
+	  zIndex: 100,
+
+    width: '100%',
+    height: 54,
+	  paddingLeft: 32,
+	  paddingRight: 32,
 	  boxSizing: 'border-box',
 	  boxShadow: '0px 1px 6px rgba(0, 0, 0, 0.12), 0px 1px 4px rgba(0, 0, 0, 0.12)',
 	  borderRadius: 0,
-	  position: 'relative',
-	  zIndex: 1100,
-	  width: '100%',
-    height: 64,
-	  display: 'flex',
-	  paddingLeft: 32,
-	  paddingRight: 32,
+    backgroundColor: cyan500,
     color: 'white',
 
+    display: 'flex',
     justifyContent: 'space-between',
   },
   side: {
@@ -108,4 +145,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    quit: (username) => {
+      dispatch(signin(username));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

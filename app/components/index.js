@@ -3,6 +3,7 @@ import React from 'react';
 import Header from './Header';
 import AppList from './AppList';
 import AppTabs from './AppTabs';
+import Player from './player';
 
 
 class Index extends React.Component {
@@ -14,6 +15,7 @@ class Index extends React.Component {
           <AppList />
           <AppTabs />
         </div>
+        <Player />
       </div>
     );
   }
@@ -22,7 +24,7 @@ class Index extends React.Component {
 
 const styles = {
   container: {
-    margin: '20px 0 0 0',
+    margin: '70px 0 70px 0',
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
