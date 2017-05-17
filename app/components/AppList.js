@@ -16,12 +16,13 @@ let SelectableList = makeSelectable(List);
 class AppList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {selectedIndex: 0};
+    this.state = {selectedIndex: props.page};
     this.handleRequestChange = this.handleRequestChange.bind(this);
   }
 
   handleRequestChange(event, index) {
     this.setState({selectedIndex: index});
+    this.props.setPage(index);
   };
 
   render() {
@@ -37,24 +38,24 @@ class AppList extends React.Component {
           value={this.state.selectedIndex}
           onChange={this.handleRequestChange}>
           <Subheader>推荐</Subheader>
-          <ListItem value={0} primaryText="发现音乐" leftIcon={musicNote}/>
-          <ListItem value={1} primaryText="随机音乐" leftIcon={musicVideo}/>
+          <ListItem value="0" primaryText="发现音乐" leftIcon={musicNote}/>
+          <ListItem value="1" primaryText="随机音乐" leftIcon={musicVideo}/>
         </SelectableList>
         <Divider />
         <SelectableList
           value={this.state.selectedIndex}
           onChange={this.handleRequestChange}>
           <Subheader>我的音乐</Subheader>
-          <ListItem value={2} primaryText="我的歌单" leftIcon={queueMusic}/>
-          <ListItem value={3} primaryText="我的歌手" leftIcon={account}/>
+          <ListItem value="2" primaryText="我的歌单" leftIcon={queueMusic}/>
+          <ListItem value="3" primaryText="我的歌手" leftIcon={account}/>
         </SelectableList>
         <Divider />
         <SelectableList
           value={this.state.selectedIndex}
           onChange={this.handleRequestChange}>
           <Subheader>管理</Subheader>
-          <ListItem value={4} primaryText="上传音乐" leftIcon={upload}/>
-          <ListItem value={5} primaryText="历史下载" leftIcon={restore}/>
+          <ListItem value="4" primaryText="上传音乐" leftIcon={upload}/>
+          <ListItem value="5" primaryText="历史下载" leftIcon={restore}/>
         </SelectableList>
       </div>
     );
