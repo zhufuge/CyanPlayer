@@ -1,13 +1,15 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {signin} from '../../actions';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import {teal500} from 'material-ui/styles/colors';
 import RadiusInput from './RadiusInput';
-import WelcomeLink from './welcomeLink';
+import Link from './Link';
 
 const assign = Object.assign;
 
-class WelcomeForm extends React.Component {
+class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,6 +44,7 @@ class WelcomeForm extends React.Component {
           isSignin = this.state.isSignin;
 
     if (username === '123' && password === '123') {
+      this.props.setUsername(username);
       window.history.back(-1);
     } else {
       this.setState({warning: true});
@@ -77,7 +80,7 @@ class WelcomeForm extends React.Component {
           buttonStyle={assign({backgroundColor: teal500}, styles.submit)}
           overlayStyle={styles.submit}/>
         <br/>
-        <WelcomeLink
+        <Link
           isSignin={isSignin}
           switchSign={(s) => this.setState({isSignin: s})}
           />
@@ -100,4 +103,12 @@ const styles = {
   },
 };
 
-module.exports = WelcomeForm;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUsername: (username) => {
+      dispatch(signin(username));
+    }
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Form);

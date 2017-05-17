@@ -6,8 +6,8 @@ import {
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducers from './reducers';
-import Home from './public';
-import Sign from './public/sign';
+import Home from './components';
+import Sign from './components/sign';
 
 let store = createStore(reducers);
 

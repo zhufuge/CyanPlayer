@@ -1,9 +1,10 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 import FlatButton from 'material-ui/FlatButton';
 import MusicNote from 'material-ui/svg-icons/image/music-note';
 import Avatar from 'material-ui/Avatar';
-import DropDown from 'material-ui/svg-icons/Navigation/arrow-drop-down';
+import Icon_DropDown from 'material-ui/svg-icons/Navigation/arrow-drop-down';
 import {cyan500, cyan200} from 'material-ui/styles/colors';
 
 import {Link} from 'react-router-dom';
@@ -13,8 +14,38 @@ class Header extends React.Component {
     super(props);
   }
 
+  signButton() {
+    const dropDown = <Icon_DropDown color="white"/>;
+    return (
+      <Link to="/sign">
+        <FlatButton
+          target="_blank"
+          labelPosition="before"
+          label="登录"
+          labelStyle={styles.username}
+          icon={dropDown}
+          />
+      </Link>
+    );
+  }
+
+  infoButton() {
+    const dropDown = <Icon_DropDown color="white"/>;
+    return (
+      <FlatButton
+        target="_blank"
+        labelPosition="before"
+        label={this.props.username}
+        labelStyle={styles.username}
+        icon={dropDown}
+        />
+    );
+  }
+
   render() {
-    const dropDown = <DropDown color="white"/>;
+    const info = (this.props.username === '登录')
+          ? this.signButton()
+          : this.infoButton();
     return (
       <div style={styles.container}>
         <div style={styles.side}>
@@ -25,15 +56,7 @@ class Header extends React.Component {
         </div>
         <div style={styles.side}>
           <Avatar size={32}>L</Avatar>
-          <Link to="/sign">
-            <FlatButton
-              target="_blank"
-              labelPosition="before"
-              label={"未登录"}
-              labelStyle={styles.userName}
-              icon={dropDown}
-              />
-          </Link>
+          {info}
         </div>
       </div>
     );
@@ -74,9 +97,15 @@ const styles = {
     flex: 1,
     textAlign: 'center',
   },
-  userName: {
+  username: {
     color: 'white',
   }
 };
 
-module.exports = Header;
+const mapStateToProps = (state) => {
+  return {
+    username: state.username
+  };
+};
+
+export default connect(mapStateToProps)(Header);

@@ -1,6 +1,6 @@
-import React from 'react';
+﻿import React from 'react';
 
-import WelcomeForm from './welcomeForm';
+import Form from './Form';
 
 class Sign extends React.Component {
   render() {
@@ -14,7 +14,7 @@ class Sign extends React.Component {
           <p style={styles.p}>在某些人眼里视乎已为他们的先辈踏遍，</p>
           <p style={styles.p}>而所有的东西也无一不为前人关注所及。</p>
         </div>
-        <WelcomeForm />
+        <Form />
       </div>
     );
   }

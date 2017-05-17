@@ -2,7 +2,7 @@ import React from 'react';
 
 import {teal400} from 'material-ui/styles/colors';
 
-class WelcomeLink extends React.Component {
+class Link extends React.Component {
   handleSwitch(e, signin) {
     e.preventDefault();
     if (this.props.isSignin === !signin) {
@@ -44,4 +44,4 @@ const styles = {
   },
 };
 
-module.exports = WelcomeLink;
+module.exports = Link;
