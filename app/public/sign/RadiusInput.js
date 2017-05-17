@@ -17,6 +17,8 @@ class RadiusInput extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.warning !== false){
       this.setState({color: '#FF5722'});
+    } else {
+      this.setState({color: 'white'});
     }
   }
 

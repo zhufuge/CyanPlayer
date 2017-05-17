@@ -38,7 +38,9 @@ class WelcomeForm extends React.Component {
 
   handleTouchTap(event) {
     const username = this.state.username,
-          password = this.state.password;
+          password = this.state.password,
+          isSignin = this.state.isSignin;
+
     if (username === '123' && password === '123') {
       window.history.back(-1);
     } else {
