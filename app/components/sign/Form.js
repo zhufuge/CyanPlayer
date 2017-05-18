@@ -43,12 +43,22 @@ class Form extends React.Component {
           password = this.state.password,
           isSignin = this.state.isSignin;
 
-    if (username === '123' && password === '123') {
-      this.props.setUsername(username);
-      window.history.back(-1);
-    } else {
-      this.setState({warning: true});
-    }
+    fetch("/Asign", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `username=${username}&password=${password}&isSignin=${isSignin}`
+    }).then((res) => {
+      if (res.ok) {
+        this.props.setUsername(username);
+        window.history.back(-1);
+      } else if (res.status == 401) {
+        this.setState({warning: true});
+      }
+    }, (e) => {
+      console.log("连接失败！");
+    });
   }
 
   switchWarning() {

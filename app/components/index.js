@@ -11,7 +11,7 @@ import Player from './player';
 class Index extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {page: '2'};
+    this.state = {page: '0'};
 
     this.setPage = this.setPage.bind(this);
   }
@@ -24,7 +24,7 @@ class Index extends React.Component {
     switch(index) {
     case '0': return <AppTabs />;
     case '1': return <RandomMusic />;
-    case '2': return <SongSheet />;
+    case '4': return <SongSheet />;
     default: return <AppTabs />;
     }
   }

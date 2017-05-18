@@ -7,7 +7,6 @@ import {List, ListItem} from 'material-ui/List';
 import Card from './Card.js';
 
 class Recommend extends React.Component {
-
   Cards() {
     const data = [1, 2, 3, 4, 5, 6, 7, 8];
     return data.map((v) => {
@@ -25,12 +24,12 @@ class Recommend extends React.Component {
   render() {
     return (
       <div style={styles.container}>
-        <Subheader title="推荐歌单" />
+        <Subheader title="推荐歌单" onClick={() => this.props.setTab('b')}/>
         <Divider />
         <div style={styles.cards}>
           {this.Cards()}
         </div>
-        <Subheader title="推荐音乐" />
+        <Subheader title="推荐音乐" onClick={() => this.props.setTab('e')}/>
         <Divider />
         <div style={styles.songs}>
           <List style={styles.list}>
@@ -40,7 +39,7 @@ class Recommend extends React.Component {
             {this.Songs(false)}
           </List>
         </div>
-        <Subheader title="推荐歌手" />
+        <Subheader title="推荐歌手" onClick={() => this.props.setTab('d')}/>
         <Divider />
         <div style={styles.cards}>
           {this.Cards()}
@@ -53,6 +52,7 @@ class Recommend extends React.Component {
 const styles = {
   container: {
     marginTop: 16,
+    marginRight: 16,
   },
   cards: {
     display: 'flex',

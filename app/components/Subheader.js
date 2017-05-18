@@ -1,11 +1,24 @@
 import React from 'react';
 
 class Subheader extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    event.preventDefault();
+    const onClick = this.props.onClick;
+    if (onClick !== void 0) {
+      this.props.onClick();
+    }
+  }
+
   render() {
     return (
       <div style={styles.container}>
         <h3 style={styles.h3}>{this.props.title}</h3>
-        <a href="#" style={styles.a}>更多></a>
+        <a href="#" style={styles.a} onClick={this.handleClick}>更多></a>
       </div>
     );
   }

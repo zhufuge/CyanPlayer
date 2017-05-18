@@ -26,7 +26,8 @@ class TabsExampleControlled extends React.Component {
         contentContainerStyle={styles.container}
         tabTemplateStyle={styles.content}
         onChange={this.handleChange}>
-        <Tab label="个性推荐" value="a"><Recommend /></Tab>
+        <Tab label="个性推荐" value="a">
+          <Recommend setTab={this.handleChange}/></Tab>
         <Tab label="歌单" value="b"><SongSheets /></Tab>
         <Tab label="排行榜" value="c"><RankingLists /></Tab>
         <Tab label="歌手" value="d"><SingerList /></Tab>
