@@ -28,7 +28,7 @@ class Header extends React.Component {
   signButton() {
     const dropDown = <Icon_DropDown color="white"/>;
     return (
-      <Link to="/sign">
+      <Link to="/Emusic/sign">
         <FlatButton
           target="_blank"
           labelPosition="before"
