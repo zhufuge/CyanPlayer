@@ -15,9 +15,21 @@ class Recommend extends React.Component {
   }
 
   Songs(isFirst) {
-    const data = isFirst ? [1, 2, 3, 4, 5] : [6, 7, 8, 9, 10];
-    return data.map((v) => {
-      return (<ListItem key={'s' + v} primaryText={v}/>);
+    const data = isFirst
+          ? ['01', '02', '03', '04', '05']
+          : ['06', '07', '08', '09', '10'];
+    return data.map((v, i) => {
+      return (
+        <ListItem
+          key={'s' + v}
+          style={(i % 2 === 0) ? {} : {backgroundColor: '#f2f2f2'}}>
+          <span style={{marginRight: 16, color: '#999'}}>{v}</span>
+          <span style={{marginRight: 16, color: '#444'}}>
+            Time to say goodbye</span>
+          <span style={{position: 'absolute', right: 16, color: '#999'}}>
+            Lambda</span>
+        </ListItem>
+      );
     });
   }
 
@@ -58,12 +70,12 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     marginTop: 5,
-    marginBottom: 12,
+    marginBottom: 24,
   },
   songs: {
     display: 'flex',
     marginTop: 16,
-    marginBottom: 16,
+    marginBottom: 36,
   },
   list: {
     width: 396,
@@ -72,7 +84,7 @@ const styles = {
     borderColor: '#ccc',
     borderStyle: 'solid',
     borderWidth: 1,
-  }
+  },
 };
 
 export default Recommend;

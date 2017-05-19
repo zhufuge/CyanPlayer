@@ -23,8 +23,9 @@ class Index extends React.Component {
   page(index) {
     switch(index) {
     case '0': return <AppTabs />;
-    case '1': return <RandomMusic />;
-    case '4': return <SongSheet />;
+    case '1':
+    case '2': return <RandomMusic />;
+    case '5': return <SongSheet />;
     default: return <AppTabs />;
     }
   }

@@ -1,21 +1,8 @@
 import React from 'react';
 
 import Card from './Card';
-import Divider from 'material-ui/Divider';
 
 class SingerList extends React.Component {
-  tabs() {
-    let data = '0ABCDEFGHIJKLMNOPQRSTUVWXYZ#'.split('');
-
-
-    return data.map((v, i) => {
-      if (i === 0) {
-        return (<span key={v}>热门</span>);
-      }
-      return (<span key={v}>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<span>{v}</span></span>);
-    });
-  }
-
   Cards() {
     let data = [];
 
@@ -32,10 +19,6 @@ class SingerList extends React.Component {
   render() {
     return (
       <div style={styles.container}>
-        <div style={styles.tabs}>
-          筛选： {this.tabs()}
-        </div>
-        <Divider />
         <div style={styles.cards}>
           {this.Cards()}
         </div>

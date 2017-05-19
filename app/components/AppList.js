@@ -44,8 +44,9 @@ class AppList extends React.Component {
           value={this.state.selectedIndex}
           onChange={this.handleRequestChange}>
           <Subheader>我的音乐</Subheader>
-          <ListItem value="2" primaryText="上传音乐" leftIcon={upload}/>
-          <ListItem value="3" primaryText="历史下载" leftIcon={restore}/>
+          <ListItem value="2" primaryText="正在播放" leftIcon={musicNote}/>
+          <ListItem value="3" primaryText="上传音乐" leftIcon={upload}/>
+          <ListItem value="4" primaryText="历史下载" leftIcon={restore}/>
         </SelectableList>
         <Divider />
         <Subheader>
@@ -54,7 +55,7 @@ class AppList extends React.Component {
         <SelectableList
           value={this.state.selectedIndex}
           onChange={this.handleRequestChange}>
-          <ListItem value="4" primaryText="我喜欢的音乐" leftIcon={queueMusic}/>
+          <ListItem value="5" primaryText="我喜欢的音乐" leftIcon={queueMusic}/>
         </SelectableList>
       </div>
     );

@@ -3,8 +3,11 @@ import React from 'react';
 import Card from './Card';
 import Divider from 'material-ui/Divider';
 
-class SongSheets extends React.Component {
+const Span = (props) => (
+  <span style={{marginLeft: 10}}>{props.children}</span>
+);
 
+class SongSheets extends React.Component {
   Cards() {
     let data = [];
 
@@ -17,14 +20,22 @@ class SongSheets extends React.Component {
     });
   }
 
-  tabs() {
-    let data = [ '华语', '流行', '电子', '轻音乐', 'ACG'];
+  filterSheet(e, v) {
+    e.preventDefault();
+  }
 
+  tabs() {
+    const data = [ '华语', '流行', '电子', '轻音乐', 'ACG', '其他'];
     return data.map((v, i) => {
-      if (i === 0) {
-        return (<span key={v}>{v}</span>);
-      }
-      return (<span key={v}>&nbsp;&nbsp;/&nbsp;&nbsp;<span>{v}</span></span>);
+      return (
+        <Span key={v}>{(i === 0) ? '' : '/'}
+          <Span>
+            <a href="#"
+               style={{textDecoration: 'none', color: '#666'}}
+               onClick={(e) => this.filterSheet(e, v)}>{v}</a>
+          </Span>
+        </Span>
+      );
     });
   }
 
@@ -53,7 +64,11 @@ const styles = {
   },
   tabs: {
     margin: 8,
+    color: '#333',
   },
+  marginl: {
+
+  }
 };
 
 export default SongSheets;

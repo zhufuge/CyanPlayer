@@ -1,11 +1,32 @@
 import React from 'react';
 
 class Card extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    event.preventDefault();
+    this.props.onClick();
+  }
+
   render() {
+    const imgSrc = this.props.src || '/img/0.png';
+    let value = '你打开苦难的里面，打开了我';
+    if (this.props.value !== void 0) {
+      let string = this.props.value.toString();
+      value = (string.length < 21) ? string : string.slice(0, 20) + '...';
+    }
+
     return (
       <div style={styles.container}>
-        <img alt="" src="/img/0.png" style={styles.image}/>
-        <p style={styles.p}>你何以双眼好像是流泪，已再见不再认。</p>
+        <a href="#"
+           style={{textDecoration: 'none'}}
+           onClick={this.handleClick}>
+          <img alt="[相关图片]" src={imgSrc} style={styles.image}/>
+          <p style={styles.p}>{value}</p>
+        </a>
       </div>
     );
   }
