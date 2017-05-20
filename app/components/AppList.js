@@ -3,12 +3,14 @@ import React from 'react';
 import {List, ListItem, makeSelectable} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
+import IconButton from 'material-ui/IconButton';
 
 import MusicNote from 'material-ui/svg-icons/image/music-note';
 import MusicVideo from 'material-ui/svg-icons/av/music-video';
 import QueueMusic from 'material-ui/svg-icons/av/queue-music';
 import Upload from 'material-ui/svg-icons/file/cloud-upload';
 import Restore from 'material-ui/svg-icons/action/restore';
+import AddCircle from 'material-ui/svg-icons/content/add-circle';
 
 let SelectableList = makeSelectable(List);
 
@@ -51,6 +53,7 @@ class AppList extends React.Component {
         <Divider />
         <Subheader>
           创建的歌单
+          <IconButton tooltip="创建"><AddCircle /></IconButton>
         </Subheader>
         <SelectableList
           value={this.state.selectedIndex}

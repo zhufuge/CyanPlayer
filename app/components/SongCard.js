@@ -1,6 +1,6 @@
 import React from 'react';
 
-class RandomMusic extends React.Component {
+class SongCard extends React.Component {
   render() {
     return (
       <div style={styles.container}>
@@ -69,4 +69,4 @@ const styles = {
   }
 };
 
-export default RandomMusic;
+export default SongCard;

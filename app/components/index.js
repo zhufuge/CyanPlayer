@@ -3,10 +3,10 @@ import React from 'react';
 import Header from './Header';
 import AppList from './AppList';
 import AppTabs from './AppTabs';
-import RandomMusic from './RandomMusic';
+import SongCard from './SongCard';
+import DownloadList from './DownloadList';
 import SongSheet from './SongSheet';
 import Player from './player';
-
 
 class Index extends React.Component {
   constructor(props) {
@@ -24,7 +24,8 @@ class Index extends React.Component {
     switch(index) {
     case '0': return <AppTabs />;
     case '1':
-    case '2': return <RandomMusic />;
+    case '2': return <SongCard />;
+    case '4': return <DownloadList />;
     case '5': return <SongSheet />;
     default: return <AppTabs />;
     }
