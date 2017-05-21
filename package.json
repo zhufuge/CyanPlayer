@@ -14,7 +14,8 @@
   },
   "scripts": {
     "build": "webpack -p",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "s": "node index.js"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",

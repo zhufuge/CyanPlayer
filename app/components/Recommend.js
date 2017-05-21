@@ -22,15 +22,10 @@ class Recommend extends React.Component {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       }
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return {};
-      }
-    }, (e) => {
-      console.log("连接错误", e);
-    }).then((json) => {
+    }).then(
+      (res) => (res.ok) ? res.json() : {},
+      (e) => console.log("连接失败", e)
+    ).then(json => {
       this.setState({
         songSheets: json.songSheets,
         songs: json.songs,
@@ -55,6 +50,7 @@ class Recommend extends React.Component {
         <Card
           key={k}
           value={v[0]}
+          onClick={() => {alert("jump to SongSheet");}}
           src={v[1]}/>
       );
     });
@@ -74,12 +70,13 @@ class Recommend extends React.Component {
       return (
         <ListItem
           key={'s' + v}
+          onClick={() => {alert("jump to music");}}
           style={(i % 2 === 0) ? {} : styles.oBGC}>
           <span style={styles.mRC('#999')}>{v}</span>
           <span style={styles.mRC('#444')}>
-            {(songs[j] === void 0) ? dflt[0] : songs[j].name}</span>
+            {(songs[j] === void 0) ? dflt[0] : songs[j][0]}</span>
           <span style={styles.songSinger}>
-            {(songs[j] === void 0) ? dflt[1] : songs[j].singere}</span>
+            {(songs[j] === void 0) ? dflt[1] : songs[j][1]}</span>
         </ListItem>
       );
     });

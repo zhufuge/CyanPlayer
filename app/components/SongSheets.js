@@ -8,15 +8,46 @@ const Span = (props) => (
 );
 
 class SongSheets extends React.Component {
-  Cards() {
-    let data = [];
+  constructor(props) {
+    super(props);
+    this.state = {
+      songSheets: [],
+    };
+  }
 
-    for (let i = 0; i < 20; i++) {
-      data.push(i);
+  componentDidMount() {
+    fetch('/songSheets', {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    }).then(
+      (res) => (res.ok) ? res.json() : {songSheets: []},
+      (e) => console.log("连接失败", e)
+    ).then(json => {
+      this.setState({
+        songSheets: json.songSheets,
+      });
+    });
+  }
+
+  Cards() {
+    let data = this.state.songSheets;
+
+    if (data.length === 0) {
+      for (let i = 0; i < 20; i++) {
+        data.push(i);
+      }
     }
 
     return data.map((v) => {
-      return (<Card key={v}></Card>);
+      return (
+        <Card
+          key={v[0] + v[1]}
+          value={v[0]}
+          onClick={() => {alert("jump to SongSheet");}}
+          src={v[1]}/>
+      );
     });
   }
 

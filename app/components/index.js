@@ -25,9 +25,10 @@ class Index extends React.Component {
     case '0': return <AppTabs />;
     case '1':
     case '2': return <SongCard />;
+    case '3': return <DownloadList />;
     case '4': return <DownloadList />;
     case '5': return <SongSheet />;
-    default: return <AppTabs />;
+    default: return <SongSheet />;
     }
   }
 

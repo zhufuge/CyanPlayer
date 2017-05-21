@@ -17,7 +17,9 @@ let SelectableList = makeSelectable(List);
 class AppList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {selectedIndex: props.page};
+    this.state = {
+      selectedIndex: props.page,
+    };
     this.handleRequestChange = this.handleRequestChange.bind(this);
   }
 
@@ -51,9 +53,10 @@ class AppList extends React.Component {
           <ListItem value="4" primaryText="历史下载" leftIcon={restore}/>
         </SelectableList>
         <Divider />
-        <Subheader>
+        <Subheader style={styles.createHeader}>
           创建的歌单
-          <IconButton tooltip="创建"><AddCircle /></IconButton>
+          <IconButton tooltip="创建">
+            <AddCircle color="#aaa" hoverColor="#666" /></IconButton>
         </Subheader>
         <SelectableList
           value={this.state.selectedIndex}
@@ -68,11 +71,18 @@ class AppList extends React.Component {
 const styles = {
   container: {
     width: 240,
+    height: 600,
     marginRight: 16,
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: 'rgb(217, 217, 217)',
+    overflow: 'hidden',
   },
+  createHeader: {
+    paddingRight: 20,
+    display: 'flex',
+    justifyContent: 'space-between',
+  }
 };
 
 export default AppList;

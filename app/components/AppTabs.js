@@ -40,7 +40,7 @@ class TabsExampleControlled extends React.Component {
 const styles = {
   container: {
     width: 820,
-    height: 575,
+    height: 555,
     overflowX: 'hidden',
     overflowY: 'scroll',
   },
