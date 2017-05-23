@@ -3,15 +3,46 @@ import React from 'react';
 import Card from './Card';
 
 class SingerList extends React.Component {
-  Cards() {
-    let data = [];
+  constructor(props) {
+    super(props);
+    this.state = {
+      singers: []
+    };
+  }
 
-    for (let i = 0; i < 20; i++) {
-      data.push(i);
+  componentDidMount() {
+    fetch('/singers', {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    }).then(
+      (res) => (res.ok) ? res.json() : {},
+      (e) => console.log("连接失败", e)
+    ).then(json => {
+      this.setState({
+        singers: json.singers,
+      });
+    });
+  }
+
+  Cards() {
+    let data = this.state.singers || [];
+
+    if (data.length === 0) {
+      for (let i = 0; i < 20; i++) {
+        data.push(i);
+      }
     }
 
-    return data.map((v) => {
-      return (<Card key={v}></Card>);
+    return data.map((v, i) => {
+      return (
+        <Card
+          key={'singer-list-' + i}
+          value={v.name}
+          onClick={() => {alert("jump to SongSheet");}}
+          src={v.src}/>
+      );
     });
   }
 

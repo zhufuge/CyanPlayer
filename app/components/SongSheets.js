@@ -40,10 +40,10 @@ class SongSheets extends React.Component {
       }
     }
 
-    return data.map((v) => {
+    return data.map((v, i) => {
       return (
         <Card
-          key={v[0] + v[1]}
+          key={'sss' + i}
           value={v[0]}
           onClick={() => {alert("jump to SongSheet");}}
           src={v[1]}/>

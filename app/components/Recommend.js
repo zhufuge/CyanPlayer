@@ -57,16 +57,16 @@ class Recommend extends React.Component {
   }
 
   renderSongs(isFirst) {
-    const dflt = [
-      "Time to say goodbye",
-      "Lauren Aquilina"
-    ];
+    const df = {
+      name: "Time to say goodbye",
+      singer: "Lauren Aquilina"
+    };
     const data = isFirst
           ? ['01', '02', '03', '04', '05']
           : ['06', '07', '08', '09', '10'];
     const songs = this.state.songs;
     return data.map((v, i) => {
-      const j = (isFirst) ? i : i + 5;
+      const song = (isFirst) ? songs[i] : songs[i + 5];
       return (
         <ListItem
           key={'s' + v}
@@ -74,9 +74,9 @@ class Recommend extends React.Component {
           style={(i % 2 === 0) ? {} : styles.oBGC}>
           <span style={styles.mRC('#999')}>{v}</span>
           <span style={styles.mRC('#444')}>
-            {(songs[j] === void 0) ? dflt[0] : songs[j][0]}</span>
+            {(song === void 0) ? df.name : song[0]}</span>
           <span style={styles.songSinger}>
-            {(songs[j] === void 0) ? dflt[1] : songs[j][1]}</span>
+            {(song === void 0) ? df.singer : song[1]}</span>
         </ListItem>
       );
     });
