@@ -7,7 +7,7 @@ import RankingLists from './RankingLists';
 import SingerList from './SingerList';
 import NewestMusic from './NewestMusic';
 
-class TabsExampleControlled extends React.Component {
+class AppTabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {value: 'a'};
@@ -49,4 +49,4 @@ const styles = {
   },
 };
 
-export default TabsExampleControlled;
+export default AppTabs;

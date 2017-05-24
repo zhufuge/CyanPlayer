@@ -14,39 +14,39 @@ class SongSheets extends React.Component {
       songSheets: [],
     };
   }
-
-  componentDidMount() {
+  componentWillMount() {
     fetch('/songSheets', {
       method: 'GET',
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       }
     }).then(
-      (res) => (res.ok) ? res.json() : {songSheets: []},
-      (e) => console.log("连接失败", e)
+      res => (res.ok) ? res.json() : undefined,
+      e => console.log("连接失败", e)
     ).then(json => {
-      this.setState({
-        songSheets: json.songSheets,
-      });
+      if (json) {
+        this.setState({
+          songSheets: json.songSheets,
+        });
+      }
     });
   }
 
   Cards() {
-    let data = this.state.songSheets;
-
-    if (data.length === 0) {
+    const container = this.state.songSheets;
+    if (container.length === 0) {
       for (let i = 0; i < 20; i++) {
-        data.push(i);
+        container.push(i);
       }
     }
 
-    return data.map((v, i) => {
+    return container.map((v, i) => {
       return (
         <Card
-          key={'sss' + i}
-          value={v[0]}
+          key={'songSheets-' + i}
+          value={v.name}
           onClick={() => {alert("jump to SongSheet");}}
-          src={v[1]}/>
+          src={v.src}/>
       );
     });
   }
@@ -56,10 +56,11 @@ class SongSheets extends React.Component {
   }
 
   tabs() {
-    const data = [ '华语', '流行', '电子', '轻音乐', 'ACG', '其他'];
-    return data.map((v, i) => {
+    const container = [ '华语', '流行', '电子', '轻音乐', 'ACG', '其他'];
+    return container.map((v, i) => {
       return (
-        <Span key={v}>{(i === 0) ? '' : '/'}
+        <Span key={'songSheets' + v}>
+          {(i === 0) ? '' : '/'}
           <Span>
             <a href="#"
                style={{textDecoration: 'none', color: '#666'}}

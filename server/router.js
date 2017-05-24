@@ -25,27 +25,27 @@ function sendFile(res, file) {
 function sendJSON(res) {
   const json = {
     songSheets: [
-      ['12134', '/img/0.png'],
-      ['uas;flj', '/img/0.png'],
-      ['sadjf;s', '/img/0.png'],
-      ['asf;', '/img/0.png'],
-      ['wpequ', '/img/0.png']
+      {name: '12134', src: '/img/0.png'},
+      {name: 'uas;flj', src: '/img/0.png'},
+      {name: 'sadjf;s', src: '/img/0.png'},
+      {name: 'asf;', src: '/img/0.png'},
+      {name: 'wpequ', src: '/img/0.png'}
     ],
     songs: [
-      ['123', 'jas'],
-      ['jasf;', 'asdn'],
-      ['12;z', 'n;z'],
-      ['zjx', 'nz'],
-      ['pwq', 'pfa'],
-      ['p1q', 'pasfp'],
-      ['pw23', 'pjafa'],
-      ['pwasfj', 'pqwerp']
+      {name: '123', singer: 'jas'},
+      {name: 'jasf;', singer: 'asdn'},
+      {name: '12;z', singer: 'n;z'},
+      {name: 'zjx', singer: 'nz'},
+      {name: 'pwq', singer: 'pfa'},
+      {name: 'p1q', singer: 'pasfp'},
+      {name: 'pw23', singer: 'pjafa'},
+      {name: 'pwasfj', singer: 'pqwerp'}
     ],
     singers: [
-      ['zj;v', '/img/0.png'],
-      ['as;jf;v', '/img/0.png'],
-      ['zjasjf', '/img/0.png'],
-      ['zj;afj', '/img/0.png']
+      {name: 'zj;v', src: '/img/0.png'},
+      {name: 'as;jf;v', src: '/img/0.png'},
+      {name: 'zjasjf', src: '/img/0.png'},
+      {name: 'zj;afj', src: '/img/0.png'}
     ]
   };
   res.writeHead(200, {'Content-Type': 'application/json'});

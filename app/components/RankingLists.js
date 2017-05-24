@@ -4,6 +4,13 @@ import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Subheader from './Subheader.js';
 
+const df = {
+  name: "Time to say goodbye",
+  singer: "Lauren Aquilina"
+};
+const Name = v => <span key={v} style={styles.mRC('#444')}>{v}</span>,
+      Singer = v => <span key={v} style={styles.songSinger}>{v}</span>;
+
 class RankingLists extends React.Component {
   constructor(props) {
     super(props);
@@ -14,48 +21,44 @@ class RankingLists extends React.Component {
       singer: [],
     };
   }
-
-  componentDidMount() {
+  componentWillMount() {
     fetch("/rank", {
       method: "GET",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       }
     }).then(
-      res => (res.ok) ? res.json() : {top: [], newest: [], hot: [], singer: []},
+      res => (res.ok) ? res.json() : undefined,
       e => console.log("连接失败", e)
     ).then(json => {
-      this.setState({
-        top: json.top,
-        newest: json.newest,
-        hot: json.hot,
-        singer: json.singer,
-      });
+      if (json) {
+        this.setState({
+          top: json.top,
+          newest: json.newest,
+          hot: json.hot,
+          singer: json.singer,
+        });
+      }
     });
   }
 
   riseList(type) {
-    const df = {
-      name: "Time to say goodbye",
-      singer: "Lauren Aquilina"
-    };
-    const Name = v => <span style={styles.mRC('#444')}>{v}</span>,
-          Singer = v => <span style={styles.songSinger}>{v}</span>;
-
-    let data = this.state[type] || [];
-    if (data.length === 0) {
+    const container = this.state[type];
+    if (container.length === 0) {
       for (let i = 0; i < 8; i++) {
-        data.push(i);
+        container.push(i);
       }
     }
 
-    return data.map((v, i) => {
+    return container.map((v, i) => {
       return (
         <ListItem
           key={type + '-' + i}
           onClick={() => {alert("jump to music");}}
           style={(i % 2 === 0) ? {} : styles.oBGC}>
-          <span style={styles.mRC('#999')}>{'0' + (i + 1)}</span>
+          <span style={styles.mRC('#999')}>
+            {'0' + (i + 1)}
+          </span>
           {(type !== 'singer')
             ? [Name(v.name || df.name), Singer(v.singer || df.singer)]
             : Name(v.name || df.singer)
@@ -66,9 +69,9 @@ class RankingLists extends React.Component {
   }
 
   lists() {
-    const data = ['飙升榜', '新歌榜', '热歌榜', '歌手榜'],
+    const container = ['飙升榜', '新歌榜', '热歌榜', '歌手榜'],
           type = ['top', 'newest', 'hot', 'singer'];
-    return data.map((v, i) => {
+    return container.map((v, i) => {
       return (
         <List key={v} style={styles.list}>
           <Subheader title={v} />

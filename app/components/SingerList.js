@@ -9,33 +9,33 @@ class SingerList extends React.Component {
       singers: []
     };
   }
-
-  componentDidMount() {
+  componentWillMount() {
     fetch('/singers', {
       method: 'GET',
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       }
     }).then(
-      (res) => (res.ok) ? res.json() : {},
-      (e) => console.log("连接失败", e)
+      res => (res.ok) ? res.json() : undefined,
+      e => console.log("连接失败", e)
     ).then(json => {
-      this.setState({
-        singers: json.singers,
-      });
+      if (json) {
+        this.setState({
+          singers: json.singers,
+        });
+      }
     });
   }
 
   Cards() {
-    let data = this.state.singers || [];
-
-    if (data.length === 0) {
+    const container = this.state.singers;
+    if (container.length === 0) {
       for (let i = 0; i < 20; i++) {
-        data.push(i);
+        container.push(i);
       }
     }
 
-    return data.map((v, i) => {
+    return container.map((v, i) => {
       return (
         <Card
           key={'singer-list-' + i}

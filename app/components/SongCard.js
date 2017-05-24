@@ -1,6 +1,18 @@
 import React from 'react';
 
 class SongCard extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillMount() {
+    if (this.props.type === 'random') {
+
+    } else {
+
+    }
+  }
+
   render() {
     return (
       <div style={styles.container}>

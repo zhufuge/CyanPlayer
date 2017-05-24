@@ -2,6 +2,12 @@ import React from 'react';
 
 import {List, ListItem} from 'material-ui/List';
 
+const song = {
+  name: 'Time to say goodbye',
+  singer: 'Lambda',
+  time: '03:23'
+};
+
 class NewestMusic extends React.Component {
   constructor(props) {
     super(props);
@@ -9,30 +15,26 @@ class NewestMusic extends React.Component {
       songs: [],
     };
   }
-
-  componentDidMount() {
+  componentWillMount() {
     fetch('/newest', {
       method: 'GET',
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       }
     }).then(
-      res => res.ok ? res.json() : {songs: []},
+      res => res.ok ? res.json() : undefined,
       e => console.log("连接失败", e)
     ).then(json => {
-      this.setState({
-        songs: json.songs,
-      });
+      if (json) {
+        this.setState({
+          songs: json.songs,
+        });
+      }
     });
   }
 
   list() {
-    const song = {
-      name: 'Time to say goodbye',
-      singer: 'Lambda',
-      time: '03:23'
-    };
-    let data = this.state.songs || [];
+    const data = this.state.songs;
     if (data.length === 0) {
       for (let i = 0; i < 20; i++) {
         data.push(i);
@@ -45,13 +47,17 @@ class NewestMusic extends React.Component {
           key={'newest-' + i}
           style={(i % 2 === 0) ? {} : {backgroundColor: '#f2f2f2'}}>
           <div style={styles.item}>
-            <span style={styles.index}>{i < 10 ? '0' + i : '' + i}</span>
-            <div style={styles.name}>
-              {v.name || song.name}</div>
-            <span style={styles.singer}>
-              {v.singer || song.singer}</span>
             <span style={styles.index}>
-              {v.time || song.time}</span>
+              {i < 9 ? '0' + (i + 1) : '' + (i + 1)}</span>
+            <div style={styles.name}>
+              {v.name || song.name}
+            </div>
+            <span style={styles.singer}>
+              {v.singer || song.singer}
+            </span>
+            <span style={styles.index}>
+              {v.time || song.time}
+            </span>
           </div>
         </ListItem>
       );
@@ -87,7 +93,7 @@ const styles = {
     color: '#333',
     width: 400,
     height: 22,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '400',
     overflow: 'hidden',
   },

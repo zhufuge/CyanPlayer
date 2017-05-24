@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {setPage} from '../actions';
 
 import {List, ListItem, makeSelectable} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
@@ -17,19 +19,16 @@ let SelectableList = makeSelectable(List);
 class AppList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selectedIndex: props.page,
-    };
     this.handleRequestChange = this.handleRequestChange.bind(this);
   }
 
   handleRequestChange(event, index) {
-    this.setState({selectedIndex: index});
     this.props.setPage(index);
   };
 
   render() {
-    const musicNote = <MusicNote />,
+    const page = this.props.page,
+          musicNote = <MusicNote />,
           musicVideo = <MusicVideo />,
           upload = <Upload />,
           restore = <Restore />,
@@ -37,7 +36,7 @@ class AppList extends React.Component {
     return (
       <div style={styles.container}>
         <SelectableList
-          value={this.state.selectedIndex}
+          value={page}
           onChange={this.handleRequestChange}>
           <Subheader>推荐</Subheader>
           <ListItem value="0" primaryText="发现音乐" leftIcon={musicNote}/>
@@ -45,7 +44,7 @@ class AppList extends React.Component {
         </SelectableList>
         <Divider />
         <SelectableList
-          value={this.state.selectedIndex}
+          value={page}
           onChange={this.handleRequestChange}>
           <Subheader>我的音乐</Subheader>
           <ListItem value="2" primaryText="正在播放" leftIcon={musicNote}/>
@@ -59,7 +58,7 @@ class AppList extends React.Component {
             <AddCircle color="#aaa" hoverColor="#666" /></IconButton>
         </Subheader>
         <SelectableList
-          value={this.state.selectedIndex}
+          value={page}
           onChange={this.handleRequestChange}>
           <ListItem value="5" primaryText="我喜欢的音乐" leftIcon={queueMusic}/>
         </SelectableList>
@@ -85,4 +84,18 @@ const styles = {
   }
 };
 
-export default AppList;
+const mapStateToProps = (state) => {
+  return {
+    page: state.page
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setPage: (page) => {
+      dispatch(setPage(page));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppList);

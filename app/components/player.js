@@ -1,12 +1,15 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 class Player extends React.Component {
   render() {
+    const src = './TimeToSayGoodbye.mp3';
     return (
       <div style={styles.container}>
+        {'song: ' + this.props.song}
         <div style={styles.content}>
           <audio
-            src="./TimeToSayGoodbye.mp3"
+            src={src}
             controls="controls"
             style={styles.audio}
             ></audio>
@@ -38,4 +41,10 @@ const styles = {
   }
 };
 
-export default Player;
+const mapStateToProps = (state) => {
+  return {
+    song: state.presentSong
+  };
+};
+
+export default connect(mapStateToProps)(Player);

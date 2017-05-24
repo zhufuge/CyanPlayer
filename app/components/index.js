@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {connect} from 'react-redux';
 import Header from './Header';
 import AppList from './AppList';
 import AppTabs from './AppTabs';
@@ -11,19 +11,12 @@ import Player from './player';
 class Index extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {page: '0'};
-
-    this.setPage = this.setPage.bind(this);
   }
 
-  setPage(page) {
-    this.setState({page});
-  }
-
-  page(index) {
-    switch(index) {
+  page() {
+    switch(this.props.page) {
     case '0': return <AppTabs />;
-    case '1':
+    case '1': return <SongCard type="random"/>;
     case '2': return <SongCard />;
     case '3': return <DownloadList />;
     case '4': return <DownloadList />;
@@ -37,8 +30,8 @@ class Index extends React.Component {
       <div>
         <Header />
         <div style={styles.container}>
-          <AppList page={this.state.page} setPage={this.setPage}/>
-          {this.page(this.state.page)}
+          <AppList />
+          {this.page()}
         </div>
         <Player />
       </div>
@@ -56,4 +49,10 @@ const styles = {
   },
 };
 
-export default Index;
+const mapStateToProps = (state) => {
+  return {
+    page: state.page
+  };
+};
+
+export default connect(mapStateToProps)(Index);

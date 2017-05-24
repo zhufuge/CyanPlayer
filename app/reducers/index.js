@@ -9,6 +9,26 @@ const username = (state='登录', action) => {
   }
 };
 
+const presentSong = (state='', action) => {
+  switch (action.type) {
+  case 'SET_PRESENT_SONG':
+    return action.song;
+  default:
+    return state;
+  }
+};
+
+const page = (state='0', action) => {
+  switch (action.type) {
+  case 'SET_PAGE':
+    return action.page;
+  default:
+    return state;
+  }
+};
+
 export default combineReducers({
-  username
+  username,
+  presentSong,
+  page,
 });
