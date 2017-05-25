@@ -1,19 +1,16 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 class SongCard extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  componentWillMount() {
-    if (this.props.type === 'random') {
-
-    } else {
-
-    }
-  }
-
+  // TODO songName
   render() {
+    const songName = (this.props.song === '')
+          ? 'Time to say goodbye'
+          : this.props.song;
     return (
       <div style={styles.container}>
         <div style={styles.part}>
@@ -22,7 +19,7 @@ class SongCard extends React.Component {
           </div>
         </div>
         <div style={styles.part}>
-          <div style={styles.songName}>Time to say goodbye</div>
+          <div style={styles.songName}>{songName}</div>
           <div style={styles.songInfo}>
             <div>专辑：xxx</div>
             <div>歌手：Lauren</div>
@@ -81,4 +78,12 @@ const styles = {
   }
 };
 
-export default SongCard;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    song: (ownProps.type === 'random')
+      ? '随机音乐'
+      : state.presentSong
+  };
+};
+
+export default connect()(SongCard);

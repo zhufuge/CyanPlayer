@@ -1,10 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
+
 import Header from './Header';
 import AppList from './AppList';
 import AppTabs from './AppTabs';
 import SongCard from './SongCard';
 import DownloadList from './DownloadList';
+import Upload from './Upload';
 import SongSheet from './SongSheet';
 import Player from './player';
 
@@ -18,9 +20,9 @@ class Index extends React.Component {
     case '0': return <AppTabs />;
     case '1': return <SongCard type="random"/>;
     case '2': return <SongCard />;
-    case '3': return <DownloadList />;
+    case '3': return <Upload />;
     case '4': return <DownloadList />;
-    case '5': return <SongSheet />;
+    case '5': return <SongSheet type="mine"/>;
     default: return <SongSheet />;
     }
   }

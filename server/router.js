@@ -23,7 +23,7 @@ function sendFile(res, file) {
 }
 
 function sendJSON(res) {
-  const json = {
+  const json = {// url: '/recommend'
     songSheets: [
       {name: '12134', src: '/img/0.png'},
       {name: 'uas;flj', src: '/img/0.png'},
@@ -101,18 +101,34 @@ function sendNewest(res) {
   res.end(JSON.stringify(json));
 }
 
+function sendSongSheets(res) {
+  const json = {// url: '/songSheets'
+    songSheets: [
+      {name: '12134', src: '/img/0.png'},
+      {name: 'uas;flj', src: '/img/0.png'},
+      {name: 'sadjf;s', src: '/img/0.png'},
+      {name: 'asf;', src: '/img/0.png'},
+      {name: 'wpequ', src: '/img/0.png'}
+    ]
+  };
+  res.writeHead(200, {'Content-Type': 'application/json'});
+  res.end(JSON.stringify(json));
+}
+
 function router(req, res) {
   const pathname = url.parse(req.url).pathname;
   console.log(pathname);
 
   switch(pathname) {
-  case '/recommend':
-  case '/songSheets':
-    sendJSON(res);
-    break;
   case '/Asign':
     res.writeHead(200);
     res.end();
+    break;
+  case '/recommend':
+    sendJSON(res);
+    break;
+  case '/songSheets':
+    sendSongSheets(res);
     break;
   case '/newest':
     sendNewest(res);

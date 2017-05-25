@@ -43,23 +43,25 @@ class DownloadList extends React.Component {
 					<Subheader style={{fontSize: 20}}>已下载的单曲</Subheader>
 					<Divider />
 					<Table>
-    				<TableHeader displaySelectAll={false}
-            						 adjustForCheckbox={false}>
+    				<TableHeader
+              displaySelectAll={false}
+            	adjustForCheckbox={false}>
     				  <TableRow>{this.header()}</TableRow>
     				</TableHeader>
-    				<TableBody  displayRowCheckbox={false}>
+    				<TableBody
+              displayRowCheckbox={false}>
               {this.tableRow()}
     				</TableBody>
   				</Table>
   			</div>
-			</div>);
+			</div>
+    );
 	}
 }
 const styles = {
   container: {
     width: 820,
     height: 600,
-    backgroundColor: '#f6f6f6',
     overflowX: 'hidden',
     overflowY: 'scroll',
   },

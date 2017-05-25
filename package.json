@@ -13,7 +13,7 @@
     "redux": "^3.6.0"
   },
   "scripts": {
-    "build": "webpack -p",
+    "build": "webpack",
     "start": "webpack-dev-server",
     "s": "node index.js"
   },

@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {setPresentSong, setPage} from '../actions';
 
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
@@ -8,8 +10,6 @@ const df = {
   name: "Time to say goodbye",
   singer: "Lauren Aquilina"
 };
-const Name = v => <span key={v} style={styles.mRC('#444')}>{v}</span>,
-      Singer = v => <span key={v} style={styles.songSinger}>{v}</span>;
 
 class RankingLists extends React.Component {
   constructor(props) {
@@ -20,6 +20,8 @@ class RankingLists extends React.Component {
       hot: [],
       singer: [],
     };
+
+    this.handleSongClick = this.handleSongClick.bind(this);
   }
   componentWillMount() {
     fetch("/rank", {
@@ -42,7 +44,7 @@ class RankingLists extends React.Component {
     });
   }
 
-  riseList(type) {
+  renderList(type) {
     const container = this.state[type];
     if (container.length === 0) {
       for (let i = 0; i < 8; i++) {
@@ -54,29 +56,57 @@ class RankingLists extends React.Component {
       return (
         <ListItem
           key={type + '-' + i}
-          onClick={() => {alert("jump to music");}}
+          onClick={() => this.handleSongClick(v.name || df.name)}
           style={(i % 2 === 0) ? {} : styles.oBGC}>
           <span style={styles.mRC('#999')}>
             {'0' + (i + 1)}
           </span>
-          {(type !== 'singer')
-            ? [Name(v.name || df.name), Singer(v.singer || df.singer)]
-            : Name(v.name || df.singer)
-          }
+          <span style={styles.mRC('#444')}>{v.name || df.name}</span>
+          <span style={styles.songSinger}>{v.singer || df.singer}</span>
         </ListItem>
       );
     });
   }
 
+  renderSingerList() {
+    const container = this.state.singer;
+    if (container.length === 0) {
+      for (let i = 0; i < 8; i++) {
+        container.push(i);
+      }
+    }
+
+    return container.map((v, i) => {
+      return (
+        <ListItem
+          key={'singer-' + i}
+          onClick={() => alert('jump to singer sheet')}
+          style={(i % 2 === 0) ? {} : styles.oBGC}>
+          <span style={styles.mRC('#999')}>
+            {'0' + (i + 1)}
+          </span>
+          <span style={styles.mRC('#444')}>
+            {v.name || df.singer}
+          </span>
+        </ListItem>
+      );
+    });
+  }
+
+  handleSongClick(song) {
+    this.props.setPresentSong(song);
+    this.props.setPage('2');
+  }
+
   lists() {
-    const container = ['飙升榜', '新歌榜', '热歌榜', '歌手榜'],
-          type = ['top', 'newest', 'hot', 'singer'];
+    const container = ['飙升榜', '新歌榜', '热歌榜'],
+          type = ['top', 'newest', 'hot'];
     return container.map((v, i) => {
       return (
         <List key={v} style={styles.list}>
           <Subheader title={v} />
           <Divider />
-          {this.riseList(type[i])}
+          {this.renderList(type[i])}
         </List>
       );
     });
@@ -86,6 +116,11 @@ class RankingLists extends React.Component {
     return (
       <div style={styles.container}>
         {this.lists()}
+        <List style={styles.list}>
+          <Subheader title="歌手榜" />
+          <Divider />
+          {this.renderSingerList()}
+        </List>
       </div>
     );
   }
@@ -121,4 +156,15 @@ const styles = {
   },
 };
 
-export default RankingLists;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setPresentSong: (song) => {
+      dispatch(setPresentSong(song));
+    },
+    setPage: (page) => {
+      dispatch(setPage(page));
+    }
+  };
+};
+
+export default connect(null, mapDispatchToProps)(RankingLists);

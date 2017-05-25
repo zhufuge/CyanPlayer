@@ -1,15 +1,40 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
-import {List, ListItem} from 'material-ui/List';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 
 class SongSheet extends React.Component {
-  songs() {
-    let data = '1234567890';
-    data = data.split('');
+  header() {
+    const data = ['序号', '音乐标题', '歌手', '专辑', '时长', '下载时间'];
     return data.map((v) => {
-      return <ListItem key={'song' + v}>{v}</ListItem>;
+      return <TableHeaderColumn key={v}>{v}</TableHeaderColumn>;
+    });
+  }
+
+  rowColumns(data) {
+    return data.map(v => {
+      return <TableRowColumn key={v}>{v}</TableRowColumn>;
+    });
+  }
+
+  tableRow() {
+    const data = ['童话镇', '成都', '我的主题曲', '叹服', 'Faded'];
+    return data.map((v, i) => {
+      const value = [i + 1, v, '---', '---', '---', '---'];
+      return (
+    		<TableRow key={v}>
+          {this.rowColumns(value)}
+    		</TableRow>
+      );
     });
   }
 
@@ -21,16 +46,24 @@ class SongSheet extends React.Component {
             <img alt="" src="/img/0.png"/>
           </div>
           <div style={styles.description}>
-            <div style={{fontSize: 26}}>我喜欢的音乐</div>
+            <div style={{fontSize: 26}}>{this.props.sheet}</div>
             <div>__jln&nbsp;&nbsp;&nbsp;2016-12-09创建</div>
           </div>
         </div>
         <div style={styles.songList}>
           <Subheader>歌曲列表</Subheader>
           <Divider />
-          <List>
-            {this.songs()}
-          </List>
+					<Table>
+    				<TableHeader
+              displaySelectAll={false}
+            	adjustForCheckbox={false}>
+    				  <TableRow>{this.header()}</TableRow>
+    				</TableHeader>
+    				<TableBody
+              displayRowCheckbox={false}>
+              {this.tableRow()}
+    				</TableBody>
+  				</Table>
         </div>
       </div>
     );
@@ -71,4 +104,12 @@ const styles = {
   },
 };
 
-export default SongSheet;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    sheet: (ownProps.type === 'mine')
+      ? '我喜欢的音乐'
+      : state.songSheet
+  };
+};
+
+export default connect(mapStateToProps)(SongSheet);

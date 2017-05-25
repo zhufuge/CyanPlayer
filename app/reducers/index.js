@@ -27,8 +27,18 @@ const page = (state='0', action) => {
   }
 };
 
+const songSheet = (state='', action) => {
+  switch (action.type) {
+  case 'SET_SONG_SHEET':
+    return action.sheet;
+  default:
+    return state;
+  }
+};
+
 export default combineReducers({
   username,
   presentSong,
   page,
+  songSheet,
 });

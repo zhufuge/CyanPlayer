@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {setPresentSong, setPage} from '../actions';
 
 import {List, ListItem} from 'material-ui/List';
 
@@ -14,6 +16,8 @@ class NewestMusic extends React.Component {
     this.state = {
       songs: [],
     };
+
+    this.handleSongClick = this.handleSongClick.bind(this);
   }
   componentWillMount() {
     fetch('/newest', {
@@ -45,6 +49,7 @@ class NewestMusic extends React.Component {
       return (
         <ListItem
           key={'newest-' + i}
+          onClick={() => this.handleSongClick(v.name || song.name)}
           style={(i % 2 === 0) ? {} : {backgroundColor: '#f2f2f2'}}>
           <div style={styles.item}>
             <span style={styles.index}>
@@ -62,6 +67,11 @@ class NewestMusic extends React.Component {
         </ListItem>
       );
     });
+  }
+
+  handleSongClick(song) {
+    this.props.setPresentSong(song);
+    this.props.setPage('2');
   }
 
   render() {
@@ -104,4 +114,15 @@ const styles = {
   },
 };
 
-export default NewestMusic;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setPresentSong: (song) => {
+      dispatch(setPresentSong(song));
+    },
+    setPage: (page) => {
+      dispatch(setPage(page));
+    }
+  };
+};
+
+export default connect(null, mapDispatchToProps)(NewestMusic);

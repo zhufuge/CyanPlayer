@@ -19,8 +19,16 @@ const setPage = (page) => {
   };
 };
 
+const setSongSheet = (sheet) => {
+  return {
+    type: 'SET_SONG_SHEET',
+    sheet
+  };
+};
+
 export {
   signin,
   setPresentSong,
   setPage,
+  setSongSheet,
 };

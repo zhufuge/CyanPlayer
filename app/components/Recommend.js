@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {setPresentSong, setPage} from '../actions';
+import {setPresentSong, setPage, setSongSheet} from '../actions';
 
 import Divider from 'material-ui/Divider';
 import Subheader from './Subheader.js';
@@ -23,6 +23,7 @@ class Recommend extends React.Component {
     };
 
     this.handleSongClick = this.handleSongClick.bind(this);
+    this.handleSheetClick = this.handleSheetClick.bind(this);
   }
   componentWillMount() {
     fetch("/recommend", {
@@ -60,10 +61,15 @@ class Recommend extends React.Component {
         <Card
           key={'recommend-' + type + '-' + i}
           value={v.name}
-          onClick={() => {alert("jump to SongSheet");}}
+          onClick={() => this.handleSheetClick(v.name || '未命名歌单')}
           src={v.src}/>
       );
     });
+  }
+
+  handleSheetClick(sheet) {
+    this.props.setSongSheet(sheet);
+    this.props.setPage('6');
   }
 
   renderSongs(isLeft) {
@@ -171,6 +177,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setPage: (page) => {
       dispatch(setPage(page));
+    },
+    setSongSheet: (sheet) => {
+      dispatch(setSongSheet(sheet));
     }
   };
 };

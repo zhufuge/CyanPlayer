@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {setPage, setSongSheet} from '../actions';
 
 import Card from './Card';
 import Divider from 'material-ui/Divider';
@@ -13,6 +15,8 @@ class SongSheets extends React.Component {
     this.state = {
       songSheets: [],
     };
+
+    this.handleSheetClick = this.handleSheetClick.bind(this);
   }
   componentWillMount() {
     fetch('/songSheets', {
@@ -45,10 +49,15 @@ class SongSheets extends React.Component {
         <Card
           key={'songSheets-' + i}
           value={v.name}
-          onClick={() => {alert("jump to SongSheet");}}
+          onClick={() => this.handleSheetClick(v.name || '未命名歌单')}
           src={v.src}/>
       );
     });
+  }
+
+  handleSheetClick(sheet) {
+    this.props.setSongSheet(sheet);
+    this.props.setPage('6');
   }
 
   filterSheet(e, v) {
@@ -103,4 +112,15 @@ const styles = {
   }
 };
 
-export default SongSheets;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setPage: (page) => {
+      dispatch(setPage(page));
+    },
+    setSongSheet: (sheet) => {
+      dispatch(setSongSheet(sheet));
+    }
+  };
+};
+
+export default connect(null, mapDispatchToProps)(SongSheets);
