@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {setPresentSong, setPage} from '../actions';
+import {setPresentSong, setPage, setSongSheet} from '../actions';
 
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
@@ -22,6 +22,7 @@ class RankingLists extends React.Component {
     };
 
     this.handleSongClick = this.handleSongClick.bind(this);
+    this.handleSingerClick = this.handleSingerClick.bind(this);
   }
   componentWillMount() {
     fetch("/rank", {
@@ -68,6 +69,11 @@ class RankingLists extends React.Component {
     });
   }
 
+  handleSongClick(song) {
+    this.props.setPresentSong(song);
+    this.props.setPage('2');
+  }
+
   renderSingerList() {
     const container = this.state.singer;
     if (container.length === 0) {
@@ -80,7 +86,7 @@ class RankingLists extends React.Component {
       return (
         <ListItem
           key={'singer-' + i}
-          onClick={() => alert('jump to singer sheet')}
+          onClick={() => this.handleSingerClick(v.name || df.singer)}
           style={(i % 2 === 0) ? {} : styles.oBGC}>
           <span style={styles.mRC('#999')}>
             {'0' + (i + 1)}
@@ -93,9 +99,9 @@ class RankingLists extends React.Component {
     });
   }
 
-  handleSongClick(song) {
-    this.props.setPresentSong(song);
-    this.props.setPage('2');
+  handleSingerClick(singer) {
+    this.props.setSongSheet(singer);
+    this.props.setPage('6');
   }
 
   lists() {
@@ -163,6 +169,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setPage: (page) => {
       dispatch(setPage(page));
+    },
+    setSongSheet: (sheet) => {
+      dispatch(setSongSheet(sheet));
     }
   };
 };

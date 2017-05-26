@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+
 import {
   Table,
   TableBody,
@@ -11,6 +13,32 @@ import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 
 class DownloadList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state =  {
+      songs: []
+    };
+  }
+
+  componentWillMount() {
+    fetch('/downloadList', {
+      method: "POST",
+      header: {
+        "Content-Type": 'application/x-www-form-urlencoded'
+      },
+      body: `username=${this.props.username}`
+    }).then(
+      res => (res.ok) ? res.json() : undefined,
+      e => console.log('连接失败', e)
+    ).then(json => {
+      if (json) {
+        this.setState({
+          songs: json.songs
+        });
+      }
+    });
+  }
+
   header() {
     const data = ['序号', '音乐标题', '歌手', '专辑', '时长', '下载时间'];
     return data.map((v) => {
@@ -25,11 +53,11 @@ class DownloadList extends React.Component {
   }
 
   tableRow() {
-    const data = ['童话镇', '成都', '我的主题曲', '叹服', 'Faded'];
+    const data = this.state.songs;
     return data.map((v, i) => {
       const value = [i + 1, v, '---', '---', '---', '---'];
       return (
-    		<TableRow key={v}>
+    		<TableRow key={v.name}>
           {this.rowColumns(value)}
     		</TableRow>
       );
@@ -71,4 +99,10 @@ const styles = {
   },
 };
 
-export default DownloadList;
+const mapStateToProps = (state) => {
+  return {
+    username: state.username
+  };
+};
+
+export default connect(mapStateToProps)(DownloadList);

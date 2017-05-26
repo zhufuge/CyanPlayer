@@ -18,6 +18,15 @@ const presentSong = (state='', action) => {
   }
 };
 
+const presentSongSrc = (state='/music/TimeToSayGoodbye.mp3', action) => {
+  switch (action.type) {
+  case 'SET_PRESENT_SONG_SRC':
+    return action.src;
+  default:
+    return state;
+  }
+};
+
 const page = (state='0', action) => {
   switch (action.type) {
   case 'SET_PAGE':
@@ -39,6 +48,7 @@ const songSheet = (state='', action) => {
 export default combineReducers({
   username,
   presentSong,
+  presentSongSrc,
   page,
   songSheet,
 });

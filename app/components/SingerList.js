@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {setPage, setSongSheet} from '../actions';
 
 import Card from './Card';
 
@@ -8,6 +10,7 @@ class SingerList extends React.Component {
     this.state = {
       singers: []
     };
+    this.handleSingerClick = this.handleSingerClick.bind(this);
   }
   componentWillMount() {
     fetch('/singers', {
@@ -40,12 +43,16 @@ class SingerList extends React.Component {
         <Card
           key={'singer-list-' + i}
           value={v.name}
-          onClick={() => {alert("jump to SongSheet");}}
+          onClick={() => this.handleSingerClick(v.name || '未命名歌单')}
           src={v.src}/>
       );
     });
   }
 
+  handleSingerClick(singer) {
+    this.props.setSongSheet(singer);
+    this.props.setPage('6');
+  }
 
   render() {
     return (
@@ -75,4 +82,15 @@ const styles = {
   },
 };
 
-export default SingerList;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setPage: (page) => {
+      dispatch(setPage(page));
+    },
+    setSongSheet: (sheet) => {
+      dispatch(setSongSheet(sheet));
+    }
+  };
+};
+
+export default connect(null, mapDispatchToProps)(SingerList);

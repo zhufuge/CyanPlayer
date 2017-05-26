@@ -9,8 +9,9 @@ import {List, ListItem} from 'material-ui/List';
 import Card from './Card.js';
 
 const df = {
+  id: '001',
   name: "Time to say goodbye",
-  singer: "Lauren Aquilina"
+  singer: "Lauren Aquilina",
 };
 
 class Recommend extends React.Component {
@@ -84,7 +85,7 @@ class Recommend extends React.Component {
       return (
         <ListItem
           key={'recommend-' + 'songs-'+ i}
-          onClick={() => this.handleSongClick(v)}
+          onClick={() => this.handleSongClick(song.id)}
           style={(i % 2 === 0) ? {} : styles.oBGC}>
           <span style={styles.mRC('#999')}>
             {v}

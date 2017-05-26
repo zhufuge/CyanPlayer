@@ -3,10 +3,9 @@ import {connect} from 'react-redux';
 
 class Player extends React.Component {
   render() {
-    const src = './TimeToSayGoodbye.mp3';
+    const src = this.props.src || '/music/TimeToSayGoodbye.mp3';
     return (
       <div style={styles.container}>
-        {'song: ' + this.props.song}
         <div style={styles.content}>
           <audio
             src={src}
@@ -43,7 +42,7 @@ const styles = {
 
 const mapStateToProps = (state) => {
   return {
-    song: state.presentSong
+    src: state.presentSongSrc
   };
 };
 

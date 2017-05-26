@@ -7,6 +7,7 @@ function contentType(filename) {
     'html': 'text/html',
     'css': 'text/css',
     'js': 'application/x-javascript',
+    'jpg': 'image/jpg',
     'png': 'image/png',
     'mp3': 'audio/mp3',
   };
@@ -26,25 +27,14 @@ function sendJSON(res) {
   const json = {// url: '/recommend'
     songSheets: [
       {name: '12134', src: '/img/0.png'},
-      {name: 'uas;flj', src: '/img/0.png'},
-      {name: 'sadjf;s', src: '/img/0.png'},
-      {name: 'asf;', src: '/img/0.png'},
       {name: 'wpequ', src: '/img/0.png'}
     ],
     songs: [
-      {name: '123', singer: 'jas'},
-      {name: 'jasf;', singer: 'asdn'},
-      {name: '12;z', singer: 'n;z'},
-      {name: 'zjx', singer: 'nz'},
-      {name: 'pwq', singer: 'pfa'},
-      {name: 'p1q', singer: 'pasfp'},
-      {name: 'pw23', singer: 'pjafa'},
-      {name: 'pwasfj', singer: 'pqwerp'}
+      {id: '001', name: 'TimeToSayGoodbye', singer: 'Lauren'},
+      {id: '002', name: 'MyDestiny', singer: 'LYn'}
     ],
     singers: [
       {name: 'zj;v', src: '/img/0.png'},
-      {name: 'as;jf;v', src: '/img/0.png'},
-      {name: 'zjasjf', src: '/img/0.png'},
       {name: 'zj;afj', src: '/img/0.png'}
     ]
   };
@@ -56,10 +46,6 @@ function sendSingers(res) {
   const json = {//  url: '/singers' //歌手列表
     singers: [
       {name: '陈奕迅', src: '/img/0.png'},
-      {name: '2', src: '/img/0.png'},
-      {name: '3', src: '/img/0.png'},
-      {name: '4', src: '/img/0.png'},
-      {name: '5', src: '/img/0.png'},
     ]
   };
   res.writeHead(200, {'Content-Type': 'application/json'});
@@ -69,16 +55,16 @@ function sendSingers(res) {
 function sendRank(res) {
   const json = {// url: '/rank' // 排行榜
     top: [ // 飙升榜
-      {name: '一丝不挂', singer: '陈奕迅'},
-      {name: '暗涌', singer: '王菲'},
+      {id: '001', name: '一丝不挂', singer: '陈奕迅'},
+      {id: '002', name: '暗涌', singer: '王菲'},
     ],
     newest: [ // 新歌榜
-      {name: '一丝不挂', singer: '陈奕迅'},
-      {name: '暗涌', singer: '王菲'},
+      {id: '001', name: '一丝不挂', singer: '陈奕迅'},
+      {id: '002', name: '暗涌', singer: '王菲'},
     ],
     hot: [ // 热歌榜
-      {name: '一丝不挂', singer: '陈奕迅'},
-      {name: '暗涌', singer: '王菲'},
+      {id: '001', name: '一丝不挂', singer: '陈奕迅'},
+      {id: '002', name: '暗涌', singer: '王菲'},
     ],
     singer: [ // 歌手榜
       {name: '陈奕迅'},
@@ -92,9 +78,8 @@ function sendRank(res) {
 function sendNewest(res) {
   const json = {// url: '/newest' // 最新歌曲
     songs: [
-      {name: '一丝不挂', singer: '陈奕迅', time: '03:43'},
-      {name: '暗涌', singer: '王菲', time: '03:23'},
-      {name: '一丝不挂', singer: '陈奕迅', time: '04:43'}
+      {id: '001', name: '一丝不挂', singer: '陈奕迅', time: '03:43'},
+      {id: '002', name: '暗涌', singer: '王菲', time: '03:23'},
     ]
   };
   res.writeHead(200, {'Content-Type': 'application/json'});
@@ -106,13 +91,60 @@ function sendSongSheets(res) {
     songSheets: [
       {name: '12134', src: '/img/0.png'},
       {name: 'uas;flj', src: '/img/0.png'},
-      {name: 'sadjf;s', src: '/img/0.png'},
-      {name: 'asf;', src: '/img/0.png'},
-      {name: 'wpequ', src: '/img/0.png'}
     ]
   };
   res.writeHead(200, {'Content-Type': 'application/json'});
   res.end(JSON.stringify(json));
+}
+
+function keyValueParse(str) {
+  let s = str;
+  const result = {};
+  const regexp = /^([^=]+)=([^\&]+)(?:&*)(.*)/;
+  while (s !== '') {
+    let match = regexp.exec(s);
+    if (!match) throw SyntaxError(s + ' is illegal.');
+    result[match[1]] = match[2];
+    s = match[3];
+  }
+
+  return result;
+}
+
+function sendSong(req, res) {
+  let body = "";
+  req.on('data', (thunk) => {
+    body += thunk;
+  });
+
+  req.on('end', () => {
+    const post = keyValueParse(body);
+    console.log(post);
+
+    let json = {};
+    if (post.id === '002') {
+      json = {// url: '/song'
+        name: 'MyDestiny',
+        album: '来自星星的你',
+        singer: 'LYn',
+        lrc: 'my destiny',
+        img: 'img/2.jpg',
+        audio: 'music/MyDestiny.mp3'
+      };
+    } else {
+      json = {
+        name: 'TimeToSayGoodbye',
+        album: '...',
+        singer: 'Lauren',
+        lrc: 'time to say goodbye',
+        img: 'img/0.png',
+        audio: 'music/TimeToSayGoodbye.mp3'
+      };
+    }
+
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify(json));
+  });
 }
 
 function router(req, res) {
@@ -138,6 +170,9 @@ function router(req, res) {
     break;
   case '/singers':
     sendSingers(res);
+    break;
+  case '/song':
+    sendSong(req, res);
     break;
   default:
     sendFile(res, (pathname === '/Emusic') ? '/index.html' : pathname);

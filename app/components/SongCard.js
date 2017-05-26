@@ -1,30 +1,65 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {setPresentSongSrc} from '../actions';
+
+const primary = {
+  name: 'Time to say goodbye',
+  album: '...',
+  singer: 'Lauren',
+  lrc: '...',
+  img: '/img/0.png',
+  audio: '/music/TimeToSayGoodbye.mp3',
+};
 
 class SongCard extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {};
   }
 
-  // TODO songName
+  componentWillMount() {
+    fetch('/song', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `id=${this.props.song}`
+    }).then(
+      res => res.ok ? res.json() : undefined,
+      e => console.log('连接失败' + e)
+    ).then(json => {
+      if (json) {
+        this.setState({
+          name: json.name,
+          album: json.album,
+          singer: json.singer,
+          lrc: json.lrc,
+          img: json.img,
+          audio: json.audio,
+        });
+        this.props.setPresentSongSrc(json.audio);
+      }
+    });
+  }
+
   render() {
-    const songName = (this.props.song === '')
-          ? 'Time to say goodbye'
-          : this.props.song;
     return (
       <div style={styles.container}>
         <div style={styles.part}>
           <div style={styles.imgContainer}>
-            <img alt="" src="/img/0.png"/>
+            <img alt="" src={this.state.img || primary.img}/>
           </div>
         </div>
         <div style={styles.part}>
-          <div style={styles.songName}>{songName}</div>
+          <div style={styles.songName}>
+            {this.state.name || primary.name}
+          </div>
           <div style={styles.songInfo}>
-            <div>专辑：xxx</div>
-            <div>歌手：Lauren</div>
+            <div>专辑：{this.state.album || primary.album}</div>
+            <div>歌手：{this.state.singer || primary.singer}</div>
           </div>
           <div style={styles.lyr}>
+            {this.state.lrc || primary.lrc}
           </div>
         </div>
       </div>
@@ -81,9 +116,17 @@ const styles = {
 const mapStateToProps = (state, ownProps) => {
   return {
     song: (ownProps.type === 'random')
-      ? '随机音乐'
+      ? 'random'
       : state.presentSong
   };
 };
 
-export default connect()(SongCard);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setPresentSongSrc: (src) => {
+      dispatch(setPresentSongSrc(src));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SongCard);

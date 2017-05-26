@@ -12,6 +12,13 @@ const setPresentSong = (song) => {
   };
 };
 
+const setPresentSongSrc = (src) => {
+  return {
+    type: 'SET_PRESENT_SONG_SRC',
+    src
+  };
+};
+
 const setPage = (page) => {
   return {
     type: 'SET_PAGE',
@@ -29,6 +36,7 @@ const setSongSheet = (sheet) => {
 export {
   signin,
   setPresentSong,
+  setPresentSongSrc,
   setPage,
   setSongSheet,
 };
