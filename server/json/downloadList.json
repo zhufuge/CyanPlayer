@@ -1,0 +1,20 @@
+{
+  "songs": [
+    {
+      "id": "001",
+      "name": "TimeToSayGoodbye",
+      "singer": "Lauren",
+      "album": "lambda",
+      "time": "3:23",
+      "date": "2017-5-18"
+    },
+    {
+      "id": "002",
+      "name": "MyDestiny",
+      "singer": "LYn",
+      "album": "MyDestiny",
+      "time": "3:53",
+      "date": "2017-5-1"
+    }
+  ]
+}

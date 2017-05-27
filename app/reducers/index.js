@@ -9,7 +9,7 @@ const username = (state='登录', action) => {
   }
 };
 
-const presentSong = (state='', action) => {
+const presentSong = (state='001', action) => {
   switch (action.type) {
   case 'SET_PRESENT_SONG':
     return action.song;

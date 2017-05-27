@@ -25,12 +25,7 @@ class RankingLists extends React.Component {
     this.handleSingerClick = this.handleSingerClick.bind(this);
   }
   componentWillMount() {
-    fetch("/rank", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    }).then(
+    fetch("/rank", {method: "GET"}).then(
       res => (res.ok) ? res.json() : undefined,
       e => console.log("连接失败", e)
     ).then(json => {
@@ -54,16 +49,17 @@ class RankingLists extends React.Component {
     }
 
     return container.map((v, i) => {
+      const song = (v.id) ? v : df;
       return (
         <ListItem
-          key={type + '-' + i}
-          onClick={() => this.handleSongClick(v.name || df.name)}
+          key={v.id || type + '-' + i}
+          onClick={() => this.handleSongClick(song.id)}
           style={(i % 2 === 0) ? {} : styles.oBGC}>
           <span style={styles.mRC('#999')}>
             {'0' + (i + 1)}
           </span>
-          <span style={styles.mRC('#444')}>{v.name || df.name}</span>
-          <span style={styles.songSinger}>{v.singer || df.singer}</span>
+          <span style={styles.mRC('#444')}>{song.name}</span>
+          <span style={styles.songSinger}>{song.singer}</span>
         </ListItem>
       );
     });
@@ -86,7 +82,7 @@ class RankingLists extends React.Component {
       return (
         <ListItem
           key={'singer-' + i}
-          onClick={() => this.handleSingerClick(v.name || df.singer)}
+          onClick={() => this.handleSingerClick(v.id || df.id)}
           style={(i % 2 === 0) ? {} : styles.oBGC}>
           <span style={styles.mRC('#999')}>
             {'0' + (i + 1)}

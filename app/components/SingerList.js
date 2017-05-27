@@ -13,19 +13,12 @@ class SingerList extends React.Component {
     this.handleSingerClick = this.handleSingerClick.bind(this);
   }
   componentWillMount() {
-    fetch('/singers', {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    }).then(
+    fetch('/singers', {method: 'GET'}).then(
       res => (res.ok) ? res.json() : undefined,
       e => console.log("连接失败", e)
     ).then(json => {
       if (json) {
-        this.setState({
-          singers: json.singers,
-        });
+        this.setState({singers: json.singers});
       }
     });
   }
@@ -41,9 +34,9 @@ class SingerList extends React.Component {
     return container.map((v, i) => {
       return (
         <Card
-          key={'singer-list-' + i}
+          key={v.id || 'singer-list-' + i}
           value={v.name}
-          onClick={() => this.handleSingerClick(v.name || '未命名歌单')}
+          onClick={() => this.handleSingerClick(v.id || '默认歌单')}
           src={v.src}/>
       );
     });

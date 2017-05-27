@@ -1,0 +1,22 @@
+{
+  "name": "文明6背景音乐",
+  "img": "/img/2.jpg",
+  "creator": "zhufuge",
+  "description": "从水下生命的摇篮到宇宙的浩瀚星云...",
+  "songs": [
+    {
+      "id": "001",
+      "name": "TimeToSayGoodbye",
+      "singer": "Lauren",
+      "album": "lambda",
+      "time": "3:23"
+    },
+    {
+      "id": "002",
+      "name": "MyDestiny",
+      "singer": "LYn",
+      "album": "MyDestiny",
+      "time": "3:53"
+    }
+  ]
+}

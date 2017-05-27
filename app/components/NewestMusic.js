@@ -4,7 +4,8 @@ import {setPresentSong, setPage} from '../actions';
 
 import {List, ListItem} from 'material-ui/List';
 
-const song = {
+const df = {
+  id: '001',
   name: 'Time to say goodbye',
   singer: 'Lambda',
   time: '03:23'
@@ -20,19 +21,12 @@ class NewestMusic extends React.Component {
     this.handleSongClick = this.handleSongClick.bind(this);
   }
   componentWillMount() {
-    fetch('/newest', {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    }).then(
+    fetch('/newest', {method: 'GET'}).then(
       res => res.ok ? res.json() : undefined,
       e => console.log("连接失败", e)
     ).then(json => {
       if (json) {
-        this.setState({
-          songs: json.songs,
-        });
+        this.setState({songs: json.songs});
       }
     });
   }
@@ -46,22 +40,23 @@ class NewestMusic extends React.Component {
     }
 
     return data.map((v, i) => {
+      const song = (v.id) ? v : df;
       return (
         <ListItem
-          key={'newest-' + i}
-          onClick={() => this.handleSongClick(v.name || song.name)}
+          key={v.id || 'newest-' + i}
+          onClick={() => this.handleSongClick(song.id)}
           style={(i % 2 === 0) ? {} : {backgroundColor: '#f2f2f2'}}>
           <div style={styles.item}>
             <span style={styles.index}>
               {i < 9 ? '0' + (i + 1) : '' + (i + 1)}</span>
             <div style={styles.name}>
-              {v.name || song.name}
+              {song.name}
             </div>
             <span style={styles.singer}>
-              {v.singer || song.singer}
+              {song.singer}
             </span>
             <span style={styles.index}>
-              {v.time || song.time}
+              {song.time}
             </span>
           </div>
         </ListItem>

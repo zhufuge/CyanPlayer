@@ -27,12 +27,7 @@ class Recommend extends React.Component {
     this.handleSheetClick = this.handleSheetClick.bind(this);
   }
   componentWillMount() {
-    fetch("/recommend", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    }).then(
+    fetch("/recommend", {method: "GET"}).then(
       res => (res.ok) ? res.json() : undefined,
       e => console.log("连接失败", e)
     ).then(json => {
@@ -62,7 +57,7 @@ class Recommend extends React.Component {
         <Card
           key={'recommend-' + type + '-' + i}
           value={v.name}
-          onClick={() => this.handleSheetClick(v.name || '未命名歌单')}
+          onClick={() => this.handleSheetClick(v.id || '默认歌单')}
           src={v.src}/>
       );
     });
@@ -165,7 +160,7 @@ const styles = {
   list: {
     width: 396,
     height: 240,
-    borderColor: '#ccc',
+    borderColor: '#eee',
     borderStyle: 'solid',
     borderWidth: 1,
   },

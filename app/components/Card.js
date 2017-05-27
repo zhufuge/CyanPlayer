@@ -42,7 +42,7 @@ const styles = {
     width: 176,
     height: 176,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#eee',
     borderStyle: 'solid',
   },
   p: {

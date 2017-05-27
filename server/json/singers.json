@@ -1,0 +1,6 @@
+{
+  "singers": [
+    {"id": "001", "name": "Lauren", "src": "/img/0.png"},
+    {"id": "002", "name": "LYn", "src": "/img/0.png"}
+  ]
+}

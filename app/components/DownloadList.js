@@ -41,7 +41,7 @@ class DownloadList extends React.Component {
 
   header() {
     const data = ['序号', '音乐标题', '歌手', '专辑', '时长', '下载时间'];
-    return data.map((v) => {
+    return data.map(v => {
       return <TableHeaderColumn key={v}>{v}</TableHeaderColumn>;
     });
   }
@@ -53,12 +53,12 @@ class DownloadList extends React.Component {
   }
 
   tableRow() {
-    const data = this.state.songs;
-    return data.map((v, i) => {
-      const value = [i + 1, v, '---', '---', '---', '---'];
+    const songs = this.state.songs;
+    return songs.map((v, i) => {
+      const song = [i + 1, v.name, v.singer, v.album, v.time, v.date];
       return (
     		<TableRow key={v.name}>
-          {this.rowColumns(value)}
+          {this.rowColumns(song)}
     		</TableRow>
       );
     });

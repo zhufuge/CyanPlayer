@@ -1,0 +1,18 @@
+{
+  "top": [
+    {"id": "001", "name": "TimeToSayGoodbye", "singer": "Lauren"},
+    {"id": "002", "name": "MyDestiny", "singer": "LYn"}
+  ],
+  "newest": [
+    {"id": "001", "name": "TimeToSayGoodbye", "singer": "Lauren"},
+    {"id": "002", "name": "MyDestiny", "singer": "LYn"}
+  ],
+  "hot": [
+    {"id": "001", "name": "TimeToSayGoodbye", "singer": "Lauren"},
+    {"id": "002", "name": "MyDestiny", "singer": "LYn"}
+  ],
+  "singer": [
+    {"id": "001", "name": "Lauren"},
+    {"id": "002", "name": "LYn"}
+  ]
+}

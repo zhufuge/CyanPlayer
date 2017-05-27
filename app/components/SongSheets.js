@@ -19,19 +19,12 @@ class SongSheets extends React.Component {
     this.handleSheetClick = this.handleSheetClick.bind(this);
   }
   componentWillMount() {
-    fetch('/songSheets', {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    }).then(
+    fetch('/songSheets', {method: 'GET'}).then(
       res => (res.ok) ? res.json() : undefined,
       e => console.log("连接失败", e)
     ).then(json => {
       if (json) {
-        this.setState({
-          songSheets: json.songSheets,
-        });
+        this.setState({songSheets: json.songSheets});
       }
     });
   }
@@ -47,9 +40,9 @@ class SongSheets extends React.Component {
     return container.map((v, i) => {
       return (
         <Card
-          key={'songSheets-' + i}
+          key={v.id || 'songSheets-' + i}
           value={v.name}
-          onClick={() => this.handleSheetClick(v.name || '未命名歌单')}
+          onClick={() => this.handleSheetClick(v.id || '默认歌单')}
           src={v.src}/>
       );
     });
