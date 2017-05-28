@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {setPresentSong, setPage} from '../actions';
 
 import {
   Table,
@@ -26,6 +27,8 @@ class SongSheet extends React.Component {
     this.state = {
       songs: []
     };
+
+    this.handleRowSelected = this.handleRowSelected.bind(this);
   }
 
   componentWillMount() {
@@ -44,6 +47,7 @@ class SongSheet extends React.Component {
           name: json.name,
           img: json.img,
           creator: json.creator,
+          date: json.date,
           description: json.description,
           songs: json.songs
         });
@@ -76,34 +80,42 @@ class SongSheet extends React.Component {
     });
   }
 
+  handleRowSelected(selected) {
+    const index = parseInt(selected.toString());
+    this.props.setPresentSong(this.state.songs[index].id);
+    this.props.setPage('2');
+  }
+
   render() {
+    const sheet = (this.state.name) ? this.state : df;
     return (
       <div style={styles.container}>
         <div style={styles.info}>
           <div style={styles.imgContainer}>
-            <img alt="" src={this.state.img || df.img}/>
+            <img alt="" src={sheet.img}/>
           </div>
           <div style={styles.descriptionBox}>
-            <div style={{fontSize: 26}}>{this.state.name || df.name}</div>
+            <div style={{fontSize: 26}}>{sheet.name}</div>
             <div style={styles.creator}>
-              {this.state.creator || df.creator}&nbsp;&nbsp;&nbsp;
-              {this.state.date || df.date}创建
+              {sheet.creator}&nbsp;&nbsp;&nbsp;
+              {sheet.date}创建
             </div>
             <div style={styles.description}>
-              简介：{this.state.description || df.description}
+              简介：{sheet.description}
             </div>
           </div>
         </div>
         <div style={styles.songList}>
           <Subheader>歌曲列表</Subheader>
           <Divider />
-					<Table>
+					<Table onRowSelection={this.handleRowSelected}>
     				<TableHeader
               displaySelectAll={false}
             	adjustForCheckbox={false}>
     				  <TableRow>{this.header()}</TableRow>
     				</TableHeader>
     				<TableBody
+              showRowHover={true}
               displayRowCheckbox={false}>
               {this.tableRow()}
     				</TableBody>
@@ -164,4 +176,15 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(SongSheet);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setPresentSong: (song) => {
+      dispatch(setPresentSong(song));
+    },
+    setPage: (page) => {
+      dispatch(setPage(page));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SongSheet);

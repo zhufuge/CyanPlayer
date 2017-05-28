@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {setPresentSong, setPage} from '../actions';
 
 import {
   Table,
@@ -18,6 +19,8 @@ class DownloadList extends React.Component {
     this.state =  {
       songs: []
     };
+
+    this.handleRowSelected = this.handleRowSelected.bind(this);
   }
 
   componentWillMount() {
@@ -57,11 +60,17 @@ class DownloadList extends React.Component {
     return songs.map((v, i) => {
       const song = [i + 1, v.name, v.singer, v.album, v.time, v.date];
       return (
-    		<TableRow key={v.name}>
+    		<TableRow key={v.id}>
           {this.rowColumns(song)}
     		</TableRow>
       );
     });
+  }
+
+  handleRowSelected(selected) {
+    const index = parseInt(selected.toString());
+    this.props.setPresentSong(this.state.songs[index].id);
+    this.props.setPage('2');
   }
 
 	render() {
@@ -70,13 +79,14 @@ class DownloadList extends React.Component {
 				<div style={styles.downloadList}>
 					<Subheader style={{fontSize: 20}}>已下载的单曲</Subheader>
 					<Divider />
-					<Table>
+					<Table onRowSelection={this.handleRowSelected}>
     				<TableHeader
               displaySelectAll={false}
             	adjustForCheckbox={false}>
     				  <TableRow>{this.header()}</TableRow>
     				</TableHeader>
     				<TableBody
+              showRowHover={true}
               displayRowCheckbox={false}>
               {this.tableRow()}
     				</TableBody>
@@ -105,4 +115,15 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(DownloadList);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setPresentSong: (song) => {
+      dispatch(setPresentSong(song));
+    },
+    setPage: (page) => {
+      dispatch(setPage(page));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DownloadList);

@@ -8,13 +8,13 @@ const {
 } = require('./helper');
 
 function sendFile(res, file) {
-  fs.readFile(file, (err, data) => {
+  fs.stat(file, (err, stats) => {
     if (err) {
       res.writeHead(404);
       res.end();
     } else {
-      res.writeHead(200, {'Content-Type': contentType(file)});
-      res.end(data);
+      res.writeHead(200, {'Content-Type': contentType(path.extname(file))});
+      fs.createReadStream(file).pipe(res);
     }
   });
 }

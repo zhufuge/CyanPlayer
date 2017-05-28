@@ -2,6 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {setPresentSongSrc} from '../actions';
 
+import RaisedButton from 'material-ui/RaisedButton';
+import Favorite from 'material-ui/svg-icons/action/favorite';
+import FileDownload from 'material-ui/svg-icons/file/file-download';
+import CreateNewFolder from 'material-ui/svg-icons/file/create-new-folder';
+
 const primary = {
   name: 'Time to say goodbye',
   album: '...',
@@ -10,6 +15,11 @@ const primary = {
   img: '/img/0.png',
   audio: '/music/TimeToSayGoodbye.mp3',
 };
+
+function basefile(filepath) {
+  const index = filepath.lastIndexOf('/');
+  return (index === -1) ? filepath : filepath.slice(index + 1);
+}
 
 class SongCard extends React.Component {
   constructor(props) {
@@ -43,23 +53,43 @@ class SongCard extends React.Component {
   }
 
   render() {
+    const fileDownload = <FileDownload />,
+          favorite = <Favorite />,
+          createNewFolder = <CreateNewFolder />;
+    const song = (this.state.name) ? this.state : primary;
     return (
       <div style={styles.container}>
-        <div style={styles.part}>
+        <div style={styles.left}>
           <div style={styles.imgContainer}>
             <img alt="" src={this.state.img || primary.img}/>
           </div>
+          <div style={styles.operation}>
+            <RaisedButton
+              label="喜欢"
+              primary={true}
+              icon={favorite}/>
+            <RaisedButton
+              label="收藏"
+              primary={true}
+              icon={createNewFolder}/>
+            <RaisedButton
+              href={song.audio}
+              download={basefile(song.audio)}
+              label="下载"
+              primary={true}
+              icon={fileDownload}/>
+          </div>
         </div>
-        <div style={styles.part}>
+        <div style={styles.right}>
           <div style={styles.songName}>
-            {this.state.name || primary.name}
+            {song.name}
           </div>
           <div style={styles.songInfo}>
-            <div>专辑：{this.state.album || primary.album}</div>
-            <div>歌手：{this.state.singer || primary.singer}</div>
+            <div>专辑：{song.album}</div>
+            <div>歌手：{song.singer}</div>
           </div>
           <div style={styles.lyr}>
-            {this.state.lrc || primary.lrc}
+            {song.lrc}
           </div>
         </div>
       </div>
@@ -73,23 +103,35 @@ const styles = {
     height: 600,
     display: 'flex',
   },
-  part: {
+  left: {
     display: 'flex',
     flexDirection: 'column',
     margin: 15,
-    width: 370,
+    width: 320,
+  },
+  right: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 15,
+    width: 420,
   },
   imgContainer: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 320,
+    width: 300,
     height: 300,
     overflow: 'hidden',
-    marginTop: 50,
-    marginLeft: 30,
+    marginTop: 90,
+    marginBottom: 20,
+    marginLeft: 10,
     border: '1px solid #666',
     borderRadius: 6,
+  },
+  operation: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    marginBottom: 20,
   },
   songName: {
     fontSize: 26,

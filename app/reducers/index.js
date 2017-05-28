@@ -27,7 +27,7 @@ const presentSongSrc = (state='/music/TimeToSayGoodbye.mp3', action) => {
   }
 };
 
-const page = (state='0', action) => {
+const page = (state='2', action) => {
   switch (action.type) {
   case 'SET_PAGE':
     return action.page;
