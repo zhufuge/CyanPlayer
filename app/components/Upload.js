@@ -9,18 +9,56 @@ class Upload extends React.Component {
     super(props);
     this.state = {
       src: '',
+      filename: '上传歌曲',
     };
+
+    this.fileSelected = this.fileSelected.bind(this);
+    this.imgSelected = this.imgSelected.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  imgSelected() {
+    const file = this.imgInput.files[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        if (reader.error) {
+          console.log('加载失败');
+        } else {
+          this.setState({src: event.target.result});
+        }
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+  fileSelected() {
+    const file = this.fileInput.files[0];
+    if (file) {
+      this.setState({filename: file.name});
+    }
+  }
+
+  handleSubmit() {
+    alert('上传成功');
   }
 
   render() {
     const img = (this.state.src === '')
           ? <Add style={styles.add} color="white"/>
-          : <img alt="" src="/img/0.png"/>;
+          : <img alt="" src={this.state.src}/>;
     return (
       <div style={styles.container}>
         <div style={styles.left}>
           <div style={styles.imgContainer}>
             {img}
+            <input
+              ref={ref => this.imgInput = ref}
+              style={styles.imgInput}
+              onChange={this.imgSelected}
+              accept="image/*"
+              type="file" />
           </div>
         </div>
         <div style={styles.right}>
@@ -34,15 +72,21 @@ class Upload extends React.Component {
             hintText=""
             floatingLabelText="歌手名"/>
           <RaisedButton
-            label="上传歌曲"
+            label={this.state.filename}
             labelPosition="before"
             style={styles.upload}
             containerElement="label">
-            <input type="file" style={styles.exampleImageInput} />
+            <input
+              ref={(ref) => this.fileInput = ref}
+              type="file"
+              style={styles.fileInput}
+              accept="audio/*"
+              onChange={this.fileSelected}/>
           </RaisedButton>
           <RaisedButton
             style={styles.submit}
             label="提交"
+            onTouchTap={this.handleSubmit}
             primary={true} />
         </div>
       </div>
@@ -73,13 +117,20 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 320,
+    width: 300,
     height: 300,
     overflow: 'hidden',
     marginLeft: 30,
     border: '1px solid #666',
     borderRadius: 6,
     backgroundColor: '#eee',
+  },
+  imgInput: {
+    position: 'absolute',
+    cursor: 'pointer',
+    width: 300,
+    height: 300,
+    opacity: 0,
   },
   add: {
     height: 150,
@@ -88,7 +139,7 @@ const styles = {
   upload: {
     marginTop: 20,
   },
-  exampleImageInput: {
+  fileInput: {
     cursor: 'pointer',
     position: 'absolute',
     top: 0,

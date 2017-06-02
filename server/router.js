@@ -27,7 +27,7 @@ function sendSong(req, res) {
         name: 'MyDestiny',
         album: '来自星星的你',
         singer: 'LYn',
-        lrc: 'my destiny',
+        lrc: '/lrc/qsx.lrc',
         img: 'img/2.jpg',
         audio: 'music/MyDestiny.mp3'
       };
@@ -36,7 +36,7 @@ function sendSong(req, res) {
         name: 'TimeToSayGoodbye',
         album: '...',
         singer: 'Lauren',
-        lrc: 'time to say goodbye',
+        lrc: '/lrc/qsx.lrc',
         img: 'img/0.png',
         audio: 'music/TimeToSayGoodbye.mp3'
       };

@@ -24,13 +24,10 @@ class DownloadList extends React.Component {
   }
 
   componentWillMount() {
-    fetch('/downloadList', {
-      method: "POST",
-      header: {
-        "Content-Type": 'application/x-www-form-urlencoded'
-      },
-      body: `username=${this.props.username}`
-    }).then(
+    fetch(
+      `/downloadList?username=${this.props.username}`,
+      {method: "GET"}
+    ).then(
       res => (res.ok) ? res.json() : undefined,
       e => console.log('连接失败', e)
     ).then(json => {

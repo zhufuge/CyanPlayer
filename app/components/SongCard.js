@@ -43,13 +43,40 @@ class SongCard extends React.Component {
           name: json.name,
           album: json.album,
           singer: json.singer,
-          lrc: json.lrc,
           img: json.img,
           audio: json.audio,
         });
         this.props.setPresentSongSrc(json.audio);
+
+        fetch(json.lrc, {method: 'GET'}).then(
+          res => res.ok ? res.text() : '',
+          e => console.log('连接失败' + e)
+        ).then(text => {
+          this.setState({
+            lrc: text,
+          });
+        });
       }
     });
+  }
+
+  displayLrc(lrc) {
+    const e = /\[..\:..\...\](.*)\r\n/g;
+    const container = [];
+    let match;
+    while ((match = e.exec(lrc)) !== null) {
+      container.push(match[1]);
+    }
+
+    const data = (container.length === 0)
+          ? (<p style={styles.lrcp}>lrc</p>)
+          : (container.map(v => <p key={v} style={styles.lrcp}>{v}</p>));
+
+    return (
+        <div style={styles.lrc}>
+          {data}
+        </div>
+    );
   }
 
   render() {
@@ -88,9 +115,7 @@ class SongCard extends React.Component {
             <div>专辑：{song.album}</div>
             <div>歌手：{song.singer}</div>
           </div>
-          <div style={styles.lyr}>
-            {song.lrc}
-          </div>
+          {this.displayLrc(song.lrc)}
         </div>
       </div>
     );
@@ -146,13 +171,16 @@ const styles = {
     color: '#666',
     fontSize: 14,
   },
-  lyr: {
+  lrc: {
     width: '100%',
     height: 420,
     backgroundColor: '#f0f0f0',
     overflowY: 'scroll',
     overflowX: 'hidden',
-  }
+  },
+  lrcp: {
+    textAlign: 'center',
+  },
 };
 
 const mapStateToProps = (state, ownProps) => {

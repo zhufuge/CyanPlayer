@@ -8,8 +8,9 @@ class Player extends React.Component {
       <div style={styles.container}>
         <div style={styles.content}>
           <audio
-            src={src}
             controls="controls"
+            autoplay="autoplay"
+            src={src}
             style={styles.audio}
             ></audio>
         </div>
@@ -36,7 +37,6 @@ const styles = {
   },
   audio: {
     width: 1000,
-    backgroundColor: 'skyblue',
   }
 };
 

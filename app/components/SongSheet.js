@@ -32,13 +32,10 @@ class SongSheet extends React.Component {
   }
 
   componentWillMount() {
-    fetch('/songSheet', {
-      method: 'POST',
-      header: {
-        'Content-Type': 'application/x-www-from-urlencoded'
-      },
-      body: `id=${this.props.sheet}&username=${this.props.username}`
-    }).then(
+    fetch(
+      `/songSheet?id=${this.props.sheet}&username=${this.props.username}`,
+      {method: 'GET'}
+    ).then(
       res => res.ok ? res.json() : undefined,
       e => console.log('连接失败', e)
     ).then(json => {
@@ -170,7 +167,7 @@ const styles = {
 const mapStateToProps = (state, ownProps) => {
   return {
     sheet: (ownProps.type === 'mine')
-      ? 'mine'
+      ? '0'
       : state.songSheet,
     username: state.username
   };
