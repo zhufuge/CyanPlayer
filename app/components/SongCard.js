@@ -186,7 +186,7 @@ const styles = {
 const mapStateToProps = (state, ownProps) => {
   return {
     song: (ownProps.type === 'random')
-      ? 'random'
+      ? '0'
       : state.presentSong
   };
 };

@@ -17,8 +17,8 @@ class AppRouter extends React.Component {
       <Provider store={store}>
         <Router>
           <div>
-            <Route exact path="/Emusic" component={Home}/>
-            <Route path="/Emusic/sign" component={Sign}/>
+            <Route exact path="/" component={Home}/>
+            <Route path="/sign" component={Sign}/>
           </div>
         </Router>
       </Provider>

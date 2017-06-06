@@ -1,5 +1,4 @@
-const url = require('url'),
-      fs = require('fs'),
+const fs = require('fs'),
       path = require('path');
 
 const {
@@ -7,16 +6,16 @@ const {
   readPostBody,
 } = require('./helper');
 
-function sendFile(res, file) {
-  fs.stat(file, (err, stats) => {
-    if (err) {
-      res.writeHead(404);
-      res.end();
-    } else {
-      res.writeHead(200, {'Content-Type': contentType(path.extname(file))});
-      fs.createReadStream(file).pipe(res);
-    }
-  });
+async function sendFile(ctx, file) {
+  try {
+    const data = fs.readFileSync(file);
+    ctx.status = 200;
+    ctx.set('Content-Type', contentType(path.extname(file)));
+    ctx.body = data;
+  } catch(err) {
+    ctx.status = 404;
+    console.log(err);
+  }
 }
 
 function sendSong(req, res) {
@@ -47,17 +46,20 @@ function sendSong(req, res) {
   });
 }
 
-function handleSign(req, res) {
-  readPostBody(req, (data) => {
-    if (data.username !== "321" &&
-        data.password !== "321" &&
-        data.isSignin === "true") {
-      res.writeHead(200);
-    } else {
-      res.writeHead(401);
-    }
-    res.end();
-  });
+async function handleSign(ctx) {
+  await readPostBody(ctx.req)
+    .then((data) => {
+      console.log(data);
+      if (data.username !== "321" &&
+          data.password !== "321" &&
+          data.isSignin === "true") {
+        ctx.status = 200;
+        console.log('200');
+      } else {
+        ctx.status = 401;
+        console.log('401');
+      }
+    });
 }
 
 function sendSongSheet(req, res) {
@@ -80,33 +82,31 @@ function sendDownloadList(req, res) {
   });
 }
 
-function router(req, res) {
-  const pathname = url.parse(req.url).pathname;
-  console.log(pathname);
-
-  switch(pathname) {
-  case '/Asign':
-    handleSign(req, res);
-    break;
-  case '/recommend':
-  case '/songSheets':
-  case '/rank':
-  case '/singers':
-  case '/newest':
-    sendFile(res, path.join('./server/json', pathname + '.json'));
-    break;
-  case '/song':
-    sendSong(req, res);
-    break;
-  case '/songSheet':
-    sendSongSheet(req, res);
-    break;
-  case '/downloadList':
-    sendDownloadList(req, res);
-    break;
+function router(ctx) {
+  const url = ctx.url;
+  switch(url) {
+  // case '/Asign':
+  //   handleSign(ctx);
+  //   break;
+  // case '/recommend':
+  // case '/songSheets':
+  // case '/rank':
+  // case '/singers':
+  // case '/newest':
+  //   sendFile(ctx, path.join('./server/json', + '.json'));
+  //   break;
+  // case '/song':
+  //   sendSong(req, res);
+  //   break;
+  // case '/songSheet':
+  //   sendSongSheet(req, res);
+  //   break;
+  // case '/downloadList':
+  //   sendDownloadList(req, res);
+  //   break;
   default:
-    sendFile(res, path.join(
-      './public', (pathname === '/Emusic') ? '/index.html' : pathname
+    sendFile(ctx, path.join(
+      './public', (url === '/') ? '/index.html' : url
     ));
   }
 }

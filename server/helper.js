@@ -28,14 +28,16 @@ function keyValueParse(str) {
   return result;
 }
 
-function readPostBody(req, callback) {
-  let data = "";
-  req.on('data', (thunk) => {
-    data += thunk;
-  });
+function readPostBody(req) {
+  return new Promise(resolve => {
+    let data = "";
+    req.on('data', (thunk) => {
+      data += thunk;
+    });
 
-  req.on('end', () => {
-    callback(keyValueParse(data));
+    req.on('end', () => {
+      resolve(keyValueParse(data));
+    });
   });
 }
 
