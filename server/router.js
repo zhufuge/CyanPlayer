@@ -6,7 +6,24 @@ const {
   readPostBody,
 } = require('./helper');
 
-async function sendFile(ctx, file) {
+function readFile(file) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(file, (err, data) => {
+      if (err) reject(err);
+      resolve(data);
+    });
+  });
+}
+
+function sendFile(ctx, file) {
+  // readFile(file).then(data => {
+  //     ctx.status = 200;
+  //     ctx.set('Content-Type', contentType(path.extname(file)));
+  //     ctx.body = data;
+  // }).catch(err => {
+  //   ctx.status = 404;
+  //   console.log(err);
+  // });
   try {
     const data = fs.readFileSync(file);
     ctx.status = 200;
