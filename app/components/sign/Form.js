@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {signin} from '../../actions';
+import Ajax from '../../common/Ajax';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import {teal500} from 'material-ui/styles/colors';
@@ -39,25 +40,15 @@ class Form extends React.Component {
   }
 
   handleTouchTap(event) {
-    const username = this.state.username,
-          password = this.state.password,
-          isSignin = this.state.isSignin;
-
-    fetch("/Asign", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `username=${username}&password=${password}&isSignin=${isSignin}`
-    }).then((res) => {
+    const state = this.state,
+          username = state.username;
+    Ajax('sign')(username, state.password, state.isSignin).then((res) => {
       if (res.ok) {
         this.props.setUsername(username);
         window.history.back(-1);
       } else if (res.status == 401) {
         this.setState({warning: true});
       }
-    }, (e) => {
-      console.log("连接失败！");
     });
   }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {setPresentSongSrc} from '../actions';
+import Ajax from '../common/Ajax';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import Favorite from 'material-ui/svg-icons/action/favorite';
@@ -28,16 +29,7 @@ class SongCard extends React.Component {
   }
 
   componentWillMount() {
-    fetch('/song', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `id=${this.props.song}`
-    }).then(
-      res => res.ok ? res.json() : undefined,
-      e => console.log('连接失败' + e)
-    ).then(json => {
+    Ajax('song')(this.props.song).then(json => {
       if (json) {
         this.setState({
           name: json.name,
@@ -47,17 +39,15 @@ class SongCard extends React.Component {
           audio: json.audio,
         });
         this.props.setPresentSongSrc(json.audio);
-
-        fetch(json.lrc, {method: 'GET'}).then(
-          res => res.ok ? res.text() : '',
-          e => console.log('连接失败' + e)
-        ).then(text => {
-          this.setState({
-            lrc: text,
-          });
-        });
+        return Ajax('lrc')(json.lrc);
+      } else {
+        return '';
       }
-    });
+    }).then(text => {
+      this.setState({
+        lrc: text,
+      });
+    });;
   }
 
   displayLrc(lrc) {

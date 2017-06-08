@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {setPresentSong, setPage, setSongSheet} from '../actions';
+import Ajax from '../common/Ajax';
 
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
@@ -25,10 +26,7 @@ class RankingLists extends React.Component {
     this.handleSingerClick = this.handleSingerClick.bind(this);
   }
   componentWillMount() {
-    fetch("/rank", {method: "GET"}).then(
-      res => (res.ok) ? res.json() : undefined,
-      e => console.log("连接失败", e)
-    ).then(json => {
+    Ajax('rank')().then(json => {
       if (json) {
         this.setState({
           top: json.top,

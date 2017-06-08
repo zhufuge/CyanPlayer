@@ -9,7 +9,6 @@ class Player extends React.Component {
         <div style={styles.content}>
           <audio
             controls="controls"
-            autoplay="autoplay"
             src={src}
             style={styles.audio}
             ></audio>

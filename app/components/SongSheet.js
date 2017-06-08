@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {setPresentSong, setPage} from '../actions';
+import Ajax from '../common/Ajax';
 
 import {
   Table,
@@ -32,13 +33,7 @@ class SongSheet extends React.Component {
   }
 
   componentWillMount() {
-    fetch(
-      `/songSheet?id=${this.props.sheet}&username=${this.props.username}`,
-      {method: 'GET'}
-    ).then(
-      res => res.ok ? res.json() : undefined,
-      e => console.log('连接失败', e)
-    ).then(json => {
+    Ajax('songSheet')(this.props.sheet, this.props.username).then(json => {
       if (json) {
         this.setState({
           name: json.name,

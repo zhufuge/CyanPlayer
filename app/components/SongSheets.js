@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {setPage, setSongSheet} from '../actions';
+import Ajax from '../common/Ajax';
 
 import Card from './Card';
 import Divider from 'material-ui/Divider';
@@ -19,10 +20,7 @@ class SongSheets extends React.Component {
     this.handleSheetClick = this.handleSheetClick.bind(this);
   }
   componentWillMount() {
-    fetch('/songSheets', {method: 'GET'}).then(
-      res => (res.ok) ? res.json() : undefined,
-      e => console.log("连接失败", e)
-    ).then(json => {
+    Ajax('songSheets')().then(json => {
       if (json) {
         this.setState({songSheets: json.songSheets});
       }

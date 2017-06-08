@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {setPage, setSongSheet} from '../actions';
+import Ajax from '../common/Ajax';
 
 import Card from './Card';
 
@@ -13,10 +14,7 @@ class SingerList extends React.Component {
     this.handleSingerClick = this.handleSingerClick.bind(this);
   }
   componentWillMount() {
-    fetch('/singers', {method: 'GET'}).then(
-      res => (res.ok) ? res.json() : undefined,
-      e => console.log("连接失败", e)
-    ).then(json => {
+    Ajax('singers')().then(json => {
       if (json) {
         this.setState({singers: json.singers});
       }

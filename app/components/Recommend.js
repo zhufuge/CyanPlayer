@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {setPresentSong, setPage, setSongSheet} from '../actions';
+import Ajax from '../common/Ajax';
 
 import Divider from 'material-ui/Divider';
 import Subheader from './Subheader.js';
@@ -27,10 +28,7 @@ class Recommend extends React.Component {
     this.handleSheetClick = this.handleSheetClick.bind(this);
   }
   componentWillMount() {
-    fetch("/recommend", {method: "GET"}).then(
-      res => (res.ok) ? res.json() : undefined,
-      e => console.log("连接失败", e)
-    ).then(json => {
+    Ajax('recommend')().then(json => {
       if (json) {
         this.setState({
           songSheets: json.songSheets,
