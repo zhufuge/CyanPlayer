@@ -1,42 +1,32 @@
 const fs = require('fs'),
-      path = require('path');
+      path = require('path'),
+      url = require('url'),
+      querystring = require('querystring');
 
 const {
   contentType,
   readPostBody,
+  readFile,
 } = require('./helper');
 
-function readFile(file) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(file, (err, data) => {
-      if (err) reject(err);
-      resolve(data);
-    });
-  });
+function handleSign(ctx) {
+  return readPostBody(ctx.req).then(data => {
+    const {username, password, isSignin} = querystring.parse(data);
+    console.log(username, password, isSignin);
+    if (username !== '321' &&
+        password !== '321' &&
+        isSignin === 'true') {
+      ctx.status = 200;
+      console.log('200');
+    } else {
+      ctx.status = 401;
+      console.log('401');
+    }
+  }).catch(err => console.log(err));
 }
 
-function sendFile(ctx, file) {
-  // readFile(file).then(data => {
-  //     ctx.status = 200;
-  //     ctx.set('Content-Type', contentType(path.extname(file)));
-  //     ctx.body = data;
-  // }).catch(err => {
-  //   ctx.status = 404;
-  //   console.log(err);
-  // });
-  try {
-    const data = fs.readFileSync(file);
-    ctx.status = 200;
-    ctx.set('Content-Type', contentType(path.extname(file)));
-    ctx.body = data;
-  } catch(err) {
-    ctx.status = 404;
-    console.log(err);
-  }
-}
-
-function sendSong(req, res) {
-  readPostBody(req, (data) => {
+function sendSong(ctx) {
+  return readPostBody(ctx.req).then(data => {
     let json = {};
     if (data.id === '002') {
       json = {
@@ -58,74 +48,79 @@ function sendSong(req, res) {
       };
     }
 
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.end(JSON.stringify(json));
+    ctx.status = 200;
+    ctx.set('Content-Type', 'application/json');
+    ctx.body = JSON.stringify(json);
+  }).catch(err => console.log(err));
+}
+
+function sendSongSheet(ctx) {
+  return readPostBody(ctx.req).then(body => {
+    console.log(`body: ${body}`);
+    return readFile(path.join('./server/json/songSheet.json'));
+  }).then(data => {
+    ctx.status = 200;
+    ctx.set('Content-Type', 'application/json');
+    ctx.body = data;
+  }).catch(err => console.log(err));
+}
+
+function sendDownloadList(ctx) {
+  return readPostBody(ctx.req).then(body => {
+    console.log(`body: ${body}`);
+    return fs.readFile(path.join('./server/json/downloadList.json'));
+  }).then(data => {
+    ctx.status = 200;
+    ctx.set('Content-Type', 'application/json');
+    ctx.body = data;
+  }).catch(err => console.log(err));
+}
+
+function sendFile(ctx, file) {
+  return readFile(file).then(data => {
+    ctx.status = 200;
+    ctx.set('Content-Type', contentType(path.extname(file)));
+    ctx.body = data;
+  }).catch(err => {
+    ctx.status = 404;
+    console.log(err);
   });
 }
 
-async function handleSign(ctx) {
-  await readPostBody(ctx.req)
-    .then((data) => {
-      console.log(data);
-      if (data.username !== "321" &&
-          data.password !== "321" &&
-          data.isSignin === "true") {
-        ctx.status = 200;
-        console.log('200');
-      } else {
-        ctx.status = 401;
-        console.log('401');
-      }
-    });
-}
-
-function sendSongSheet(req, res) {
-  readPostBody(req, data => {
-    console.log(data.id);
-    fs.readFile(path.join('./server/json/songSheet.json'), (err, d) => {
-      res.writeHead(200, {'Content-Type': 'application/json'});
-      res.end(d);
-    });
-  });
-}
-
-function sendDownloadList(req, res) {
-  readPostBody(req, data => {
-    console.log(data.username);
-    fs.readFile(path.join('./server/json/downloadList.json'), (err, d) => {
-      res.writeHead(200, {'Content-Type': 'application/json'});
-      res.end(d);
-    });
-  });
-}
-
-function router(ctx) {
-  const url = ctx.url;
-  switch(url) {
-  // case '/Asign':
-  //   handleSign(ctx);
-  //   break;
-  // case '/recommend':
-  // case '/songSheets':
-  // case '/rank':
-  // case '/singers':
-  // case '/newest':
-  //   sendFile(ctx, path.join('./server/json', + '.json'));
-  //   break;
-  // case '/song':
-  //   sendSong(req, res);
-  //   break;
-  // case '/songSheet':
-  //   sendSongSheet(req, res);
-  //   break;
-  // case '/downloadList':
-  //   sendDownloadList(req, res);
-  //   break;
+async function router(ctx, next) {
+  const ctxUrl = url.parse(ctx.url),
+        pathname = ctxUrl.pathname;
+  switch(pathname) {
+  case '/POST/sign':
+    await handleSign(ctx);
+    break;
+  case '/GET/song':
+    await sendSong(ctx);
+    break;
+  case '/GET/songSheet':
+    await sendSongSheet(ctx);
+    break;
+  case '/GET/downloadList':
+    await sendDownloadList(ctx);
+    break;
+  case '/GET/recommend':
+  case '/GET/songSheets':
+  case '/GET/rank':
+  case '/GET/singers':
+  case '/GET/newest':
+    await sendFile(ctx, path.join(
+      __dirname, './json/',
+      path.basename(pathname) + '.json'
+    ));
+    break;
   default:
-    sendFile(ctx, path.join(
-      './public', (url === '/') ? '/index.html' : url
+    await sendFile(ctx, path.join(
+      './public', (pathname === '/')
+        ? '/index.html'
+        : pathname
     ));
   }
+  await next();
 }
 
 module.exports = router;

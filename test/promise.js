@@ -66,7 +66,6 @@ function test3() {
 
 function test4() {
   // .catch()
-
   var p1 = new Promise((resolve, reject) => {
     resolve('ok');
     // throw 之后的都不会执行
@@ -104,8 +103,24 @@ function readFile(file) {
   });
 }
 
-readFile('./RegExp.js').then(data => {
-  console.log(data);
-}).catch(err => {
-  console.log(err);
-});
+function test6() {
+  // 读文件
+  readFile('./promise.js').then(data => {
+    console.log(data);
+  }).catch(err => {
+    console.log(err);
+  });
+}
+
+function test7() {
+  readFile('./promise.js').then(data => {
+    console.log('1');
+    console.log(data);
+    return readFile('./promise.js');
+  }).then(data => {
+    console.log('2');
+    console.log(data);
+  });
+}
+
+test7();

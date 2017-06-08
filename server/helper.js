@@ -1,4 +1,5 @@
-const path  = require('path');
+const fs = require('fs'),
+      path  = require('path');
 
 function contentType(fileType) {
   const ContentType = {
@@ -14,20 +15,6 @@ function contentType(fileType) {
   return (type === void 0) ? 'text/plain' : type;
 }
 
-function keyValueParse(str) {
-  let s = str;
-  const result = {};
-  const regexp = /^([^=]+)=([^\&]+)(?:&*)(.*)/;
-  while (s !== '') {
-    let match = regexp.exec(s);
-    if (!match) throw SyntaxError(s + ' is illegal.');
-    result[match[1]] = match[2];
-    s = match[3];
-  }
-
-  return result;
-}
-
 function readPostBody(req) {
   return new Promise(resolve => {
     let data = "";
@@ -36,13 +23,23 @@ function readPostBody(req) {
     });
 
     req.on('end', () => {
-      resolve(keyValueParse(data));
+      resolve(data);
     });
   });
 }
 
 
+function readFile(file) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(file, (err, data) => {
+      if (err) reject(err);
+      resolve(data);
+    });
+  });
+}
+
 module.exports = {
   contentType,
   readPostBody,
+  readFile,
 };
