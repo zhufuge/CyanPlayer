@@ -26,14 +26,14 @@ function handleSign(ctx) {
 }
 
 function sendSong(ctx) {
-  return readPostBody(ctx.req).then(data => {
+  return Promise.resolve().then(() => {
     let json = {};
-    if (data.id === '002') {
+    if (querystring.parse(url.parse(ctx.url).query).id === '002') {
       json = {
         name: 'MyDestiny',
         album: '来自星星的你',
         singer: 'LYn',
-        lrc: '/lrc/qsx.lrc',
+        lrc: 'MyDestiny',
         img: 'img/2.jpg',
         audio: 'music/MyDestiny.mp3'
       };
@@ -42,7 +42,7 @@ function sendSong(ctx) {
         name: 'TimeToSayGoodbye',
         album: '...',
         singer: 'Lauren',
-        lrc: '/lrc/qsx.lrc',
+        lrc: 'TimeToSayGoodbye',
         img: 'img/0.png',
         audio: 'music/TimeToSayGoodbye.mp3'
       };
@@ -54,9 +54,17 @@ function sendSong(ctx) {
   }).catch(err => console.log(err));
 }
 
+function sendLrc(ctx) {
+  return Promise.resolve().then(() => {
+    ctx.status = 200;
+    ctx.body = `[00:00:00]你打开苦难的里面
+[00:00:01]打开了我`;
+  });
+}
+
 function sendSongSheet(ctx) {
-  return readPostBody(ctx.req).then(body => {
-    console.log(`body: ${body}`);
+  return Promise.resolve().then(() => {
+    console.log(querystring.parse(url.parse(ctx.url).query));
     return readFile(path.join('./server/json/songSheet.json'));
   }).then(data => {
     ctx.status = 200;
@@ -66,9 +74,9 @@ function sendSongSheet(ctx) {
 }
 
 function sendDownloadList(ctx) {
-  return readPostBody(ctx.req).then(body => {
-    console.log(`body: ${body}`);
-    return fs.readFile(path.join('./server/json/downloadList.json'));
+  return Promise.resolve().then(() => {
+    console.log(querystring.parse(url.parse(ctx.url).query));
+    return readFile(path.join('./server/json/downloadList.json'));
   }).then(data => {
     ctx.status = 200;
     ctx.set('Content-Type', 'application/json');
@@ -96,6 +104,9 @@ async function router(ctx, next) {
     break;
   case '/GET/song':
     await sendSong(ctx);
+    break;
+  case '/GET/lrc':
+    await sendLrc(ctx);
     break;
   case '/GET/songSheet':
     await sendSongSheet(ctx);

@@ -8,7 +8,7 @@ import SongCard from './SongCard';
 import DownloadList from './DownloadList';
 import Upload from './Upload';
 import SongSheet from './SongSheet';
-import Player from './player';
+import Player from './Player';
 
 class Index extends React.Component {
   constructor(props) {
@@ -44,8 +44,8 @@ class Index extends React.Component {
 
 const styles = {
   container: {
-    margin: '70px 0 0 0',
-    width: '100%',
+    margin: '70px auto',
+    width: 1280,
     display: 'flex',
     justifyContent: 'center',
   },

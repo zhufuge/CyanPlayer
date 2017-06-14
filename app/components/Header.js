@@ -106,10 +106,9 @@ const styles = {
 
     width: '100%',
     height: 54,
-	  paddingLeft: 32,
-	  paddingRight: 32,
+	  padding: '0 100px',
 	  boxSizing: 'border-box',
-	  boxShadow: '0px 1px 6px rgba(0, 0, 0, 0.12), 0px 1px 4px rgba(0, 0, 0, 0.12)',
+	  boxShadow: '0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12)',
 	  borderRadius: 0,
     backgroundColor: cyan500,
     color: 'white',
