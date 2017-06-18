@@ -12,37 +12,84 @@ import VolumeOff from 'material-ui/svg-icons/av/volume-off';
 import Slider from 'material-ui/Slider';
 import CircleIconButton from './CircleIconButton';
 
+function secFormat(sec) {
+  const toTimeString = (n) => n < 10 ? '0' + n : n,
+        trunc = Math.trunc,
+        intSec = trunc(sec),
+        s = intSec % 60,
+        m = trunc(intSec / 60) % 60,
+        h = trunc(intSec / 60 / 60);
+
+  let format = '';
+  if (h !== 0) {
+    format += toTimeString(h) + ':';
+  }
+  format += toTimeString(m) + ':' + toTimeString(s);
+
+  return format;
+}
+
 class Player extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       playing: false,
-      time: '00:00',
-      volume: 1,
+      muted: false,
+      time: 0,
+      totalTime: 0,
     };
     this.changePlayState = this.changePlayState.bind(this);
-    this.volumeOff = this.volumeOff.bind(this);
+    this.handleProcess = this.handleProcess.bind(this);
+    this.handleMute = this.handleMute.bind(this);
     this.handleVolume = this.handleVolume.bind(this);
   }
 
   changePlayState() {
-    this.setState({playing: !this.state.playing});
+    const playing = this.state.playing;
+    if (playing) {
+      this.audio.pause();
+      clearInterval(this.interval);
+    } else {
+      this.audio.play();
+      this.interval = setInterval(() => {
+        const time = this.state.time;
+        if (time + 1 >= this.state.totalTime &&
+            this.interval) {
+          clearInterval(this.interval);
+          return ;
+        }
+        this.setState({time: time + 1});
+      }, 1000);
+    }
+    this.setState({playing: !playing, totalTime: this.audio.duration});
   }
-  volumeOff() {
-    this.setState({volume: this.state.volume ^ 1});
+  handleProcess(event, value) {
+    const time = value * this.state.totalTime;
+    this.audio.currentTime = time;
+    this.setState({time});
+  }
+  handleMute() {
+    const muted = this.state.muted;
+    this.audio.muted = !muted;
+    this.setState({muted: !muted});
   }
   handleVolume(event, value) {
-    this.setState({volume: value});
+    const muted = this.state.muted;
+    if (!muted && value === 0) {
+      this.setState({muted: true});
+    } else if (muted && value !== 0) {
+      this.setState({muted: false});
+    }
+    this.audio.volume = value;
   }
 
   render() {
-    const src = this.props.src || '/music/TimeToSayGoodbye.mp3',
-          totalTime = '03:14',
-          state = this.state,
-          playIcon = (state.playing)
+    const state = this.state;
+    const playIcon = (state.playing)
           ? <Pause style={styles.playArrow}/>
           : <PlayArrow style={styles.playArrow}/>,
-          volumeIcon = (state.volume === 0) ? <VolumeOff/> : <VolumeUp/>;
+          volumeIcon = state.muted ? <VolumeOff/> : <VolumeUp/>,
+          process = state.time / state.totalTime;
     return (
       <div style={styles.container}>
         <div style={styles.handles}>
@@ -64,20 +111,26 @@ class Player extends React.Component {
           </CircleIconButton>
         </div>
         <div style={styles.slider}>
-          <span style={styles.span}>{state.time}</span>
-          <Slider style={{width: 500, height: 66}}/>
-          <span style={styles.span}>{totalTime}</span>
+          <span style={styles.span}>{secFormat(state.time)}</span>
+          <Slider
+            style={{width: 500, height: 66}}
+            defaultValue={0}
+            value={Number.isNaN(process) ? 0 : process}
+            onChange={this.handleProcess}/>
+          <span style={styles.span}>{secFormat(state.totalTime)}</span>
         </div>
         <div style={styles.slider}>
-          <IconButton iconStyle={{color: '#666'}} onTouchTap={this.volumeOff}>
+          <IconButton iconStyle={{color: '#666'}} onTouchTap={this.handleMute}>
             {volumeIcon}
           </IconButton>
           <Slider
             style={{width: 100, height: 66}}
-            value={state.volume}
+            defaultValue={1}
             onChange={this.handleVolume}/>
         </div>
-        <audio src={src}></audio>
+        <audio
+          ref={(ref) => this.audio = ref}
+          src={this.props.src || '/music/TimeToSayGoodbye.mp3'}></audio>
       </div>
     );
   }
