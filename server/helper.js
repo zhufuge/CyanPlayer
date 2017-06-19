@@ -1,6 +1,3 @@
-const fs = require('fs'),
-      path  = require('path');
-
 function contentType(fileType) {
   const ContentType = {
     '.html': 'text/html',
@@ -28,18 +25,7 @@ function readPostBody(req) {
   });
 }
 
-
-function readFile(file) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(file, (err, data) => {
-      if (err) reject(err);
-      resolve(data);
-    });
-  });
-}
-
 module.exports = {
   contentType,
   readPostBody,
-  readFile,
 };

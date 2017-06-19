@@ -1,12 +1,14 @@
 const fs = require('fs'),
+      util = require('util'),
       path = require('path'),
       url = require('url'),
       querystring = require('querystring');
 
+const readFileAsync = util.promisify(fs.readFile);
+
 const {
   contentType,
   readPostBody,
-  readFile,
 } = require('./helper');
 
 function handleSign(ctx) {
@@ -65,7 +67,7 @@ function sendLrc(ctx) {
 function sendSongSheet(ctx) {
   return Promise.resolve().then(() => {
     console.log(querystring.parse(url.parse(ctx.url).query));
-    return readFile(path.join('./server/json/songSheet.json'));
+    return readFileAsync(path.join('./server/json/songSheet.json'));
   }).then(data => {
     ctx.status = 200;
     ctx.set('Content-Type', 'application/json');
@@ -76,7 +78,7 @@ function sendSongSheet(ctx) {
 function sendDownloadList(ctx) {
   return Promise.resolve().then(() => {
     console.log(querystring.parse(url.parse(ctx.url).query));
-    return readFile(path.join('./server/json/downloadList.json'));
+    return readFileAsync(path.join('./server/json/downloadList.json'));
   }).then(data => {
     ctx.status = 200;
     ctx.set('Content-Type', 'application/json');
@@ -85,7 +87,7 @@ function sendDownloadList(ctx) {
 }
 
 function sendFile(ctx, file) {
-  return readFile(file).then(data => {
+  return readFileAsync(file).then(data => {
     ctx.status = 200;
     ctx.set('Content-Type', contentType(path.extname(file)));
     ctx.body = data;
