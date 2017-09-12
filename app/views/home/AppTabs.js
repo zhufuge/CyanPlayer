@@ -1,23 +1,21 @@
-import React from 'react';
-import {Tabs, Tab} from 'material-ui/Tabs';
+import React from 'react'
+import { Tabs, Tab } from 'material-ui/Tabs'
 
-import Recommend from './Recommend';
-import SongSheets from './SongSheets';
-import RankingLists from './RankingLists';
-import SingerList from './SingerList';
-import NewestMusic from './NewestMusic';
+import Recommend from './Recommend'
+import SongSheets from './SongSheets'
+import RankingLists from './RankingLists'
+import SingerList from './SingerList'
+import NewestMusic from './NewestMusic'
 
 class AppTabs extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {value: 'a'};
+    super(props)
+    this.state = { value: 'a' }
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this)
   }
 
-  handleChange(value) {
-    this.setState({value: value});
-  };
+  handleChange(value) { this.setState({ value: value }) }
 
   render() {
     return (
@@ -33,7 +31,7 @@ class AppTabs extends React.Component {
         <Tab label="歌手" value="d"><SingerList /></Tab>
         <Tab label="最新音乐" value="e"><NewestMusic /></Tab>
       </Tabs>
-    );
+    )
   }
 }
 
@@ -47,6 +45,6 @@ const styles = {
   content: {
     width: 820,
   },
-};
+}
 
-export default AppTabs;
+export default AppTabs

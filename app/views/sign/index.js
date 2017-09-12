@@ -1,6 +1,6 @@
-﻿import React from 'react';
+﻿import React from 'react'
 
-import Form from './Form';
+import Form from './Form'
 
 class Sign extends React.Component {
   render() {
@@ -16,7 +16,7 @@ class Sign extends React.Component {
         </div>
         <Form />
       </div>
-    );
+    )
   }
 }
 
@@ -50,6 +50,6 @@ const styles = {
     marginBlockStart: '0em',
     marginBlockEnd: '0.5em',
   },
-};
+}
 
-export default Sign;
+export default Sign

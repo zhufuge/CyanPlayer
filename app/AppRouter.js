@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 import {
   BrowserRouter as Router,
   Route,
-} from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducers from './reducers';
-import Home from './components';
-import Sign from './components/sign';
+} from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import reducers from './reducers'
+import Home from './views/home'
+import Sign from './views/sign'
 
-let store = createStore(reducers);
+let store = createStore(reducers)
 
 class AppRouter extends React.Component {
   render() {
@@ -26,4 +26,4 @@ class AppRouter extends React.Component {
   }
 }
 
-export default AppRouter;
+export default AppRouter

@@ -1,12 +1,12 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {setPresentSongSrc} from '../actions';
-import Ajax from '../common/Ajax';
+import React from 'react'
+import { connect } from 'react-redux'
+import { setPresentSongSrc } from '../../actions'
+import Ajax from '../../common/Ajax'
 
-import RaisedButton from 'material-ui/RaisedButton';
-import Favorite from 'material-ui/svg-icons/action/favorite';
-import FileDownload from 'material-ui/svg-icons/file/file-download';
-import CreateNewFolder from 'material-ui/svg-icons/file/create-new-folder';
+import RaisedButton from 'material-ui/RaisedButton'
+import Favorite from 'material-ui/svg-icons/action/favorite'
+import FileDownload from 'material-ui/svg-icons/file/file-download'
+import CreateNewFolder from 'material-ui/svg-icons/file/create-new-folder'
 
 const primary = {
   name: 'Time to say goodbye',
@@ -15,17 +15,17 @@ const primary = {
   lrc: '...',
   img: '/img/0.png',
   audio: '/music/TimeToSayGoodbye.mp3',
-};
+}
 
 function basefile(filepath) {
-  const index = filepath.lastIndexOf('/');
-  return (index === -1) ? filepath : filepath.slice(index + 1);
+  const index = filepath.lastIndexOf('/')
+  return (index === -1) ? filepath : filepath.slice(index + 1)
 }
 
 class SongCard extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {};
+    super(props)
+    this.state = {}
   }
 
   componentWillMount() {
@@ -37,43 +37,43 @@ class SongCard extends React.Component {
           singer: json.singer,
           img: json.img,
           audio: json.audio,
-        });
-        this.props.setPresentSongSrc(json.audio);
-        return Ajax('lrc')(json.lrc);
+        })
+        this.props.setPresentSongSrc(json.audio)
+        return Ajax('lrc')(json.lrc)
       } else {
-        return '';
+        return ''
       }
     }).then(text => {
       this.setState({
         lrc: text,
-      });
-    });;
+      })
+    })
   }
 
   displayLrc(lrc) {
-    const e = /\[..\:..\...\](.*)\r\n/g;
-    const container = [];
-    let match;
+    const e = /\[..\:..\...\](.*)\r\n/g
+    const container = []
+    let match
     while ((match = e.exec(lrc)) !== null) {
-      container.push(match[1]);
+      container.push(match[1])
     }
 
     const data = (container.length === 0)
           ? (<p style={styles.lrcp}>lrc</p>)
-          : (container.map(v => <p key={v} style={styles.lrcp}>{v}</p>));
+          : (container.map(v => <p key={v} style={styles.lrcp}>{v}</p>))
 
     return (
         <div style={styles.lrc}>
           {data}
         </div>
-    );
+    )
   }
 
   render() {
     const fileDownload = <FileDownload />,
           favorite = <Favorite />,
-          createNewFolder = <CreateNewFolder />;
-    const song = (this.state.name) ? this.state : primary;
+          createNewFolder = <CreateNewFolder />
+    const song = (this.state.name) ? this.state : primary
     return (
       <div style={styles.container}>
         <div style={styles.left}>
@@ -108,7 +108,7 @@ class SongCard extends React.Component {
           {this.displayLrc(song.lrc)}
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -171,22 +171,18 @@ const styles = {
   lrcp: {
     textAlign: 'center',
   },
-};
+}
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    song: (ownProps.type === 'random')
-      ? '0'
-      : state.presentSong
-  };
-};
+    song: (ownProps.type === 'random') ? '0' : state.presentSong
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setPresentSongSrc: (src) => {
-      dispatch(setPresentSongSrc(src));
-    }
-  };
-};
+    setPresentSongSrc: (src) => dispatch(setPresentSongSrc(src))
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(SongCard);
+export default connect(mapStateToProps, mapDispatchToProps)(SongCard)

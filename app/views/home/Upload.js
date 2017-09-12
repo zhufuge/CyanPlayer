@@ -1,53 +1,51 @@
-import React from 'react';
+import React from 'react'
 
-import Add from 'material-ui/svg-icons/content/add';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import Add from 'material-ui/svg-icons/content/add'
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
 
 class Upload extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       src: '',
       filename: '上传歌曲',
-    };
+    }
 
-    this.fileSelected = this.fileSelected.bind(this);
-    this.imgSelected = this.imgSelected.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.fileSelected = this.fileSelected.bind(this)
+    this.imgSelected = this.imgSelected.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   imgSelected() {
-    const file = this.imgInput.files[0];
+    const file = this.imgInput.files[0]
     if (file) {
-      const reader = new FileReader();
+      const reader = new FileReader()
 
       reader.onload = (event) => {
         if (reader.error) {
-          console.log('加载失败');
+          console.log('加载失败')
         } else {
-          this.setState({src: event.target.result});
+          this.setState({ src: event.target.result })
         }
-      };
+      }
 
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file)
     }
   }
   fileSelected() {
-    const file = this.fileInput.files[0];
+    const file = this.fileInput.files[0]
     if (file) {
-      this.setState({filename: file.name});
+      this.setState({ filename: file.name })
     }
   }
 
-  handleSubmit() {
-    alert('上传成功');
-  }
+  handleSubmit() { alert('上传成功') }
 
   render() {
     const img = (this.state.src === '')
           ? <Add style={styles.add} color="white"/>
-          : <img alt="" src={this.state.src}/>;
+          : <img alt="" src={this.state.src}/>
     return (
       <div style={styles.container}>
         <div style={styles.left}>
@@ -90,7 +88,7 @@ class Upload extends React.Component {
             primary={true} />
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -152,6 +150,6 @@ const styles = {
   submit: {
     marginTop: 20,
   },
-};
+}
 
-export default Upload;
+export default Upload

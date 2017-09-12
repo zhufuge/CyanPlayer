@@ -1,7 +1,7 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {setPresentSong, setPage} from '../actions';
-import Ajax from '../common/Ajax';
+import React from 'react'
+import { connect } from 'react-redux'
+import { setPresentSong, setPage } from '../../actions'
+import Ajax from '../../common/Ajax'
 
 import {
   Table,
@@ -10,9 +10,9 @@ import {
   TableHeaderColumn,
   TableRow,
   TableRowColumn,
-} from 'material-ui/Table';
-import Divider from 'material-ui/Divider';
-import Subheader from 'material-ui/Subheader';
+} from 'material-ui/Table'
+import Divider from 'material-ui/Divider'
+import Subheader from 'material-ui/Subheader'
 
 const df = {
   name: '默认歌单',
@@ -20,16 +20,16 @@ const df = {
   creator: '__jln',
   date: '2016-12-17',
   description: '山不在高，有仙则灵。水不在深，有龙则灵。',
-};
+}
 
 class SongSheet extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       songs: []
-    };
+    }
 
-    this.handleRowSelected = this.handleRowSelected.bind(this);
+    this.handleRowSelected = this.handleRowSelected.bind(this)
   }
 
   componentWillMount() {
@@ -42,44 +42,44 @@ class SongSheet extends React.Component {
           date: json.date,
           description: json.description,
           songs: json.songs
-        });
+        })
       }
-    });
+    })
   }
 
   header() {
-    const data = ['序号', '音乐标题', '歌手', '专辑', '时长'];
+    const data = ['序号', '音乐标题', '歌手', '专辑', '时长']
     return data.map((v) => {
-      return <TableHeaderColumn key={v}>{v}</TableHeaderColumn>;
-    });
+      return <TableHeaderColumn key={v}>{v}</TableHeaderColumn>
+    })
   }
 
   rowColumns(data) {
     return data.map(v => {
-      return <TableRowColumn key={v}>{v}</TableRowColumn>;
-    });
+      return <TableRowColumn key={v}>{v}</TableRowColumn>
+    })
   }
 
   tableRow() {
-    const songs = this.state.songs;
+    const songs = this.state.songs
     return songs.map((v, i) => {
-      const song = [i + 1, v.name, v.singer, v.album, v.time];
+      const song = [i + 1, v.name, v.singer, v.album, v.time]
       return (
-    		<TableRow key={v.id}>
+        <TableRow key={v.id}>
           {this.rowColumns(song)}
-    		</TableRow>
-      );
-    });
+        </TableRow>
+      )
+    })
   }
 
   handleRowSelected(selected) {
-    const index = parseInt(selected.toString());
-    this.props.setPresentSong(this.state.songs[index].id);
-    this.props.setPage('2');
+    const index = parseInt(selected.toString())
+    this.props.setPresentSong(this.state.songs[index].id)
+    this.props.setPage('2')
   }
 
   render() {
-    const sheet = (this.state.name) ? this.state : df;
+    const sheet = (this.state.name) ? this.state : df
     return (
       <div style={styles.container}>
         <div style={styles.info}>
@@ -87,7 +87,7 @@ class SongSheet extends React.Component {
             <img alt="" src={sheet.img}/>
           </div>
           <div style={styles.descriptionBox}>
-            <div style={{fontSize: 26}}>{sheet.name}</div>
+            <div style={{ fontSize: 26 }}>{sheet.name}</div>
             <div style={styles.creator}>
               {sheet.creator}&nbsp;&nbsp;&nbsp;
               {sheet.date}创建
@@ -101,20 +101,20 @@ class SongSheet extends React.Component {
           <Subheader>歌曲列表</Subheader>
           <Divider />
 					<Table onRowSelection={this.handleRowSelected}>
-    				<TableHeader
+            <TableHeader
               displaySelectAll={false}
-            	adjustForCheckbox={false}>
-    				  <TableRow>{this.header()}</TableRow>
-    				</TableHeader>
-    				<TableBody
+              adjustForCheckbox={false}>
+              <TableRow>{this.header()}</TableRow>
+            </TableHeader>
+            <TableBody
               showRowHover={true}
               displayRowCheckbox={false}>
               {this.tableRow()}
-    				</TableBody>
-  				</Table>
+            </TableBody>
+          </Table>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -157,26 +157,20 @@ const styles = {
     marginTop: 40,
     marginRight: 50,
   },
-};
+}
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    sheet: (ownProps.type === 'mine')
-      ? '0'
-      : state.songSheet,
-    username: state.username
-  };
-};
+    sheet: (ownProps.type === 'mine') ? '0' : state.songSheet,
+    username: state.username,
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setPresentSong: (song) => {
-      dispatch(setPresentSong(song));
-    },
-    setPage: (page) => {
-      dispatch(setPage(page));
-    }
-  };
-};
+    setPresentSong: (song) => dispatch(setPresentSong(song)),
+    setPage: (page) => dispatch(setPage(page)),
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(SongSheet);
+export default connect(mapStateToProps, mapDispatchToProps)(SongSheet)

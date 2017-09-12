@@ -1,17 +1,17 @@
-import React from 'react';
+import React from 'react'
 
-import {teal400} from 'material-ui/styles/colors';
+import { teal400 } from 'material-ui/styles/colors'
 
 class Link extends React.Component {
   handleSwitch(e, signin) {
-    e.preventDefault();
+    e.preventDefault()
     if (this.props.isSignin === !signin) {
-      this.props.switchSign(signin);
+      this.props.switchSign(signin)
     }
   }
 
   render() {
-    const isSignin = this.props.isSignin;
+    const isSignin = this.props.isSignin
     return (
       <div style={styles.container}>
         <div style={styles.hr}></div>
@@ -22,7 +22,7 @@ class Link extends React.Component {
            href="#signup" onClick={(e) => this.handleSwitch(e, false)}>注册</a>
         <div style={styles.hr}></div>
       </div>
-    );
+    )
   }
 }
 
@@ -42,6 +42,6 @@ const styles = {
     width: 100,
     margin: 6,
   },
-};
+}
 
-module.exports = Link;
+export default Link

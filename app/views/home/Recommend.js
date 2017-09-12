@@ -1,31 +1,31 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {setPresentSong, setPage, setSongSheet} from '../actions';
-import Ajax from '../common/Ajax';
+import React from 'react'
+import { connect } from 'react-redux'
+import { setPresentSong, setPage, setSongSheet } from '../../actions'
+import Ajax from '../../common/Ajax'
 
-import Divider from 'material-ui/Divider';
-import Subheader from './Subheader.js';
-import {List, ListItem} from 'material-ui/List';
+import Divider from 'material-ui/Divider'
+import Subheader from './Subheader'
+import { List, ListItem } from 'material-ui/List'
 
-import Card from './Card.js';
+import Card from './Card'
 
 const df = {
   id: '001',
   name: "Time to say goodbye",
   singer: "Lauren Aquilina",
-};
+}
 
 class Recommend extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       songSheets: [],
       songs: [],
       singers: [],
-    };
+    }
 
-    this.handleSongClick = this.handleSongClick.bind(this);
-    this.handleSheetClick = this.handleSheetClick.bind(this);
+    this.handleSongClick = this.handleSongClick.bind(this)
+    this.handleSheetClick = this.handleSheetClick.bind(this)
   }
   componentWillMount() {
     Ajax('recommend')().then(json => {
@@ -34,20 +34,16 @@ class Recommend extends React.Component {
           songSheets: json.songSheets,
           songs: json.songs,
           singers: json.singers,
-        });
+        })
       }
-    });
+    })
   }
 
   renderCards(type) {
     const container = [],
-          data = this.state[type];
+          data = this.state[type]
     for (let i = 0; i < 8; i++) {
-      if (i < data.length) {
-        container.push(data[i]);
-      } else {
-        container.push(i);
-      }
+      container.push(i < data.length ? data[i] : i)
     }
 
     return container.map((v, i) => {
@@ -57,24 +53,24 @@ class Recommend extends React.Component {
           value={v.name}
           onClick={() => this.handleSheetClick(v.id || '默认歌单')}
           src={v.src}/>
-      );
-    });
+      )
+    })
   }
 
   handleSheetClick(sheet) {
-    this.props.setSongSheet(sheet);
-    this.props.setPage('6');
+    this.props.setSongSheet(sheet)
+    this.props.setPage('6')
   }
 
   renderSongs(isLeft) {
     const data = this.state.songs,
           container = isLeft
           ? ['01', '02', '03', '04', '05']
-          : ['06', '07', '08', '09', '10'];
+          : ['06', '07', '08', '09', '10']
 
     return container.map((v, i) => {
-      let song = (isLeft) ? data[i] : data[i + 5];
-      song = (song === void 0) ? df : song;
+      let song = (isLeft) ? data[i] : data[i + 5]
+      song = (song === void 0) ? df : song
       return (
         <ListItem
           key={'recommend-' + 'songs-'+ i}
@@ -90,13 +86,13 @@ class Recommend extends React.Component {
             {song.singer}
           </span>
         </ListItem>
-      );
-    });
+      )
+    })
   }
 
   handleSongClick(song) {
-    this.props.setPresentSong(song);
-    this.props.setPage('2');
+    this.props.setPresentSong(song)
+    this.props.setPage('2')
   }
 
   render() {
@@ -123,7 +119,7 @@ class Recommend extends React.Component {
           {this.renderCards('singers')}
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -162,20 +158,14 @@ const styles = {
     borderStyle: 'solid',
     borderWidth: 1,
   },
-};
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setPresentSong: (song) => {
-      dispatch(setPresentSong(song));
-    },
-    setPage: (page) => {
-      dispatch(setPage(page));
-    },
-    setSongSheet: (sheet) => {
-      dispatch(setSongSheet(sheet));
-    }
-  };
-};
+    setPresentSong: (song) => dispatch(setPresentSong(song)),
+    setPage: (page) => dispatch(setPage(page)),
+    setSongSheet: (sheet) => dispatch(setSongSheet(sheet)),
+  }
+}
 
-export default connect(null, mapDispatchToProps)(Recommend);
+export default connect(null, mapDispatchToProps)(Recommend)

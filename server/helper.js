@@ -7,25 +7,23 @@ function contentType(fileType) {
     '.jpg': 'image/jpeg',
     '.png': 'image/png',
     '.mp3': 'audio/mp3',
-  };
-  const type = ContentType[fileType];
-  return (type === void 0) ? 'text/plain' : type;
+  }
+  const type = ContentType[fileType]
+  return (type === void 0) ? 'text/plain' : type
 }
 
 function readPostBody(req) {
   return new Promise(resolve => {
-    let data = "";
+    let data = ""
     req.on('data', (thunk) => {
-      data += thunk;
-    });
+      data += thunk
+    })
 
-    req.on('end', () => {
-      resolve(data);
-    });
-  });
+    req.on('end', () => resolve(data))
+  })
 }
 
 module.exports = {
   contentType,
   readPostBody,
-};
+}

@@ -1,16 +1,16 @@
-import React from 'react';
+import React from 'react'
 
 class Subheader extends React.Component {
   constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
   }
 
   handleClick(event) {
-    event.preventDefault();
-    const onClick = this.props.onClick;
+    event.preventDefault()
+    const onClick = this.props.onClick
     if (onClick !== void 0) {
-      this.props.onClick();
+      this.props.onClick()
     }
   }
 
@@ -20,7 +20,7 @@ class Subheader extends React.Component {
         <h3 style={styles.h3}>{this.props.title}</h3>
         <a href="#" style={styles.a} onClick={this.handleClick}>更多></a>
       </div>
-    );
+    )
   }
 }
 
@@ -42,6 +42,6 @@ const styles = {
     color: '#666',
     fontSize: 14,
   }
-};
+}
 
-export default Subheader;
+export default Subheader

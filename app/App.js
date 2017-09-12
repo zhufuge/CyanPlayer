@@ -1,9 +1,6 @@
-import React from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import AppRouter from './AppRouter';
-
-injectTapEventPlugin();
+import React from 'react'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import AppRouter from './AppRouter'
 
 class App extends React.Component {
   render() {
@@ -11,8 +8,8 @@ class App extends React.Component {
       <MuiThemeProvider>
         <AppRouter />
       </MuiThemeProvider>
-    );
+    )
   }
 }
 
-export default App;
+export default App

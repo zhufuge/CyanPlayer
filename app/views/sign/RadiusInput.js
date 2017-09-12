@@ -1,48 +1,46 @@
-import React from 'react';
-import {teal300} from 'material-ui/styles/colors';
+import React from 'react'
+import { teal300 } from 'material-ui/styles/colors'
 
 class RadiusInput extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       color: 'white',
       value: '',
-    };
+    }
 
-    this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
+    this.handleClick = this.handleClick.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleBlur = this.handleBlur.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.warning !== this.props.warning) {
       if (nextProps.warning !== false){
-        this.setState({color: '#FF5722'});
+        this.setState({ color: '#FF5722' })
       } else {
-        this.setState({color: 'white'});
+        this.setState({ color: 'white' })
       }
     }
   }
 
   handleClick() {
     if (this.Input !== null) {
-      this.Input.focus();
+      this.Input.focus()
     }
-    this.setState({color: teal300});
-    this.props.switchWarning();
+    this.setState({ color: teal300 })
+    this.props.switchWarning()
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
+  handleChange(event) { this.setState({ value: event.target.value }) }
 
   handleBlur() {
-    this.setState({color: 'white'});
-    this.props.getValue(this.state.value);
+    this.setState({ color: 'white' })
+    this.props.getValue(this.state.value)
   }
 
   render() {
-    const props = this.props;
+    const props = this.props
     return (
       <div style={styles.container(this.state.color)}
            onClick={this.handleClick}>
@@ -54,7 +52,7 @@ class RadiusInput extends React.Component {
           onBlur={this.handleBlur}
           style={styles.input}/>
       </div>
-    );
+    )
   }
 }
 
@@ -82,6 +80,6 @@ const styles = {
     width: 200,
     fontSize: 18,
   },
-};
+}
 
-export default RadiusInput;
+export default RadiusInput

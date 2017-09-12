@@ -1,37 +1,37 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {setPage, setSongSheet} from '../actions';
-import Ajax from '../common/Ajax';
+import React from 'react'
+import { connect } from 'react-redux'
+import { setPage, setSongSheet } from '../../actions'
+import Ajax from '../../common/Ajax'
 
-import Card from './Card';
-import Divider from 'material-ui/Divider';
+import Card from './Card'
+import Divider from 'material-ui/Divider'
 
 const Span = (props) => (
-  <span style={{marginLeft: 10}}>{props.children}</span>
-);
+  <span style={{ marginLeft: 10 }}>{props.children}</span>
+)
 
 class SongSheets extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       songSheets: [],
-    };
+    }
 
-    this.handleSheetClick = this.handleSheetClick.bind(this);
+    this.handleSheetClick = this.handleSheetClick.bind(this)
   }
   componentWillMount() {
     Ajax('songSheets')().then(json => {
       if (json) {
-        this.setState({songSheets: json.songSheets});
+        this.setState({ songSheets: json.songSheets })
       }
-    });
+    })
   }
 
   Cards() {
-    const container = this.state.songSheets;
+    const container = this.state.songSheets
     if (container.length === 0) {
       for (let i = 0; i < 20; i++) {
-        container.push(i);
+        container.push(i)
       }
     }
 
@@ -42,33 +42,31 @@ class SongSheets extends React.Component {
           value={v.name}
           onClick={() => this.handleSheetClick(v.id || '默认歌单')}
           src={v.src}/>
-      );
-    });
+      )
+    })
   }
 
   handleSheetClick(sheet) {
-    this.props.setSongSheet(sheet);
-    this.props.setPage('6');
+    this.props.setSongSheet(sheet)
+    this.props.setPage('6')
   }
 
-  filterSheet(e, v) {
-    e.preventDefault();
-  }
+  filterSheet(e, v) { e.preventDefault() }
 
   tabs() {
-    const container = [ '华语', '流行', '电子', '轻音乐', 'ACG', '其他'];
+    const container = [ '华语', '流行', '电子', '轻音乐', 'ACG', '其他']
     return container.map((v, i) => {
       return (
         <Span key={'songSheets' + v}>
           {(i === 0) ? '' : '/'}
           <Span>
             <a href="#"
-               style={{textDecoration: 'none', color: '#666'}}
+               style={{ textDecoration: 'none', color: '#666' }}
                onClick={(e) => this.filterSheet(e, v)}>{v}</a>
           </Span>
         </Span>
-      );
-    });
+      )
+    })
   }
 
   render() {
@@ -80,7 +78,7 @@ class SongSheets extends React.Component {
           {this.Cards()}
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -101,17 +99,13 @@ const styles = {
   marginl: {
 
   }
-};
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setPage: (page) => {
-      dispatch(setPage(page));
-    },
-    setSongSheet: (sheet) => {
-      dispatch(setSongSheet(sheet));
-    }
-  };
-};
+    setPage: (page) => dispatch(setPage(page)),
+    setSongSheet: (sheet) => dispatch(setSongSheet(sheet)),
+  }
+}
 
-export default connect(null, mapDispatchToProps)(SongSheets);
+export default connect(null, mapDispatchToProps)(SongSheets)
