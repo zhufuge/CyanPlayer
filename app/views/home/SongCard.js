@@ -70,31 +70,28 @@ class SongCard extends React.Component {
   }
 
   render() {
-    const fileDownload = <FileDownload />,
-          favorite = <Favorite />,
-          createNewFolder = <CreateNewFolder />
     const song = (this.state.name) ? this.state : primary
     return (
       <div style={styles.container}>
         <div style={styles.left}>
-          <div style={styles.imgContainer}>
+          <div className="flex-c-c" style={styles.imgContainer}>
             <img alt="" src={this.state.img || primary.img}/>
           </div>
           <div style={styles.operation}>
             <RaisedButton
               label="喜欢"
               primary={true}
-              icon={favorite}/>
+              icon={<Favorite />}/>
             <RaisedButton
               label="收藏"
               primary={true}
-              icon={createNewFolder}/>
+              icon={<CreateNewFolder />}/>
             <RaisedButton
               href={song.audio}
               download={basefile(song.audio)}
               label="下载"
               primary={true}
-              icon={fileDownload}/>
+              icon={<FileDownload />}/>
           </div>
         </div>
         <div style={styles.right}>
@@ -131,9 +128,6 @@ const styles = {
     width: 420,
   },
   imgContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
     width: 300,
     height: 300,
     overflow: 'hidden',

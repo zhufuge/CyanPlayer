@@ -22,7 +22,7 @@ class AppRouter extends React.Component {
           </div>
         </Router>
       </Provider>
-    );
+    )
   }
 }
 

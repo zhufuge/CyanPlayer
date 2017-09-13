@@ -28,8 +28,6 @@ class SongSheet extends React.Component {
     this.state = {
       songs: []
     }
-
-    this.handleRowSelected = this.handleRowSelected.bind(this)
   }
 
   componentWillMount() {
@@ -47,26 +45,13 @@ class SongSheet extends React.Component {
     })
   }
 
-  header() {
-    const data = ['序号', '音乐标题', '歌手', '专辑', '时长']
-    return data.map((v) => {
-      return <TableHeaderColumn key={v}>{v}</TableHeaderColumn>
-    })
-  }
-
-  rowColumns(data) {
-    return data.map(v => {
-      return <TableRowColumn key={v}>{v}</TableRowColumn>
-    })
-  }
-
   tableRow() {
     const songs = this.state.songs
     return songs.map((v, i) => {
       const song = [i + 1, v.name, v.singer, v.album, v.time]
       return (
         <TableRow key={v.id}>
-          {this.rowColumns(song)}
+          {song.map(v => <TableRowColumn key={v}>{v}</TableRowColumn>)}
         </TableRow>
       )
     })
@@ -83,7 +68,7 @@ class SongSheet extends React.Component {
     return (
       <div style={styles.container}>
         <div style={styles.info}>
-          <div style={styles.imgContainer}>
+          <div className="flex-c-c" style={styles.imgContainer}>
             <img alt="" src={sheet.img}/>
           </div>
           <div style={styles.descriptionBox}>
@@ -100,11 +85,15 @@ class SongSheet extends React.Component {
         <div style={styles.songList}>
           <Subheader>歌曲列表</Subheader>
           <Divider />
-					<Table onRowSelection={this.handleRowSelected}>
+					<Table onRowSelection={(s) => this.handleRowSelected(s)}>
             <TableHeader
               displaySelectAll={false}
               adjustForCheckbox={false}>
-              <TableRow>{this.header()}</TableRow>
+              <TableRow>
+                {['序号', '音乐标题', '歌手', '专辑', '时长'].map((v) =>
+                  <TableHeaderColumn key={v}>{v}</TableHeaderColumn>
+                )}
+              </TableRow>
             </TableHeader>
             <TableBody
               showRowHover={true}
@@ -137,9 +126,6 @@ const styles = {
     marginTop: 20,
   },
   imgContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
     width: 196,
     height: 196,
     marginTop: 1,

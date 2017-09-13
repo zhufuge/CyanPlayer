@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { setPresentSong, setPage, setSongSheet } from '../../actions'
 import Ajax from '../../common/Ajax'
 
-import {List, ListItem} from 'material-ui/List'
+import { List, ListItem } from 'material-ui/List'
 import Divider from 'material-ui/Divider'
 import Subheader from './Subheader'
 
@@ -21,9 +21,6 @@ class RankingLists extends React.Component {
       hot: [],
       singer: [],
     }
-
-    this.handleSongClick = this.handleSongClick.bind(this)
-    this.handleSingerClick = this.handleSingerClick.bind(this)
   }
   componentWillMount() {
     Ajax('rank')().then(json => {

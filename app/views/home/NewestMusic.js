@@ -18,8 +18,6 @@ class NewestMusic extends React.Component {
     this.state = {
       songs: [],
     }
-
-    this.handleSongClick = this.handleSongClick.bind(this)
   }
 
   componentWillMount() {
@@ -54,16 +52,11 @@ class NewestMusic extends React.Component {
                style={(i % 2 === 0) ? null : { backgroundColor: '#f2f2f2' }}>
                <div style={styles.item}>
                  <span style={styles.index}>
-                   {i < 9 ? '0' + (i + 1) : '' + (i + 1)}</span>
-                 <div style={styles.name}>
-                   {song.name}
-                 </div>
-                 <span style={styles.singer}>
-                   {song.singer}
+                   {i < 9 ? '0' + (i + 1) : '' + (i + 1)}
                  </span>
-                 <span style={styles.index}>
-                   {song.time}
-                 </span>
+                 <div style={styles.name}>{song.name}</div>
+                 <span style={styles.singer}>{song.singer}</span>
+                 <span style={styles.index}>{song.time}</span>
                </div>
              </ListItem>
            )

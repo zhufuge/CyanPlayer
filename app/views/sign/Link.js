@@ -16,10 +16,12 @@ class Link extends React.Component {
       <div style={styles.container}>
         <div style={styles.hr}></div>
         <a style={styles.a(isSignin)}
-           href="#signin" onClick={(e) => this.handleSwitch(e, true)}>登录</a>
+           href="#signin"
+           onClick={(e) => this.handleSwitch(e, true)}>登录</a>
         <span style={styles.a(false)}> · </span>
         <a style={styles.a(!isSignin)}
-           href="#signup" onClick={(e) => this.handleSwitch(e, false)}>注册</a>
+           href="#signup"
+           onClick={(e) => this.handleSwitch(e, false)}>注册</a>
         <div style={styles.hr}></div>
       </div>
     )

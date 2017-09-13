@@ -23,9 +23,6 @@ class Recommend extends React.Component {
       songs: [],
       singers: [],
     }
-
-    this.handleSongClick = this.handleSongClick.bind(this)
-    this.handleSheetClick = this.handleSheetClick.bind(this)
   }
   componentWillMount() {
     Ajax('recommend')().then(json => {
@@ -163,8 +160,8 @@ const styles = {
 const mapDispatchToProps = (dispatch) => {
   return {
     setPresentSong: (song) => dispatch(setPresentSong(song)),
-    setPage: (page) => dispatch(setPage(page)),
     setSongSheet: (sheet) => dispatch(setSongSheet(sheet)),
+    setPage: (page) => dispatch(setPage(page)),
   }
 }
 

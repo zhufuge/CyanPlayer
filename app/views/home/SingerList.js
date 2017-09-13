@@ -11,12 +11,12 @@ class SingerList extends React.Component {
     this.state = {
       singers: []
     }
-    this.handleSingerClick = this.handleSingerClick.bind(this)
   }
+
   componentWillMount() {
     Ajax('singers')().then(json => {
       if (json) {
-        this.setState({singers: json.singers})
+        this.setState({ singers: json.singers })
       }
     })
   }

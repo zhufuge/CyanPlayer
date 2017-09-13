@@ -19,19 +19,8 @@ class Form extends React.Component {
       password: '',
       warning: false,
     }
-
-    this.handleUsername = this.handleUsername.bind(this)
-    this.handlePassword = this.handlePassword.bind(this)
-    this.switchSign = this.switchSign.bind(this)
-    this.handleClicked = this.handleClicked.bind(this)
-    this.switchWarning = this.switchWarning.bind(this)
   }
-
-  handleUsername(value) { this.setState({ username: value }) }
-  handlePassword(value) { this.setState({ password: value }) }
-  switchSign(signin) { this.setState({ isSignin: signin }) }
-  switchWarning() { this.setState({ warning: false }) }
-  handleClicked(event) {
+  handleClicked() {
     const state = this.state,
       username = state.username
     Ajax('sign')(username, state.password, state.isSignin).then((res) => {
@@ -46,33 +35,33 @@ class Form extends React.Component {
 
   render() {
     const state = this.state,
-          isSignin = state.isSignin
+      isSignin = state.isSignin
     return (
-      <div style={styles.container}>
+      <div className="flex-c-c" style={styles.container}>
         <RadiusInput
           placeholder="用户名"
-          warning={this.state.warning}
-          switchWarning={this.switchWarning}
-          getValue={this.handleUsername}/>
+          warning={state.warning}
+          switchWarning={() => this.setState({ warning: false })}
+          getValue={(username) => this.setState({ username })}/>
         <RadiusInput
           placeholder="密码"
           type="password"
-          warning={this.state.warning}
-          switchWarning={this.switchWarning}
-          getValue={this.handlePassword}/>
+          warning={state.warning}
+          switchWarning={() => this.switchWarning}
+          getValue={(password) => this.setState({ password })}/>
         <RaisedButton
           label={isSignin ? '登录' : '注册'}
           labelStyle={{ fontSize: 20 }}
           primary={true}
-          onClick={this.handleClicked}
+          onClick={() => this.handleClicked()}
           style={assign({ margin: 10 }, styles.submit) }
           buttonStyle={assign({ backgroundColor: teal500 }, styles.submit)}
           overlayStyle={styles.submit}/>
         <br/>
         <Link
           isSignin={isSignin}
-          switchSign={(s) => this.setState({ isSignin: s })}
-          />
+          switchSign={(isSignin) => this.setState({ isSignin })}
+        />
       </div>
     )
   }
@@ -80,10 +69,7 @@ class Form extends React.Component {
 
 const styles = {
   container: {
-    display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   submit: {
     width: 320,
@@ -94,9 +80,7 @@ const styles = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setUsername: (username) => {
-      dispatch(signin(username))
-    }
+    setUsername: (username) => dispatch(signin(username)),
   }
 }
 

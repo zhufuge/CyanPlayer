@@ -20,8 +20,6 @@ class DownloadList extends React.Component {
     this.state =  {
       songs: []
     }
-
-    this.handleRowSelected = this.handleRowSelected.bind(this)
   }
 
   componentWillMount() {
@@ -32,29 +30,8 @@ class DownloadList extends React.Component {
     })
   }
 
-  header() {
-    const data = ['序号', '音乐标题', '歌手', '专辑', '时长', '下载时间']
-    return data.map(v => {
-      return <TableHeaderColumn key={v}>{v}</TableHeaderColumn>
-    })
-  }
-
-  rowColumns(data) {
-    return data.map(v => {
-      return <TableRowColumn key={v}>{v}</TableRowColumn>
-    })
-  }
-
-  tableRow() {
-    const songs = this.state.songs
-    return songs.map((v, i) =>  <TableRow key={ v.id }>
-      { this.rowColumns([i + 1, v.name, v.singer, v.album, v.time, v.date]) }
-    </TableRow>)
-  }
-
   handleRowSelected(selected) {
-    const index = parseInt(selected.toString())
-    this.props.setPresentSong(this.state.songs[index].id)
+    this.props.setPresentSong(this.state.songs[parseInt(selected.toString())].id)
     this.props.setPage('2')
   }
 
@@ -64,16 +41,26 @@ class DownloadList extends React.Component {
 				<div style={styles.downloadList}>
 					<Subheader style={{ fontSize: 20 }}>已下载的单曲</Subheader>
 					<Divider />
-					<Table onRowSelection={this.handleRowSelected}>
+					<Table onRowSelection={(selected) => this.handleRowSelected(selected)}>
             <TableHeader
               displaySelectAll={false}
               adjustForCheckbox={false}>
-              <TableRow>{this.header()}</TableRow>
+              <TableRow>
+                {['序号', '音乐标题', '歌手', '专辑', '时长', '下载时间'].map(v =>
+                  <TableHeaderColumn key={v}>{v}</TableHeaderColumn>
+                )}
+              </TableRow>
             </TableHeader>
             <TableBody
               showRowHover={true}
               displayRowCheckbox={false}>
-              { this.tableRow() }
+              {this.state.songs.map((v, i) =>
+                <TableRow key={ v.id }>
+                  {[i + 1, v.name, v.singer, v.album, v.time, v.date].map(v =>
+                    <TableRowColumn key={v}>{v}</TableRowColumn>
+                  )}
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </div>
@@ -102,12 +89,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setPresentSong: (song) => {
-      dispatch(setPresentSong(song))
-    },
-    setPage: (page) => {
-      dispatch(setPage(page))
-    }
+    setPresentSong: (song) => dispatch(setPresentSong(song)),
+    setPage: (page) => dispatch(setPage(page)),
   }
 }
 

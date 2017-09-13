@@ -1,11 +1,6 @@
 import React from 'react'
 
 class Subheader extends React.Component {
-  constructor(props) {
-    super(props)
-    this.handleClick = this.handleClick.bind(this)
-  }
-
   handleClick(event) {
     event.preventDefault()
     const onClick = this.props.onClick
@@ -18,7 +13,12 @@ class Subheader extends React.Component {
     return (
       <div style={styles.container}>
         <h3 style={styles.h3}>{this.props.title}</h3>
-        <a href="#" style={styles.a} onClick={this.handleClick}>更多></a>
+        <a
+          href="#"
+          style={styles.a}
+          onClick={(event) => this.handleClick(event)}>
+          更多>
+        </a>
       </div>
     )
   }

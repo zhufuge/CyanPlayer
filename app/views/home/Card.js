@@ -1,11 +1,6 @@
 import React from 'react'
 
 class Card extends React.Component {
-  constructor(props) {
-    super(props)
-    this.handleClick = this.handleClick.bind(this)
-  }
-
   handleClick(event) {
     event.preventDefault()
     this.props.onClick()
@@ -23,7 +18,7 @@ class Card extends React.Component {
       <div style={styles.container}>
         <a href="#"
            style={{ textDecoration: 'none' }}
-           onClick={this.handleClick}>
+           onClick={() => this.handleClick()}>
           <img alt="[相关图片]" src={imgSrc} style={styles.image}/>
           <p style={styles.p}>{value}</p>
         </a>

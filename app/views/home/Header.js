@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { signin } from '../../actions'
 
 import IconMenu from 'material-ui/IconMenu'
@@ -11,7 +12,6 @@ import Avatar from 'material-ui/Avatar'
 import Icon_DropDown from 'material-ui/svg-icons/Navigation/arrow-drop-down'
 import { cyan500, cyan200 } from 'material-ui/styles/colors'
 
-import { Link } from 'react-router-dom'
 
 class Header extends React.Component {
   constructor(props) {
@@ -19,15 +19,7 @@ class Header extends React.Component {
     this.state = {
       openMenu: false,
     }
-
-    this.handleInfoButton = this.handleInfoButton.bind(this)
-    this.handleOnRequestChange = this.handleOnRequestChange.bind(this)
-    this.handleQuit = this.handleQuit.bind(this)
   }
-
-  handleInfoButton() { this.setState({ openMenu: true }) }
-  handleOnRequestChange(value){ this.setState({ openMenu: value }) }
-  handleQuit() { this.props.quit('登录') }
 
   render() {
     return (
@@ -42,15 +34,6 @@ class Header extends React.Component {
           <Avatar size={32}>L</Avatar>
           {(this.props.username === '登录')
            ? (
-             <FlatButton
-               target="_blank"
-               labelPosition="before"
-               label={this.props.username}
-               labelStyle={styles.username}
-               icon={<Icon_DropDown color="white"/>}
-               onClick={this.handleInfoButton}
-             />
-           ) : (
              <Link to="/sign">
                <FlatButton
                  target="_blank"
@@ -60,15 +43,24 @@ class Header extends React.Component {
                  icon={<Icon_DropDown color="white"/>}
                />
              </Link>
+           ) : (
+             <FlatButton
+               target="_blank"
+               labelPosition="before"
+               label={this.props.username}
+               labelStyle={styles.username}
+               icon={<Icon_DropDown color="white"/>}
+               onClick={() => this.setState({ openMenu: true })}
+             />
            )}
           <IconMenu
             iconButtonElement={<IconButton></IconButton>}
             open={this.state.openMenu}
-            onRequestChange={this.handleOnRequestChange}>
+            onRequestChange={openMenu => this.setState({ openMenu })}>
             <MenuItem value="1" primaryText="其他" />
             <MenuItem
               value="quit"
-              onClick={this.handleQuit}
+              onClick={() => this.props.quit('登录')}
               primaryText="退出登录" />
           </IconMenu>
         </div>
@@ -97,7 +89,6 @@ const styles = {
   },
   side: {
     display: 'flex',
-    flexDirection: 'row',
     alignItems: 'center',
   },
   album: {
@@ -114,20 +105,18 @@ const styles = {
   },
   username: {
     color: 'white',
-  }
+  },
 }
 
 const mapStateToProps = (state) => {
   return {
-    username: state.username
+    username: state.username,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    quit: (username) => {
-      dispatch(signin(username))
-    }
+    quit: (username) => dispatch(signin(username)),
   }
 }
 

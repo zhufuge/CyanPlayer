@@ -8,19 +8,11 @@ class RadiusInput extends React.Component {
       color: 'white',
       value: '',
     }
-
-    this.handleClick = this.handleClick.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-    this.handleBlur = this.handleBlur.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.warning !== this.props.warning) {
-      if (nextProps.warning !== false){
-        this.setState({ color: '#FF5722' })
-      } else {
-        this.setState({ color: 'white' })
-      }
+      this.setState({ color: nextProps.warning ? '#FF5722' : 'white' })
     }
   }
 
@@ -32,8 +24,6 @@ class RadiusInput extends React.Component {
     this.props.switchWarning()
   }
 
-  handleChange(event) { this.setState({ value: event.target.value }) }
-
   handleBlur() {
     this.setState({ color: 'white' })
     this.props.getValue(this.state.value)
@@ -42,14 +32,15 @@ class RadiusInput extends React.Component {
   render() {
     const props = this.props
     return (
-      <div style={styles.container(this.state.color)}
-           onClick={this.handleClick}>
+      <div className="flex-c-c"
+           style={styles.container(this.state.color)}
+           onClick={() => this.handleClick()}>
         <input
           type={props.type}
           placeholder={props.placeholder}
           ref={(ref) => this.Input = ref}
-          onChange={this.handleChange}
-          onBlur={this.handleBlur}
+          onChange={(event) => this.setState({ value: event.target.value })}
+          onBlur={() => this.handleBlur()}
           style={styles.input}/>
       </div>
     )
@@ -67,10 +58,6 @@ const styles = {
     borderRadius: 26,
     borderColor: bc,
     backgroundColor: "transparent",
-
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
   }),
   input: {
     backgroundColor: "transparent",

@@ -16,9 +16,8 @@ class SongSheets extends React.Component {
     this.state = {
       songSheets: [],
     }
-
-    this.handleSheetClick = this.handleSheetClick.bind(this)
   }
+
   componentWillMount() {
     Ajax('songSheets')().then(json => {
       if (json) {
@@ -27,7 +26,12 @@ class SongSheets extends React.Component {
     })
   }
 
-  Cards() {
+  handleSheetClick(sheet) {
+    this.props.setSongSheet(sheet)
+    this.props.setPage('6')
+  }
+
+  render() {
     const container = this.state.songSheets
     if (container.length === 0) {
       for (let i = 0; i < 20; i++) {
@@ -35,47 +39,30 @@ class SongSheets extends React.Component {
       }
     }
 
-    return container.map((v, i) => {
-      return (
-        <Card
-          key={v.id || 'songSheets-' + i}
-          value={v.name}
-          onClick={() => this.handleSheetClick(v.id || '默认歌单')}
-          src={v.src}/>
-      )
-    })
-  }
-
-  handleSheetClick(sheet) {
-    this.props.setSongSheet(sheet)
-    this.props.setPage('6')
-  }
-
-  filterSheet(e, v) { e.preventDefault() }
-
-  tabs() {
-    const container = [ '华语', '流行', '电子', '轻音乐', 'ACG', '其他']
-    return container.map((v, i) => {
-      return (
-        <Span key={'songSheets' + v}>
-          {(i === 0) ? '' : '/'}
-          <Span>
-            <a href="#"
-               style={{ textDecoration: 'none', color: '#666' }}
-               onClick={(e) => this.filterSheet(e, v)}>{v}</a>
-          </Span>
-        </Span>
-      )
-    })
-  }
-
-  render() {
     return (
       <div style={styles.container}>
-        <div style={styles.tabs}>热门标签： {this.tabs()}</div>
+        <div style={styles.tabs}>
+          热门标签：
+          {[ '华语', '流行', '电子', '轻音乐', 'ACG', '其他'].map((v, i) => (
+            <Span key={'songSheets' + v}>
+              {(i === 0) ? '' : '/'}
+              <Span>
+                <a href="#"
+                   style={{ textDecoration: 'none', color: '#666' }}
+                   onClick={(e) => e.preventDefault()}>{v}</a>
+              </Span>
+            </Span>
+          ))}
+        </div>
         <Divider />
-        <div style={styles.cards}>
-          {this.Cards()}
+        <div className="flex-wrap" style={styles.cards}>
+          {container.map((v, i) => (
+            <Card
+              key={v.id || 'songSheets-' + i}
+              value={v.name}
+              onClick={() => this.handleSheetClick(v.id || '默认歌单')}
+              src={v.src}/>
+          ))}
         </div>
       </div>
     )
@@ -87,8 +74,6 @@ const styles = {
     marginTop: 24,
   },
   cards: {
-    display: 'flex',
-    flexWrap: 'wrap',
     marginTop: 5,
     marginBottom: 12,
   },
@@ -96,9 +81,6 @@ const styles = {
     margin: 8,
     color: '#333',
   },
-  marginl: {
-
-  }
 }
 
 const mapDispatchToProps = (dispatch) => {

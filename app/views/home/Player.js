@@ -28,10 +28,6 @@ class Player extends React.Component {
       time: 0,
       totalTime: 0,
     }
-    this.changePlayState = this.changePlayState.bind(this)
-    this.handleProcess = this.handleProcess.bind(this)
-    this.handleMute = this.handleMute.bind(this)
-    this.handleVolume = this.handleVolume.bind(this)
   }
 
   changePlayState() {
@@ -53,11 +49,13 @@ class Player extends React.Component {
     }
     this.setState({ playing: !playing, totalTime: this.audio.duration })
   }
+
   handleProcess(event, value) {
     const time = value * this.state.totalTime
     this.audio.currentTime = time
     this.setState({ time })
   }
+
   handleMute() {
     const muted = this.state.muted
     this.audio.muted = !muted
@@ -81,15 +79,15 @@ class Player extends React.Component {
           volumeIcon = state.muted ? <VolumeOff/> : <VolumeUp/>,
           process = state.time / state.totalTime
     return (
-      <div style={styles.container}>
-        <div style={styles.handles}>
+      <div className="flex-c-c" style={styles.container}>
+        <div className="flex-c-c" style={styles.handles}>
           <CircleIconButton
             style={styles.smallCircle}
             hover={cyan600}>
             <SkipPrevious style={styles.skip}/>
           </CircleIconButton>
           <CircleIconButton
-            onClick={this.changePlayState}
+            onClick={() => this.changePlayState()}
             style={styles.bigCircle}
             hover={cyan600}>
             {playIcon}
@@ -106,17 +104,19 @@ class Player extends React.Component {
             style={{ width: 500, height: 66 }}
             defaultValue={0}
             value={Number.isNaN(process) ? 0 : process}
-            onChange={this.handleProcess}/>
+            onChange={(event, value) => this.handleProcess(event, value)}/>
           <span style={styles.span}>{secFormat(state.totalTime)}</span>
         </div>
         <div style={styles.slider}>
-          <IconButton iconStyle={{ color: '#666' }} onTouchTap={this.handleMute}>
+          <IconButton
+            iconStyle={{ color: '#666' }}
+            onClick={() => this.handleMute()}>
             {volumeIcon}
           </IconButton>
           <Slider
             style={{ width: 100, height: 66 }}
             defaultValue={1}
-            onChange={this.handleVolume}/>
+            onChange={(event, value) => this.handleVolume(event, value)}/>
         </div>
         <audio
           ref={(ref) => this.audio = ref}
@@ -133,16 +133,11 @@ const styles = {
     bottom: 0,
     height: 54,
     width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#fafafa',
     borderTop: '1px solid #eaeaea',
   },
   handles: {
     width: 160,
-    display: 'flex',
-    alignItems: 'center',
     justifyContent: 'space-around',
   },
   bigCircle: {

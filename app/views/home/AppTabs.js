@@ -11,11 +11,7 @@ class AppTabs extends React.Component {
   constructor(props) {
     super(props)
     this.state = { value: 'a' }
-
-    this.handleChange = this.handleChange.bind(this)
   }
-
-  handleChange(value) { this.setState({ value: value }) }
 
   render() {
     return (
@@ -23,9 +19,8 @@ class AppTabs extends React.Component {
         value={this.state.value}
         contentContainerStyle={styles.container}
         tabTemplateStyle={styles.content}
-        onChange={this.handleChange}>
-        <Tab label="个性推荐" value="a">
-          <Recommend setTab={this.handleChange}/></Tab>
+        onChange={(value) => this.setState({ value: value })}>
+        <Tab label="个性推荐" value="a"><Recommend /></Tab>
         <Tab label="歌单" value="b"><SongSheets /></Tab>
         <Tab label="排行榜" value="c"><RankingLists /></Tab>
         <Tab label="歌手" value="d"><SingerList /></Tab>
