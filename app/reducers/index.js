@@ -1,49 +1,49 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 
 const username = (state='登录', action) => {
   switch (action.type) {
   case 'SIGNIN':
-    return action.username;
+    return action.username
   default:
-    return state;
+    return state
   }
-};
+}
 
 const presentSong = (state='001', action) => {
   switch (action.type) {
   case 'SET_PRESENT_SONG':
-    return action.song;
+    return action.song
   default:
-    return state;
+    return state
   }
-};
+}
 
 const presentSongSrc = (state='/music/TimeToSayGoodbye.mp3', action) => {
   switch (action.type) {
   case 'SET_PRESENT_SONG_SRC':
-    return action.src;
+    return action.src
   default:
-    return state;
+    return state
   }
-};
+}
 
 const page = (state='0', action) => {
   switch (action.type) {
   case 'SET_PAGE':
-    return action.page;
+    return action.page
   default:
-    return state;
+    return state
   }
-};
+}
 
 const songSheet = (state='', action) => {
   switch (action.type) {
   case 'SET_SONG_SHEET':
-    return action.sheet;
+    return action.sheet
   default:
-    return state;
+    return state
   }
-};
+}
 
 export default combineReducers({
   username,
@@ -51,4 +51,4 @@ export default combineReducers({
   presentSongSrc,
   page,
   songSheet,
-});
+})

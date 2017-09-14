@@ -5,7 +5,7 @@ import Ajax from '../../common/Ajax'
 
 import { List, ListItem } from 'material-ui/List'
 import Divider from 'material-ui/Divider'
-import Subheader from './Subheader'
+import Subheader from '../../components/Subheader'
 
 const df = {
   name: "Time to say goodbye",

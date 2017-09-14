@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { setPage, setSongSheet } from '../../actions'
 import Ajax from '../../common/Ajax'
 
-import Card from './Card'
+import Card from '../../components/Card'
 import Divider from 'material-ui/Divider'
 
 const Span = (props) => (

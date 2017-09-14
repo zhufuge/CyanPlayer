@@ -5,7 +5,7 @@ import Header from '../../components/Header'
 import Sider from '../../components/Sider'
 import Player from '../../components/Player'
 
-import AppTabs from './AppTabs'
+import HomeTabs from './HomeTabs'
 import SongCard from './SongCard'
 import DownloadList from './DownloadList'
 import Upload from './Upload'
@@ -14,7 +14,7 @@ import SongSheet from './SongSheet'
 class Index extends React.Component {
   page() {
     switch(this.props.page) {
-    case '0': return <AppTabs />
+    case '0': return <HomeTabs />
     case '1': return <SongCard key="songcard1" type="random"/>
     case '2': return <SongCard key="songcard2"/>
     case '3': return <Upload />

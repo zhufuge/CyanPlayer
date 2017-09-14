@@ -12,7 +12,7 @@ class Subheader extends React.Component {
   render() {
     return (
       <div style={styles.container}>
-        <h3 style={styles.h3}>{this.props.title}</h3>
+        <span style={styles.span}>{this.props.title}</span>
         <a
           href="#"
           style={styles.a}
@@ -30,8 +30,7 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'end',
   },
-  h3: {
-    display: 'inline',
+  span: {
     margin: 6,
     color: '#333',
     fontWeight: '400',

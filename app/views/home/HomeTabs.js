@@ -18,10 +18,13 @@ const DEFAULT = {
   ]
 }
 
-class AppTabs extends React.Component {
+class HomeTabs extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { value: 'a' }
+    this.state = {
+      value: 'a',
+      hover: '',
+    }
   }
 
   render() {
@@ -33,9 +36,14 @@ class AppTabs extends React.Component {
         onChange={(value) => this.setState({ value: value })}>
         {DEFAULT.labels.map(v =>
           <Tab
+            onMouseOver={() => this.setState({ hover: v.value })}
+            onMouseOut={() => this.setState({ hover: '' })}
             label={v.label}
             value={v.value}
-            buttonStyle={{ color: v.value === this.state.value ? cyan500 : '#666' }}>
+            buttonStyle={{ color: (
+              v.value === this.state.value ||
+              v.value === this.state.hover
+            ) ? cyan500 : '#666' }}>
             {v.component}
           </Tab>
         )}
@@ -51,4 +59,4 @@ const styles = {
   }
 }
 
-export default AppTabs
+export default HomeTabs

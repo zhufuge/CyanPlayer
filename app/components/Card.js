@@ -1,5 +1,12 @@
 import React from 'react'
 
+const DEFAULT = {
+  src: '/img/0.png',
+  value: '你打开苦难的里面，打开了我',
+}
+
+const curtail = (s, l=21) => (s.l < l) ? s : s.slice(0, l - 1) + '...'
+
 class Card extends React.Component {
   handleClick(event) {
     event.preventDefault()
@@ -7,20 +14,15 @@ class Card extends React.Component {
   }
 
   render() {
-    const imgSrc = this.props.src || '/img/0.png'
-    let value = '你打开苦难的里面，打开了我'
-    if (this.props.value !== void 0) {
-      let string = this.props.value.toString()
-      value = (string.length < 21) ? string : string.slice(0, 20) + '...'
-    }
-
     return (
       <div style={styles.container}>
         <a href="#"
            style={{ textDecoration: 'none' }}
-           onClick={() => this.handleClick()}>
-          <img alt="[相关图片]" src={imgSrc} style={styles.image}/>
-          <p style={styles.p}>{value}</p>
+           onClick={(event) => this.handleClick(event)}>
+          <img alt="[相关图片]" src={this.props.src || DEFAULT.src} style={styles.image}/>
+          <p style={styles.p}>
+            {this.props.value ? curtail(this.props.value) : DEFAULT.value}
+          </p>
         </a>
       </div>
     )

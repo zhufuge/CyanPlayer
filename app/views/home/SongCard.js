@@ -51,7 +51,7 @@ class SongCard extends React.Component {
   }
 
   displayLrc(lrc) {
-    const e = /\[..\:..\...\](.*)\r\n/g
+    const e = /\[..:..\...\](.*)\r\n/g
     const container = []
     let match
     while ((match = e.exec(lrc)) !== null) {

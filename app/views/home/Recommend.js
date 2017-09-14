@@ -4,31 +4,35 @@ import { setPresentSong, setPage, setSongSheet } from '../../actions'
 import Ajax from '../../common/Ajax'
 
 import Divider from 'material-ui/Divider'
-import Subheader from './Subheader'
 import { List, ListItem } from 'material-ui/List'
+import Subheader from '../../components/Subheader'
+import Card from '../../components/Card'
 
-import Card from './Card'
-
-const df = {
-  id: '001',
-  name: "Time to say goodbye",
-  singer: "Lauren Aquilina",
+const DEFAULT = {
+  sheets: Array(8).fill(0).map((v, i) => i),
+  singers: Array(8).fill(0).map((v, i) => i),
+  song: {
+    id: '001',
+    name: "Time to say goodbye",
+    singer: "Lauren Aquilina",
+  }
 }
 
 class Recommend extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      songSheets: [],
+      sheets: DEFAULT.sheets,
       songs: [],
-      singers: [],
+      singers: DEFAULT.singers,
     }
   }
+
   componentWillMount() {
     Ajax('recommend')().then(json => {
       if (json) {
         this.setState({
-          songSheets: json.songSheets,
+          sheets: json.sheets,
           songs: json.songs,
           singers: json.singers,
         })
@@ -36,38 +40,19 @@ class Recommend extends React.Component {
     })
   }
 
-  renderCards(type) {
-    const container = [],
-          data = this.state[type]
-    for (let i = 0; i < 8; i++) {
-      container.push(i < data.length ? data[i] : i)
-    }
-
-    return container.map((v, i) => {
-      return (
-        <Card
-          key={'recommend-' + type + '-' + i}
-          value={v.name}
-          onClick={() => this.handleSheetClick(v.id || '默认歌单')}
-          src={v.src}/>
-      )
-    })
-  }
-
-  handleSheetClick(sheet) {
+  handleSheetClick(sheet='默认歌单') {
     this.props.setSongSheet(sheet)
     this.props.setPage('6')
   }
-
   renderSongs(isLeft) {
     const data = this.state.songs,
-          container = isLeft
-          ? ['01', '02', '03', '04', '05']
-          : ['06', '07', '08', '09', '10']
+      container = isLeft
+                ? ['01', '02', '03', '04', '05']
+                : ['06', '07', '08', '09', '10']
 
     return container.map((v, i) => {
       let song = (isLeft) ? data[i] : data[i + 5]
-      song = (song === void 0) ? df : song
+      song = (song === void 0) ? DEFAULT.song : song
       return (
         <ListItem
           key={'recommend-' + 'songs-'+ i}
@@ -86,7 +71,6 @@ class Recommend extends React.Component {
       )
     })
   }
-
   handleSongClick(song) {
     this.props.setPresentSong(song)
     this.props.setPage('2')
@@ -98,7 +82,13 @@ class Recommend extends React.Component {
         <Subheader title="推荐歌单" onClick={() => this.props.setTab('b')}/>
         <Divider />
         <div style={styles.cards}>
-          {this.renderCards('songSheets')}
+          {this.state.sheets.map((v, i) =>
+            <Card
+              key={'recommend-sheets-' + i + v.name}
+              value={v.name}
+              onClick={() => this.handleSheetClick(v.id)}
+              src={v.src}/>
+          )}
         </div>
         <Subheader title="推荐音乐" onClick={() => this.props.setTab('e')}/>
         <Divider />
@@ -113,7 +103,13 @@ class Recommend extends React.Component {
         <Subheader title="推荐歌手" onClick={() => this.props.setTab('d')}/>
         <Divider />
         <div style={styles.cards}>
-          {this.renderCards('singers')}
+          {this.state.singers.map((v, i) =>
+            <Card
+              key={'recommend-singers-' + i + v.name}
+              value={v.name}
+              onClick={() => this.handleSheetClick(v.id)}
+              src={v.src}/>
+          )}
         </div>
       </div>
     )
@@ -126,8 +122,10 @@ const styles = {
     marginRight: 16,
   },
   cards: {
+    /* TODO css-grid */
     display: 'flex',
     flexWrap: 'wrap',
+    justifyContent: 'space-around',
     marginTop: 5,
     marginBottom: 24,
   },
