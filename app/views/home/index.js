@@ -1,14 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Header from './Header'
-import AppList from './AppList'
+import Header from '../../components/Header'
+import Sider from '../../components/Sider'
+import Player from '../../components/Player'
+
 import AppTabs from './AppTabs'
 import SongCard from './SongCard'
 import DownloadList from './DownloadList'
 import Upload from './Upload'
 import SongSheet from './SongSheet'
-import Player from './Player'
 
 class Index extends React.Component {
   page() {
@@ -27,8 +28,8 @@ class Index extends React.Component {
     return (
       <div>
         <Header />
+        <Sider />
         <div style={styles.container}>
-          <AppList />
           {this.page()}
         </div>
         <Player />
@@ -37,13 +38,13 @@ class Index extends React.Component {
   }
 }
 
-
 const styles = {
   container: {
-    margin: '70px auto',
-    width: 1280,
-    display: 'flex',
-    justifyContent: 'center',
+    height: window.innerHeight - 148,
+    margin: '54px 0 54px 240px',
+    padding: '20px 40px',
+    overflowX: 'hidden',
+    overflowY: 'scroll',
   },
 }
 

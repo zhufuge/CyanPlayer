@@ -4,8 +4,5 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
-public/js/
-public/img/
-public/music/
-public/lrc/
+public/
 doc/

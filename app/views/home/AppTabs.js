@@ -1,11 +1,22 @@
 import React from 'react'
 import { Tabs, Tab } from 'material-ui/Tabs'
+import { cyan500 } from 'material-ui/styles/colors'
 
 import Recommend from './Recommend'
 import SongSheets from './SongSheets'
 import RankingLists from './RankingLists'
 import SingerList from './SingerList'
 import NewestMusic from './NewestMusic'
+
+const DEFAULT = {
+  labels: [
+    { label: "个性推荐", value: "a", component: <Recommend /> },
+    { label: "歌单", value: "b", component: <SongSheets /> },
+    { label: "排行榜", value: "c", component: <RankingLists /> },
+    { label: "歌手", value: "d", component: <SingerList /> },
+    { label: "最新音乐", value: "e", component: <NewestMusic /> },
+  ]
+}
 
 class AppTabs extends React.Component {
   constructor(props) {
@@ -16,30 +27,28 @@ class AppTabs extends React.Component {
   render() {
     return (
       <Tabs
+        inkBarStyle={{ background: cyan500 }}
+        tabItemContainerStyle={styles.tabItem}
         value={this.state.value}
-        contentContainerStyle={styles.container}
-        tabTemplateStyle={styles.content}
         onChange={(value) => this.setState({ value: value })}>
-        <Tab label="个性推荐" value="a"><Recommend /></Tab>
-        <Tab label="歌单" value="b"><SongSheets /></Tab>
-        <Tab label="排行榜" value="c"><RankingLists /></Tab>
-        <Tab label="歌手" value="d"><SingerList /></Tab>
-        <Tab label="最新音乐" value="e"><NewestMusic /></Tab>
+        {DEFAULT.labels.map(v =>
+          <Tab
+            label={v.label}
+            value={v.value}
+            buttonStyle={{ color: v.value === this.state.value ? cyan500 : '#666' }}>
+            {v.component}
+          </Tab>
+        )}
       </Tabs>
     )
   }
 }
 
 const styles = {
-  container: {
-    width: 820,
-    height: 555,
-    overflowX: 'hidden',
-    overflowY: 'scroll',
-  },
-  content: {
-    width: 820,
-  },
+  tabItem: {
+    background: 'rgba(0,0,0,0)',
+    borderBottom: '2px solid #ccc'
+  }
 }
 
 export default AppTabs

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setPage } from '../../actions'
+import { setPage } from '../actions'
 
 import { List, ListItem, makeSelectable } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
@@ -16,7 +16,7 @@ import AddCircle from 'material-ui/svg-icons/content/add-circle'
 
 let SelectableList = makeSelectable(List)
 
-class AppList extends React.Component {
+class Sider extends React.Component {
   render() {
     const page = this.props.page
     return (
@@ -34,26 +34,25 @@ class AppList extends React.Component {
           onChange={ this.handleRequestChange }>
           <Subheader>我的音乐</Subheader>
           <ListItem value="2" primaryText="当前音乐" leftIcon={ <MusicNote /> }/>
-          {(this.props.username === '登录') ? null : (
-             <div>
-               <ListItem value="3" primaryText="上传音乐" leftIcon={<Upload />}/>
-               <ListItem value="4" primaryText="历史下载" leftIcon={<Restore />}/>
-             </div>
-          )}
+          {(this.props.username === '登录') ? null : ([
+             <ListItem value="3" primaryText="上传音乐" leftIcon={<Upload />}/>,
+             <ListItem value="4" primaryText="历史下载" leftIcon={<Restore />}/>
+          ])}
         </SelectableList>
-      <Divider />
-      {(this.props.username === '登录') ? null : (
-        <SelectableList
-          value={ page }
-          onChange={ this.handleRequestChange }>
-          <Subheader style={ styles.createHeader }>
-            创建的歌单
-            <IconButton tooltip="创建">
-              <AddCircle color="#aaa" hoverColor="#666" /></IconButton>
-          </Subheader>
-          <ListItem value="5" primaryText="我喜欢的音乐" leftIcon={<QueueMusic />}/>
-        </SelectableList>
-      )}
+        <Divider />
+        {(this.props.username === '登录') ? null : (
+           <SelectableList
+             value={ page }
+             onChange={ this.handleRequestChange }>
+             <Subheader style={ styles.createHeader }>
+               创建的歌单
+               <IconButton tooltip="创建">
+                 <AddCircle color="#aaa" hoverColor="#666" />
+               </IconButton>
+             </Subheader>
+             <ListItem value="5" primaryText="我喜欢的音乐" leftIcon={<QueueMusic />}/>
+           </SelectableList>
+        )}
       </div>
     )
   }
@@ -61,9 +60,11 @@ class AppList extends React.Component {
 
 const styles = {
   container: {
+    position: 'fixed',
+    left: 0,
+    top: 54,
     width: 240,
-    height: 600,
-    marginRight: 16,
+    height: window.innerHeight - 54 - 54,
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: 'rgb(217, 217, 217)',
@@ -89,4 +90,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppList)
+export default connect(mapStateToProps, mapDispatchToProps)(Sider)

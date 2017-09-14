@@ -1,3 +1,4 @@
+const process = require('process')
 const Koa = require('koa')
 const app = new Koa()
 
@@ -19,6 +20,5 @@ app.use(async (ctx, next) => {
 
 app.use(router)
 
-app.listen(3000, () => {
-  console.log('Server running at http://localhost:3000/')
-})
+const port = process.argv[2] || 3000
+app.listen(port, () => console.log(`Server running at http://localhost:/${port}`))

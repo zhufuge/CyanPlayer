@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { signin } from '../../actions'
+import { signin } from '../actions'
 
-import IconMenu from 'material-ui/IconMenu'
+import Popover from 'material-ui/Popover'
+import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
-import IconButton from 'material-ui/IconButton'
 import FlatButton from 'material-ui/FlatButton'
 import MusicNote from 'material-ui/svg-icons/image/music-note'
 import Avatar from 'material-ui/Avatar'
@@ -21,48 +21,59 @@ class Header extends React.Component {
     }
   }
 
+  handleClick(event) {
+    event.preventDefault()
+
+    this.setState({
+      openMenu: true,
+      anchorEl: event.currentTarget,
+    })
+  }
+
   render() {
     return (
       <div style={styles.container}>
-        <div style={styles.side}>
-          <div>
-            <MusicNote style={styles.album} color="white" hoverColor={cyan200}/>
-          </div>
-          <h1 style={styles.h1}>音乐</h1>
+        <div style={styles.section}>
+          <MusicNote style={styles.album} color="white"/>
+          <h1 style={styles.h1}>EL</h1>
         </div>
-        <div style={styles.side}>
-          <Avatar size={32}>L</Avatar>
-          {(this.props.username === '登录')
-           ? (
+        <div style={styles.section}>
+          {(this.props.username === '登录') ? (
              <Link to="/sign">
+               <Avatar size={32}>L</Avatar>
                <FlatButton
                  target="_blank"
                  labelPosition="before"
                  label="登录"
                  labelStyle={styles.username}
-                 icon={<Icon_DropDown color="white"/>}
                />
              </Link>
-           ) : (
+          ) : ([
+             <Avatar size={32}>L</Avatar>,
              <FlatButton
                target="_blank"
                labelPosition="before"
                label={this.props.username}
                labelStyle={styles.username}
                icon={<Icon_DropDown color="white"/>}
-               onClick={() => this.setState({ openMenu: true })}
-             />
-           )}
-          <IconMenu
-            iconButtonElement={<IconButton></IconButton>}
-            open={this.state.openMenu}
-            onRequestChange={openMenu => this.setState({ openMenu })}>
-            <MenuItem value="1" primaryText="其他" />
-            <MenuItem
-              value="quit"
-              onClick={() => this.props.quit('登录')}
-              primaryText="退出登录" />
-          </IconMenu>
+               onClick={e => this.handleClick(e)}
+             />,
+             <Popover
+               open={this.state.openMenu}
+               anchorEl={this.state.anchorEl}
+               anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+               targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+               onRequestClose={() => this.setState({ openMenu: false })} >
+               <Menu>
+                 <MenuItem value="1" primaryText="其他" />
+                 <Link to="/sign"><MenuItem value="switch" primaryText="切换帐号" /></Link>
+                 <MenuItem
+                   value="quit"
+                   onClick={() => this.props.quit('登录')}
+                   primaryText="退出登录" />
+               </Menu>
+             </Popover>
+          ])}
         </div>
       </div>
     )
@@ -74,7 +85,6 @@ const styles = {
     position: 'fixed',
     top: 0,
     zIndex: 100,
-
     width: '100%',
     height: 54,
     padding: '0 100px',
@@ -87,7 +97,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
   },
-  side: {
+  section: {
     display: 'flex',
     alignItems: 'center',
   },

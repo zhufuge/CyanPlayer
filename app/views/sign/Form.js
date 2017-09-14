@@ -23,14 +23,19 @@ class Form extends React.Component {
   handleClicked() {
     const state = this.state,
       username = state.username
-    Ajax('sign')(username, state.password, state.isSignin).then((res) => {
-      if (res.ok) {
-        this.props.setUsername(username)
-        window.history.back(-1)
-      } else if (res.status == 401) {
-        this.setState({ warning: true })
-      }
-    })
+    if (!state.isSignin) {
+      this.props.setUsername(username)
+      window.history.back(-1)
+    } else {
+      Ajax('sign')(username, state.password, state.isSignin).then((res) => {
+        if (res.ok) {
+          this.props.setUsername(username)
+          window.history.back(-1)
+        } else if (res.status == 401) {
+          this.setState({ warning: true })
+        }
+      })
+    }
   }
 
   render() {
