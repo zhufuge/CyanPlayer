@@ -33,7 +33,6 @@ const styles = {
   container: {
     width: 178,
     height: 236,
-    margin: 10,
   },
   image: {
     width: 176,

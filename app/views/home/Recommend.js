@@ -40,6 +40,19 @@ class Recommend extends React.Component {
     })
   }
 
+  componentDidMount() {
+    this.updateDimensions.call(this)
+    window.addEventListener('resize', this.updateDimensions.bind(this))
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions.bind(this))
+  }
+
+  updateDimensions() {
+    this.setState({ offsetWidth: this.container.offsetWidth })
+  }
+
   handleSheetClick(sheet='默认歌单') {
     this.props.setSongSheet(sheet)
     this.props.setPage('6')
@@ -77,11 +90,12 @@ class Recommend extends React.Component {
   }
 
   render() {
+    const cardsStyles = styles.cards(Math.trunc(this.state.offsetWidth / 178))
     return (
-      <div style={styles.container}>
+      <div style={styles.container} ref={ref => this.container = ref}>
         <Subheader title="推荐歌单" onClick={() => this.props.setTab('b')}/>
         <Divider />
-        <div style={styles.cards}>
+        <div style={cardsStyles}>
           {this.state.sheets.map((v, i) =>
             <Card
               key={'recommend-sheets-' + i + v.name}
@@ -102,7 +116,7 @@ class Recommend extends React.Component {
         </div>
         <Subheader title="推荐歌手" onClick={() => this.props.setTab('d')}/>
         <Divider />
-        <div style={styles.cards}>
+        <div style={cardsStyles}>
           {this.state.singers.map((v, i) =>
             <Card
               key={'recommend-singers-' + i + v.name}
@@ -119,16 +133,14 @@ class Recommend extends React.Component {
 const styles = {
   container: {
     marginTop: 16,
-    marginRight: 16,
   },
-  cards: {
+  cards: (num) => ({
     /* TODO css-grid */
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    display: 'grid',
+    gridTemplateColumns: `repeat(${num}, 1fr)`,
     marginTop: 5,
     marginBottom: 24,
-  },
+  }),
   songs: {
     display: 'flex',
     marginTop: 16,

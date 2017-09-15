@@ -12,6 +12,23 @@ import Upload from './Upload'
 import SongSheet from './SongSheet'
 
 class Index extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { innerHeight: window.innerHeight }
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.updateDimensions.bind(this))
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions.bind(this))
+  }
+
+  updateDimensions() {
+    this.setState({ innerHeight: window.innerHeight })
+  }
+
   page() {
     switch(this.props.page) {
     case '0': return <HomeTabs />
@@ -29,7 +46,9 @@ class Index extends React.Component {
       <div>
         <Header />
         <Sider />
-        <div style={styles.container}>
+        <div style={Object.assign({
+            height: this.state.innerHeight - 148,
+        }, styles.container) }>
           {this.page()}
         </div>
         <Player />
@@ -40,7 +59,6 @@ class Index extends React.Component {
 
 const styles = {
   container: {
-    height: window.innerHeight - 148,
     margin: '54px 0 54px 240px',
     padding: '20px 40px',
     overflowX: 'hidden',
@@ -50,7 +68,7 @@ const styles = {
 
 const mapStateToProps = (state) => {
   return {
-    page: state.page
+    page: state.page,
   }
 }
 
