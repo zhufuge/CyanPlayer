@@ -8,3 +8,8 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.list {
+  display: grid;
+  border: 1px solid #eee;
+}

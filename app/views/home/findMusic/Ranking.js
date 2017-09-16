@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setPresentSong, setPage, setSongSheet } from '../../actions'
-import Ajax from '../../common/Ajax'
+import { setPresentSong, setHomeSubj, setSongSheet } from '../../../actions'
+import Ajax from '../../../common/Ajax'
 
 import { List, ListItem } from 'material-ui/List'
 import Divider from 'material-ui/Divider'
-import Subheader from '../../components/Subheader'
+import Subheader from './Subheader'
 
 const df = {
   name: "Time to say goodbye",
@@ -62,12 +62,12 @@ class RankingLists extends React.Component {
 
   handleSongClick(song) {
     this.props.setPresentSong(song)
-    this.props.setPage('2')
+    this.props.setHomeSubj('2')
   }
 
   handleSingerClick(singer) {
     this.props.setSongSheet(singer)
-    this.props.setPage('6')
+    this.props.setHomeSubj('6')
   }
 
   render() {
@@ -143,7 +143,7 @@ const styles = {
 const mapDispatchToProps = (dispatch) => {
   return {
     setPresentSong: (song) => dispatch(setPresentSong(song)),
-    setPage: (page) => dispatch(setPage(page)),
+    setHomeSubj: (subj) => dispatch(setHomeSubj(subj)),
     setSongSheet: (sheet) => dispatch(setSongSheet(sheet)),
   }
 }

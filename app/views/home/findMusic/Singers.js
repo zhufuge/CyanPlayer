@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setPage, setSongSheet } from '../../actions'
-import Ajax from '../../common/Ajax'
+import { setHomeSubj, setSongSheet } from '../../../actions'
+import Ajax from '../../../common/Ajax'
 
-import Card from '../../components/Card'
+import Card from './Card'
 
 class SingerList extends React.Component {
   constructor(props) {
@@ -42,7 +42,7 @@ class SingerList extends React.Component {
 
   handleSingerClick(singer) {
     this.props.setSongSheet(singer)
-    this.props.setPage('6')
+    this.props.setHomeSubj('6')
   }
 
   render() {
@@ -75,7 +75,7 @@ const styles = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setPage: (page) => dispatch(setPage(page)),
+    setHomeSubj: (subj) => dispatch(setHomeSubj(subj)),
     setSongSheet: (sheet) => dispatch(setSongSheet(sheet)),
   }
 }

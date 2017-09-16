@@ -5,13 +5,13 @@ import Header from '../../components/Header'
 import Sider from '../../components/Sider'
 import Player from '../../components/Player'
 
-import HomeTabs from './HomeTabs'
+import FindMusic from './FindMusic'
 import SongCard from './SongCard'
 import DownloadList from './DownloadList'
 import Upload from './Upload'
 import SongSheet from './SongSheet'
 
-class Index extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props)
     this.state = { innerHeight: window.innerHeight }
@@ -29,9 +29,9 @@ class Index extends React.Component {
     this.setState({ innerHeight: window.innerHeight })
   }
 
-  page() {
-    switch(this.props.page) {
-    case '0': return <HomeTabs />
+  subj() {
+    switch(this.props.subj) {
+    case '0': return <FindMusic />
     case '1': return <SongCard key="songcard1" type="random"/>
     case '2': return <SongCard key="songcard2"/>
     case '3': return <Upload />
@@ -49,7 +49,9 @@ class Index extends React.Component {
         <div style={Object.assign({
             height: this.state.innerHeight - 148,
         }, styles.container) }>
-          {this.page()}
+          <div style={{ margin: '0 auto', maxWidth: 980 }}>
+            {this.subj()}
+          </div>
         </div>
         <Player />
       </div>
@@ -60,7 +62,7 @@ class Index extends React.Component {
 const styles = {
   container: {
     margin: '54px 0 54px 240px',
-    padding: '20px 40px',
+    padding: 20,
     overflowX: 'hidden',
     overflowY: 'scroll',
   },
@@ -68,8 +70,8 @@ const styles = {
 
 const mapStateToProps = (state) => {
   return {
-    page: state.page,
+    subj: state.homeSubj,
   }
 }
 
-export default connect(mapStateToProps)(Index)
+export default connect(mapStateToProps)(Home)

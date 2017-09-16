@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setPage } from '../actions'
+import { setHomeSubj } from '../actions'
 
 import { List, ListItem, makeSelectable } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
@@ -18,19 +18,19 @@ let SelectableList = makeSelectable(List)
 
 class Sider extends React.Component {
   render() {
-    const page = this.props.page
+    const subj = this.props.subj
     return (
       <div style={ styles.container }>
         <SelectableList
-          value={page}
-          onChange={(event, index) => this.props.setPage(index)}>
+          value={subj}
+          onChange={(event, index) => this.props.setHomeSubj(index)}>
           <Subheader>推荐</Subheader>
           <ListItem value="0" primaryText="发现音乐" leftIcon={<MusicNote />} />
           <ListItem value="1" primaryText="随机音乐" leftIcon={<MusicVideo />} />
         </SelectableList>
         <Divider />
         <SelectableList
-          value={ page }
+          value={ subj }
           onChange={ this.handleRequestChange }>
           <Subheader>我的音乐</Subheader>
           <ListItem value="2" primaryText="当前音乐" leftIcon={ <MusicNote /> }/>
@@ -42,7 +42,7 @@ class Sider extends React.Component {
         <Divider />
         {(this.props.username === '登录') ? null : (
            <SelectableList
-             value={ page }
+             value={ subj }
              onChange={ this.handleRequestChange }>
              <Subheader style={ styles.createHeader }>
                创建的歌单
@@ -79,14 +79,14 @@ const styles = {
 
 const mapStateToProps = (state) => {
   return {
-    page: state.page,
+    subj: state.homeSubj,
     username: state.username,
    }
  }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setPage: (page) => dispatch(setPage(page)),
+    setHomeSubj: (subj) => dispatch(setHomeSubj(subj)),
   }
 }
 

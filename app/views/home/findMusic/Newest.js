@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setPresentSong, setPage } from '../../actions'
-import Ajax from '../../common/Ajax'
+import { setPresentSong, setHomeSubj } from '../../../actions'
+import Ajax from '../../../common/Ajax'
 
 import { List, ListItem } from 'material-ui/List'
 
@@ -30,7 +30,7 @@ class NewestMusic extends React.Component {
 
   handleSongClick(song) {
     this.props.setPresentSong(song)
-    this.props.setPage('2')
+    this.props.setHomeSubj('2')
   }
 
   render() {
@@ -100,7 +100,7 @@ const styles = {
 const mapDispatchToProps = (dispatch) => {
   return {
     setPresentSong: (song) => dispatch(setPresentSong(song)),
-    setPage: (page) => dispatch(setPage(page)),
+    setHomeSubj: (subj) => dispatch(setHomeSubj(subj)),
   }
 }
 

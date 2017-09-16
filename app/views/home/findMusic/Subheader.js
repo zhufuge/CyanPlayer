@@ -1,6 +1,13 @@
 import React from 'react'
 
 class Subheader extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      hover: false
+    }
+  }
+
   handleClick(event) {
     event.preventDefault()
     const onClick = this.props.onClick
@@ -15,8 +22,10 @@ class Subheader extends React.Component {
         <span style={styles.span}>{this.props.title}</span>
         <a
           href="#"
-          style={styles.a}
-          onClick={(event) => this.handleClick(event)}>
+          style={Object.assign({ color: (this.state.hover) ? '#333' : '#666' }, styles.a)}
+          onClick={(event) => this.handleClick(event)}
+          onMouseOver={() => this.setState({ hover: true })}
+          onMouseOut={() => this.setState({ hover: false })}>
           更多>
         </a>
       </div>
@@ -34,12 +43,12 @@ const styles = {
     margin: 6,
     color: '#333',
     fontWeight: '400',
+    fontSize: 18,
   },
   a: {
     textDecoration: 'none',
     margin: 6,
-    color: '#666',
-    fontSize: 14,
+    fontSize: 13,
   }
 }
 

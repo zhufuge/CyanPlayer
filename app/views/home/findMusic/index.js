@@ -3,22 +3,22 @@ import { Tabs, Tab } from 'material-ui/Tabs'
 import { cyan500 } from 'material-ui/styles/colors'
 
 import Recommend from './Recommend'
-import SongSheets from './SongSheets'
-import RankingLists from './RankingLists'
-import SingerList from './SingerList'
-import NewestMusic from './NewestMusic'
+import Sheets from './Sheets'
+import Ranking from './Ranking'
+import Singers from './Singers'
+import Newest from './Newest'
 
 const DEFAULT = {
   labels: [
-    { label: "个性推荐", value: "a", component: <Recommend /> },
-    { label: "歌单", value: "b", component: <SongSheets /> },
-    { label: "排行榜", value: "c", component: <RankingLists /> },
-    { label: "歌手", value: "d", component: <SingerList /> },
-    { label: "最新音乐", value: "e", component: <NewestMusic /> },
+    { label: "个性推荐", value: "a", component: Recommend },
+    { label: "歌单", value: "b", component: Sheets },
+    { label: "排行榜", value: "c", component: Ranking },
+    { label: "歌手", value: "d", component: Singers },
+    { label: "最新音乐", value: "e", component: Newest },
   ]
 }
 
-class HomeTabs extends React.Component {
+class FindMusic extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -44,7 +44,9 @@ class HomeTabs extends React.Component {
               v.value === this.state.value ||
               v.value === this.state.hover
             ) ? cyan500 : '#666' }}>
-            {v.component}
+            {(v.value === 'a')
+             ? <v.component setTab={value => this.setState({ value })}/>
+             : <v.component />}
           </Tab>
         )}
       </Tabs>
@@ -59,4 +61,4 @@ const styles = {
   }
 }
 
-export default HomeTabs
+export default FindMusic
