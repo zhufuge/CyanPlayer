@@ -22,7 +22,7 @@ class FindMusic extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: 'a',
+      value: DEFAULT.labels[0].value,
       hover: '',
     }
   }

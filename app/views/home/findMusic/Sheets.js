@@ -3,11 +3,14 @@ import { connect } from 'react-redux'
 import { setHomeSubj, setSongSheet } from '../../../actions'
 import Ajax from '../../../common/Ajax'
 
+import RaisedButton from 'material-ui/RaisedButton'
+import Icon_DropDown from 'material-ui/svg-icons/Navigation/arrow-drop-down'
+import { cyan500 } from 'material-ui/styles/colors'
+
 import CardPane from './CardPane'
-import Divider from 'material-ui/Divider'
 
 const DEFAULT = {
-  labels: [ '华语', '流行', '电子', '轻音乐', 'ACG', '其他'],
+  labels: [ '华语', '流行', '电子', '轻音乐', 'ACG', '怀旧'],
   sheets: Array(20).fill(false).map((v, i) => i),
 }
 
@@ -16,6 +19,7 @@ class Sheets extends React.Component {
     super(props)
     this.state = {
       sheets: DEFAULT.sheets,
+      hoverLabel: -1,
     }
   }
 
@@ -35,22 +39,29 @@ class Sheets extends React.Component {
   render() {
     return (
       <div style={styles.container}>
-        <div style={styles.tabs}>
-          热门标签：
-          {DEFAULT.labels.map((v, i) => (
-            <span style={{ marginLeft: 10 }} key={'songSheets' + v}>
-              {(i === 0) ? '' : '/'}
-              <span style={{ marginLeft: 10 }}>
-                <a href="#"
-                   style={{ textDecoration: 'none', color: '#666' }}
-                   onClick={(e) => e.preventDefault()}>{v}</a>
-              </span>
-            </span>
-          ))}
+        <div style={styles.labels}>
+          <RaisedButton
+            label={'全部歌单'}
+            labelStyle={{ paddingRight: 0 }}
+            labelPosition="before"
+            icon={<Icon_DropDown/>}
+            style={styles.button}
+          />
+          <span  style={{ color: '#444' }}>热门标签：</span>
+          {DEFAULT.labels.map((v, i) => [
+             <span style={{ color: '#777', fontSize: 12 }}>
+               {i === 0 ? "" : "|"}
+             </span>,
+             <span
+               style={styles.label(this.state.hoverLabel === i)}
+               onMouseOver={() => this.setState({ hoverLabel: i })}
+               onMouseOut={() => this.setState({ hoverLabel: -1 })}>
+               {v}
+             </span>
+          ])}
         </div>
-        <Divider />
         <CardPane
-          Items={this.state.sheets}
+          items={this.state.sheets}
           onClickItem={(s) => this.handleSheetClick(s || '默认歌单')}/>
       </div>
     )
@@ -61,10 +72,19 @@ const styles = {
   container: {
     marginTop: 24,
   },
-  tabs: {
-    margin: 8,
-    color: '#333',
+  button: {
+    height: 32,
+    marginRight: 12,
   },
+  labels: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  label: (hover) => ({
+    margin: '0 15px',
+    color: (hover ? '#444' : '#777'),
+    cursor: 'pointer'
+  }),
 }
 
 const mapDispatchToProps = (dispatch) => {

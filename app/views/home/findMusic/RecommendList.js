@@ -21,28 +21,32 @@ class RecommendList extends React.Component {
     const props = this.props
     return (
       <div className="list">
-        {props.Items.map((v, i) =>
-          <div
-            key={'recommend-songs-' + i + v.name}
-            onClick={() => props.onClickItem(v.id)}
-            onMouseOver={() => this.setState({ hover: i })}
-            onMouseOut={() => this.setState({ hover: -1 })}
-            style={Object.assign(this.state.hover === i
-                               ? { background: '#eee' }
-                               : (i % 2 === 0 ? {} : { background: '#fafafa' }),
-                styles.listItem)}>
-            <div className="flex-c-c" style={styles.number}>
-              {(i + props.start).toString().padStart(2, '0')}
+      {props.items.map((v, i) =>
+        <div
+          key={'recommend-songs-' + i + v.name}
+          onClick={() => props.onClickItem(v.id)}
+          onMouseOver={() => this.setState({ hover: i })}
+          onMouseOut={() => this.setState({ hover: -1 })}
+          style={Object.assign(this.state.hover === i
+                             ? { background: '#eee' }
+                             : (i % 2 === 0 ? {} : { background: '#fafafa' }),
+              styles.listItem)}>
+          <div className="flex-c-c" style={styles.number}>
+            {(i + props.start).toString().padStart(2, '0')}
+          </div>
+          <div className="flex-c-c">
+            <img style={styles.img} src={DEFAULT.src} alt="" />
+            <Play style={styles.mask}/>
+          </div>
+          <div className="flex-c-c" style={styles.info}>
+            <div style={styles.name}>{v.name || DEFAULT.name}</div>
+            <div style={Object.assign(
+                { color: this.state.hover === i ? '#666' : '#999' },
+                styles.singer)}>
+              {v.singer || DEFAULT.singer}
             </div>
-            <div className="flex-c-c">
-              <img style={styles.img} src={DEFAULT.src} alt="" />
-              {/* <Play style={styles.mask}/> */}
-            </div>
-            <div className="flex-c-c" style={styles.info}>
-              <div style={styles.name}>{v.name || DEFAULT.name}</div>
-              <div style={styles.singer}>{v.singer || DEFAULT.singer}</div>
-            </div>
-          </div>)}
+          </div>
+        </div>)}
       </div>
     )
   }
@@ -62,11 +66,14 @@ const styles = {
     width: 48,
     height: 48,
     border: '1px solid #eee',
+    cursor: 'pointer',
   },
   mask: {
-    zIndex: 100,
-    width: 48,
-    height: 48,
+    width: 28,
+    height: 28,
+    position: 'absolute',
+    cursor: 'pointer',
+    color: '#fffc',
   },
   info: {
     flexDirection: 'column',
@@ -78,9 +85,9 @@ const styles = {
     fontWeight: '400',
   },
   singer: {
-    color: '#999',
     fontWeight: '400',
     fontSize: 13,
+    cursor: 'pointer',
   },
 }
 

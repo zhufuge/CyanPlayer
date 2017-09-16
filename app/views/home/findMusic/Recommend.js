@@ -10,9 +10,9 @@ import List from './RecommendList'
 
 
 const DEFAULT = {
-  sheets: Array(8).fill(0).map((v, i) => i),
+  sheets: Array(10).fill(0).map((v, i) => i),
   songs: Array(10).fill(0).map((v, i) => i),
-  singers: Array(8).fill(0).map((v, i) => i),
+  singers: Array(10).fill(0).map((v, i) => i),
 }
 
 class Recommend extends React.Component {
@@ -54,24 +54,24 @@ class Recommend extends React.Component {
         <Subheader title="推荐歌单" onClick={() => this.props.setTab('b')}/>
         <Divider />
         <CardPane
-          Items={state.sheets}
+          items={state.sheets}
           onClickItem={(s) => this.handleSheetClick(s)} />
         <Subheader title="推荐音乐" onClick={() => this.props.setTab('e')}/>
         <Divider />
         <div style={styles.songs}>
           <List
-            Items={state.songs.filter((v, i, s) => i < s.length / 2)}
+            items={state.songs.filter((v, i, s) => i < s.length / 2)}
             start={1}
             onClickItem={(s) => this.handleSongClick(s)}/>
           <List
-            Items={state.songs.filter((v, i, s) => i >= s.length / 2)}
+            items={state.songs.filter((v, i, s) => i >= s.length / 2)}
             start={6}
             onClickItem={(s) => this.handleSongClick(s)}/>
         </div>
         <Subheader title="推荐歌手" onClick={() => this.props.setTab('d')}/>
         <Divider />
         <CardPane
-          Items={state.singers}
+          items={state.singers}
           onClickItem={(s) => this.handleSheetClick(s)} />
       </div>
     )

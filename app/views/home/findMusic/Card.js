@@ -1,29 +1,48 @@
 import React from 'react'
 
+import Play from 'material-ui/svg-icons/av/play-circle-outline'
+
 const DEFAULT = {
   src: '/img/0.png',
   value: '你打开苦难的里面，打开了我',
 }
 
+const assign = Object.assign
 const curtail = (s, l=21) => (s.l < l) ? s : s.slice(0, l - 1) + '...'
 
 class Card extends React.Component {
-  handleClick(event) {
-    event.preventDefault()
-    this.props.onClick()
+  constructor(props) {
+    super(props)
+    this.state = {
+      hoverImg: false,
+      hoverText: false,
+    }
   }
 
   render() {
+    const props = this.props
     return (
-      <div style={styles.container}>
-        <a href="#"
-           style={{ textDecoration: 'none' }}
-           onClick={(event) => this.handleClick(event)}>
-          <img alt="[相关图片]" src={this.props.src || DEFAULT.src} style={styles.image}/>
-          <p style={styles.p}>
-            {this.props.value ? curtail(this.props.value) : DEFAULT.value}
-          </p>
-        </a>
+      <div style={assign({}, styles.container, props.style)}
+           onClick={() => this.props.onClick()}>
+        <div
+          onMouseOver={() => this.setState({ hoverImg: true })}
+          onMouseOut={() => this.setState({ hoverImg: false })}
+          style={{ position: 'relative' }}>
+          <img
+            src={this.props.src || DEFAULT.src}
+            style={assign({}, styles.image, props.imgStyle)}/>
+          {this.state.hoverImg ? <Play style={styles.mask}/> : null}
+        </div>
+        <p
+          onMouseOver={() => this.setState({ hoverText: true })}
+          onMouseOut={() => this.setState({ hoverText: false })}
+          style={assign(
+          { color: this.state.hoverText ? '#333' : '#555' },
+          styles.text,
+          props.textStyle,
+          )}>
+          {props.value ? curtail(props.value) : DEFAULT.value}
+        </p>
       </div>
     )
   }
@@ -33,17 +52,24 @@ const styles = {
   container: {
     width: 178,
     height: 236,
+    cursor: 'pointer',
   },
   image: {
     width: 176,
     height: 176,
-    borderWidth: 1,
-    borderColor: '#eee',
-    borderStyle: 'solid',
+    border: '1px solid #eee',
   },
-  p: {
+  mask: {
+    width: 32,
+    height: 32,
+    position: 'absolute',
+    color: '#fffc',
+    bottom: 12,
+    right: 9,
+  },
+  text: {
     marginTop: 5,
-    color: '#333',
+    fontSize: 15,
   }
 }
 

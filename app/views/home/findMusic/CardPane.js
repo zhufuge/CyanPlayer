@@ -23,13 +23,17 @@ class CardPane extends React.Component {
 
   render() {
     const props = this.props
+    const repeat = Math.trunc(this.state.offsetWidth /
+      (props.itemStyle ? props.itemStyle.width || 183 : 183))
     return (
       <div
         ref={ref => this.container = ref}
-        style={styles.container(Math.trunc(this.state.offsetWidth / 178))}>
-        {props.Items.map((v, i) =>
+        style={styles.container(repeat)}>
+        {props.items.map(v =>
           <Card
-            key={'recommend-sheets-' + i + v.name}
+            style={props.itemStyle}
+            imgStyle={props.itemImgStyle}
+            textStyle={props.itemTextStyle}
             value={v.name}
             onClick={() => props.onClickItem(v.id)}
             src={v.src}/>
