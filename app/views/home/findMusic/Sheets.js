@@ -24,11 +24,7 @@ class Sheets extends React.Component {
   }
 
   componentWillMount() {
-    Ajax('songSheets')().then(json => {
-      if (json) {
-        this.setState({ songSheets: json.songSheets })
-      }
-    })
+    Ajax('sheets').then(json => json && this.setState(Object.assign({}, json)))
   }
 
   handleSheetClick(sheet) {

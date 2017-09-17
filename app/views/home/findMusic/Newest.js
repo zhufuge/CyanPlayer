@@ -21,11 +21,7 @@ class NewestMusic extends React.Component {
   }
 
   componentWillMount() {
-    Ajax('newest')().then(json => {
-      if (json) {
-        this.setState({ songs: json.songs })
-      }
-    })
+    Ajax('newest').then(json => json && this.setState({ songs: json.songs }))
   }
 
   handleSongClick(song) {

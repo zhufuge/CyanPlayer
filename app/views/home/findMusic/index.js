@@ -4,17 +4,18 @@ import { cyan500 } from 'material-ui/styles/colors'
 
 import Recommend from './Recommend'
 import Sheets from './Sheets'
-import Ranking from './Ranking'
+import Rank from './Rank'
 import Singers from './Singers'
 import Newest from './Newest'
 
 const DEFAULT = {
   labels: [
-    { label: "个性推荐", value: "a", component: Recommend },
-    { label: "歌单", value: "b", component: Sheets },
-    { label: "排行榜", value: "c", component: Ranking },
-    { label: "歌手", value: "d", component: Singers },
-    { label: "最新音乐", value: "e", component: Newest },
+    { label: "个性推荐", component: Recommend },
+    { label: "歌单", component: Sheets },
+    { label: "主播电台", component: Sheets },
+    { label: "排行榜", component: Rank },
+    { label: "歌手", component: Singers },
+    { label: "最新音乐", component: Newest },
   ]
 }
 
@@ -22,31 +23,28 @@ class FindMusic extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: DEFAULT.labels[0].value,
-      hover: '',
+      value: 3,
+      hover: -1,
     }
   }
 
   render() {
+    const state = this.state
     return (
       <Tabs
         inkBarStyle={{ background: cyan500 }}
         tabItemContainerStyle={styles.tabItem}
-        value={this.state.value}
-        onChange={(value) => this.setState({ value: value })}>
-        {DEFAULT.labels.map(v =>
+        value={state.value}
+        onChange={value => this.setState({ value })}>
+        {DEFAULT.labels.map((v, i) =>
           <Tab
-            onMouseOver={() => this.setState({ hover: v.value })}
-            onMouseOut={() => this.setState({ hover: '' })}
+            onMouseOver={() => this.setState({ hover: i })}
+            onMouseOut={() => this.setState({ hover: -1 })}
             label={v.label}
-            value={v.value}
-            buttonStyle={{ color: (
-              v.value === this.state.value ||
-              v.value === this.state.hover
-            ) ? cyan500 : '#666' }}>
-            {(v.value === 'a')
-             ? <v.component setTab={value => this.setState({ value })}/>
-             : <v.component />}
+            value={i}
+            buttonStyle={{ color: (i === state.value || i === state.hover)
+                                ? cyan500 : '#666' }}>
+            <v.component setTab={value => this.setState({ value })}/>
           </Tab>
         )}
       </Tabs>

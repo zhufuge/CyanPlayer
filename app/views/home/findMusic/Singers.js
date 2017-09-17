@@ -14,11 +14,7 @@ class SingerList extends React.Component {
   }
 
   componentWillMount() {
-    Ajax('singers')().then(json => {
-      if (json) {
-        this.setState({ singers: json.singers })
-      }
-    })
+    Ajax('singers').then(json => json && this.setState({ singers: json.singers }))
   }
 
   Cards() {

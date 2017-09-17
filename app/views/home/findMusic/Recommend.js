@@ -8,33 +8,18 @@ import Subheader from './Subheader'
 import CardPane from './CardPane'
 import List from './RecommendList'
 
-
-const DEFAULT = {
-  sheets: Array(10).fill(0).map((v, i) => i),
-  songs: Array(10).fill(0).map((v, i) => i),
-  singers: Array(10).fill(0).map((v, i) => i),
-}
-
 class Recommend extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      sheets: DEFAULT.sheets,
-      songs: DEFAULT.songs,
-      singers: DEFAULT.singers,
+      sheets: Array(10).fill(0).map((v, i) => i),
+      songs: Array(10).fill(0).map((v, i) => i),
+      singers: Array(10).fill(0).map((v, i) => i),
     }
   }
 
   componentWillMount() {
-    Ajax('recommend')().then(json => {
-      if (json) {
-        this.setState({
-          sheets: json.sheets,
-          songs: json.songs,
-          singers: json.singers,
-        })
-      }
-    })
+    Ajax('recommend').then(json => json && this.setState(Object.assign({}, json)))
   }
 
   handleSheetClick(sheet='默认歌单') {
@@ -51,12 +36,12 @@ class Recommend extends React.Component {
     const state = this.state
     return (
       <div style={styles.container}>
-        <Subheader title="推荐歌单" onClick={() => this.props.setTab('b')}/>
+        <Subheader title="推荐歌单" onClick={() => this.props.setTab(1)}/>
         <Divider />
         <CardPane
           items={state.sheets}
           onClickItem={(s) => this.handleSheetClick(s)} />
-        <Subheader title="推荐音乐" onClick={() => this.props.setTab('e')}/>
+        <Subheader title="最新音乐" onClick={() => this.props.setTab(5)}/>
         <Divider />
         <div style={styles.songs}>
           <List
@@ -68,7 +53,7 @@ class Recommend extends React.Component {
             start={6}
             onClickItem={(s) => this.handleSongClick(s)}/>
         </div>
-        <Subheader title="推荐歌手" onClick={() => this.props.setTab('d')}/>
+        <Subheader title="推荐歌手" onClick={() => this.props.setTab(4)}/>
         <Divider />
         <CardPane
           items={state.singers}

@@ -26,8 +26,8 @@ function lrc(id) {
     .catch(fetchError)
 }
 
-function songSheet(id, username) {
-  return fetch(`/songSheet?id=${id}&username=${ username }`, { method: 'GET' })
+function sheet(id, username) {
+  return fetch(`/sheet?id=${id}&username=${ username }`, { method: 'GET' })
     .then(toJSON)
     .catch(fetchError)
 }
@@ -45,13 +45,13 @@ function fetchGet(type) {
     .catch(fetchError)
 }
 
-export default function Ajax(type) {
+export default function Ajax(type, ...args) {
   switch(type) {
-  case 'sign': return sign
-  case 'song': return song
-  case 'lrc': return lrc
-  case 'songSheet': return songSheet
-  case 'downloadList': return downloadList
-  default: return () => fetchGet(type)
+  case 'sign': return sign(args)
+  case 'song': return song(args)
+  case 'lrc': return lrc(args)
+  case 'sheet': return sheet(args)
+  case 'downloadList': return downloadList(args)
+  default: return fetchGet(type)
   }
 }
