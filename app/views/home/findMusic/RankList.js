@@ -5,6 +5,9 @@ import Play from 'material-ui/svg-icons/av/play-circle-outline'
 const assign = Object.assign
 const DEFAULT = {
   items: Array(8).fill(false).map((v, i) => i),
+  title: "什么榜",
+  name: "Time to say goodbye",
+  singer: "Lauren...",
 }
 
 class RankList extends React.Component {
@@ -20,30 +23,43 @@ class RankList extends React.Component {
   render() {
     return (
       <div style={styles.container}>
-        <div className="flex-c-c" style={styles.header}>
+        <div
+          className="flex-c-c"
+          style={assign({}, this.props.headerStyle, styles.header)}>
           <div style={styles.title}>
-            <div style={styles.upper}>神</div>
-            <div style={styles.lower}>么榜</div>
+            <div style={styles.upper}>
+              {(this.props.title || DEFAULT.title)[0]}
+            </div>
+            <div style={styles.lower}>
+              {(this.props.title || DEFAULT.title).slice(1)}
+            </div>
             <div style={styles.date}>09月17日更新</div>
           </div>
           <Play
             onMouseOver={() => this.setState({ hoverPlay: true })}
             onMouseOut={() => this.setState({ hoverPlay: false })}
-            style={assign({ color: this.state.hoverPlay ? '#fff' : '#fffc' },
+            style={assign({ color: this.state.hoverPlay ? '#fff' : '#fffa' },
                 styles.play)}/>
         </div>
-        <div style={styles.list}>
+        <div>
           {(this.props.items || DEFAULT.items).map((v, i) =>
             <div
               onMouseOver={() => this.setState({ hoverItem: i })}
               onMouseOut={() => this.setState({ hoverItem: -1 })}
               className="flex-c-c"
               style={assign(
-                  { background: this.state.hoverItem === i ? '#eee' :
-                                (i % 2 === 0 ? '#fafafa' : '#fff') },
-                  styles.item
+                { background: this.state.hoverItem === i ? '#eee' :
+                              (i % 2 === 0 ? '#fafafa' : '#fff') },
+                styles.item
               )}>
-              {i + 1}--0123456789
+            <span style={{ fontSize: 17, color: i < 3 ? '#C62828' : '#555', }}>
+              {i + 1}
+            </span>
+            <span className="flex-c-c" style={{ width: 28, fontSize: 16 }}>
+              -
+            </span>
+            <span style={styles.name}>{(v.name || DEFAULT.name)}</span>
+            <span style={styles.info}>{(v.info || DEFAULT.singer)}</span>
             </div>
           )}
         </div>
@@ -67,10 +83,10 @@ const styles = {
   container: {
     border: '1px solid #eee',
     fontSize: 13,
+    color: '#888',
   },
   header: {
     height: 100,
-    background: 'skyblue',
     justifyContent: 'space-between',
     padding: '0 20px',
     cursor: 'pointer',
@@ -104,12 +120,19 @@ const styles = {
     width: 54,
     height: 54,
   },
-  list: {
-  },
   item: {
     height: 34,
     justifyContent: 'start',
     padding: '0 8px 0 12px',
+    position: 'relative',
+  },
+  name: {
+    fontSize: 14,
+    color: '#555',
+  },
+  info: {
+    position: 'absolute',
+    right: 10,
   },
   footer: {
     justifyContent: 'end',

@@ -4,14 +4,24 @@ import { setPresentSong, setHomeSubj, setSongSheet } from '../../../actions'
 import Ajax from '../../../common/Ajax'
 
 import Divider from 'material-ui/Divider'
+import {
+  blue500,
+  cyan400,
+  pink400,
+  red700,
+  deepPurple700,
+} from 'material-ui/styles/colors'
 import List from './RankList'
 import CardPane from './CardPane'
 
 const DEFAULT = {
-  song: {
-    name: "Time to say goodbye",
-    singer: "Lauren Aquilina",
-  },
+  list: [
+    { title: '飙升榜', color: blue500 },
+    { title: '新歌榜', color: cyan400 },
+    { title: '原创榜', color: pink400 },
+    { title: '热歌榜', color: red700 },
+    { title: '歌手榜', color: deepPurple700 },
+  ]
 }
 
 class RankingLists extends React.Component {
@@ -31,6 +41,19 @@ class RankingLists extends React.Component {
     Ajax('rank').then(json => json && this.setState(Object.assign({}, json)))
   }
 
+  componentDidMount() {
+    this.updateDimensions.call(this)
+    window.addEventListener('resize', this.updateDimensions.bind(this))
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions.bind(this))
+  }
+
+  updateDimensions() {
+    this.setState({ offsetWidth: this.wrapper.offsetWidth })
+  }
+
   handleSongClick(song) {
     this.props.setPresentSong(song)
     this.props.setHomeSubj('2')
@@ -46,12 +69,14 @@ class RankingLists extends React.Component {
       <div style={styles.container}>
         <div style={styles.title}>官方榜</div>
         <Divider />
-        <div style={styles.wrapper}>
-          <List />
-          <List />
-          <List />
-          <List />
-          <List />
+        <div
+          ref={ref => this.wrapper = ref}
+          style={styles.wrapper(Math.trunc(this.state.offsetWidth / 260))}>
+          {DEFAULT.list.map((v, i) =>
+            <List
+              title={v.title}
+              headerStyle={{ background: v.color }} />
+          )}
         </div>
         <div style={styles.title}>全球榜</div>
         <Divider />
@@ -72,12 +97,12 @@ const styles = {
     fontSize: 18,
     margin: '0 0 8px',
   },
-  wrapper: {
+  wrapper: (n) => ({
     display: 'grid',
-    gridTemplateColumns: '1fr 1fr 1fr',
+    gridTemplateColumns: `repeat(${n}, 1fr)`,
     gridGap: '24px 12px',
     margin: '12px auto 36px',
-  },
+  }),
 }
 
 const mapDispatchToProps = (dispatch) => {
