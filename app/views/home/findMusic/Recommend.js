@@ -6,6 +6,7 @@ import Ajax from '../../../common/Ajax'
 import Divider from 'material-ui/Divider'
 import Subheader from './Subheader'
 import CardPane from './CardPane'
+import Card from './Card'
 import List from './RecommendList'
 
 class Recommend extends React.Component {
@@ -38,9 +39,14 @@ class Recommend extends React.Component {
       <div style={styles.container}>
         <Subheader title="推荐歌单" onClick={() => this.props.setTab(1)}/>
         <Divider />
-        <CardPane
-          items={state.sheets}
-          onClickItem={(s) => this.handleSheetClick(s)} />
+        <CardPane>
+          {state.sheets.map(v =>
+            <Card
+              value={v.name}
+              onClick={() => this.handleSheetClick(v.id)}
+              src={v.src}/>
+          )}
+        </CardPane>
         <Subheader title="最新音乐" onClick={() => this.props.setTab(5)}/>
         <Divider />
         <div style={styles.songs}>
@@ -55,9 +61,14 @@ class Recommend extends React.Component {
         </div>
         <Subheader title="推荐歌手" onClick={() => this.props.setTab(4)}/>
         <Divider />
-        <CardPane
-          items={state.singers}
-          onClickItem={(s) => this.handleSheetClick(s)} />
+        <CardPane>
+          {state.singers.map(v =>
+            <Card
+              value={v.name}
+              onClick={() => this.handleSheetClick(v.id)}
+              src={v.src}/>
+          )}
+        </CardPane>
       </div>
     )
   }

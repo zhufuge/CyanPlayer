@@ -52,7 +52,7 @@ class RankList extends React.Component {
                               (i % 2 === 0 ? '#fafafa' : '#fff') },
                 styles.item
               )}>
-            <span style={{ fontSize: 17, color: i < 3 ? '#C62828' : '#555', }}>
+            <span style={{ fontSize: 17, color: i < 3 ? '#d74d4d' : '#777', }}>
               {i + 1}
             </span>
             <span className="flex-c-c" style={{ width: 28, fontSize: 16 }}>

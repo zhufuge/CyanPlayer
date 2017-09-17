@@ -8,6 +8,8 @@ import Icon_DropDown from 'material-ui/svg-icons/Navigation/arrow-drop-down'
 import { cyan500 } from 'material-ui/styles/colors'
 
 import CardPane from './CardPane'
+import Card from './Card'
+import LineSelector from './LineSelector'
 
 const DEFAULT = {
   labels: [ '华语', '流行', '电子', '轻音乐', 'ACG', '怀旧'],
@@ -43,22 +45,18 @@ class Sheets extends React.Component {
             icon={<Icon_DropDown/>}
             style={styles.button}
           />
-          <span  style={{ color: '#444' }}>热门标签：</span>
-          {DEFAULT.labels.map((v, i) => [
-             <span style={{ color: '#777', fontSize: 12 }}>
-               {i === 0 ? "" : "|"}
-             </span>,
-             <span
-               style={styles.label(this.state.hoverLabel === i)}
-               onMouseOver={() => this.setState({ hoverLabel: i })}
-               onMouseOut={() => this.setState({ hoverLabel: -1 })}>
-               {v}
-             </span>
-          ])}
+          <LineSelector
+            title="热门标签："
+            items={DEFAULT.labels}/>
         </div>
-        <CardPane
-          items={this.state.sheets}
-          onClickItem={(s) => this.handleSheetClick(s || '默认歌单')}/>
+        <CardPane>
+          {this.state.sheets.map(v =>
+            <Card
+              value={v.name}
+              onClick={() => this.handleSheetClick(v.id)}
+              src={v.src}/>
+          )}
+        </CardPane>
       </div>
     )
   }
@@ -76,11 +74,6 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
   },
-  label: (hover) => ({
-    margin: '0 15px',
-    color: (hover ? '#444' : '#777'),
-    cursor: 'pointer'
-  }),
 }
 
 const mapDispatchToProps = (dispatch) => {

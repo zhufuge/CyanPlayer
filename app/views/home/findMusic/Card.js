@@ -31,7 +31,9 @@ class Card extends React.Component {
           <img
             src={this.props.src || DEFAULT.src}
             style={assign({}, styles.image, props.imgStyle)}/>
-          {this.state.hoverImg ? <Play style={styles.mask}/> : null}
+          { this.props.playIcon && this.state.hoverImg
+          ? <Play style={styles.mask}/>
+          : null}
         </div>
         <p
           onMouseOver={() => this.setState({ hoverText: true })}
@@ -68,7 +70,7 @@ const styles = {
     right: 9,
   },
   text: {
-    marginTop: 5,
+    margin: '5px 0',
     fontSize: 15,
   }
 }

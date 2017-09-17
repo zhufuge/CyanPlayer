@@ -13,6 +13,7 @@ import {
 } from 'material-ui/styles/colors'
 import List from './RankList'
 import CardPane from './CardPane'
+import Card from './Card'
 
 const DEFAULT = {
   list: [
@@ -80,9 +81,14 @@ class RankingLists extends React.Component {
         </div>
         <div style={styles.title}>全球榜</div>
         <Divider />
-        <CardPane
-          items={this.state.sheets}
-          onClickItem={(s) => s} />
+        <CardPane>
+          {this.state.sheets.map(v =>
+            <Card
+              value={v.name}
+              onClick={() => v.id}
+              src={v.src}/>
+          )}
+        </CardPane>
       </div>
     )
   }

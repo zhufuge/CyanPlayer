@@ -1,7 +1,5 @@
 import React from 'react'
 
-import Card from './Card'
-
 class CardPane extends React.Component {
   constructor(props) {
     super(props)
@@ -29,15 +27,7 @@ class CardPane extends React.Component {
       <div
         ref={ref => this.container = ref}
         style={styles.container(repeat)}>
-        {props.items.map(v =>
-          <Card
-            style={props.itemStyle}
-            imgStyle={props.itemImgStyle}
-            textStyle={props.itemTextStyle}
-            value={v.name}
-            onClick={() => props.onClickItem(v.id)}
-            src={v.src}/>
-        )}
+        {this.props.children}
       </div>
     )
   }
