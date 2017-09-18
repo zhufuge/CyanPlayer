@@ -84,6 +84,7 @@ class RankingLists extends React.Component {
         <CardPane>
           {this.state.sheets.map(v =>
             <Card
+              primary={true}
               value={v.name}
               onClick={() => v.id}
               src={v.src}/>

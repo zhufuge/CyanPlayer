@@ -44,18 +44,19 @@ class Sheets extends React.Component {
             labelPosition="before"
             icon={<Icon_DropDown/>}
             style={styles.button}
-          />
-          <LineSelector
-            title="热门标签："
-            items={DEFAULT.labels}/>
-        </div>
-        <CardPane>
-          {this.state.sheets.map(v =>
-            <Card
-              value={v.name}
-              onClick={() => this.handleSheetClick(v.id)}
-              src={v.src}/>
-          )}
+      />
+      <LineSelector
+      title="热门标签："
+      items={DEFAULT.labels}/>
+      </div>
+      <CardPane>
+      {this.state.sheets.map(v =>
+        <Card
+          primary={true}
+          value={v.name}
+          onClick={() => this.handleSheetClick(v.id)}
+          src={v.src}/>
+      )}
         </CardPane>
       </div>
     )

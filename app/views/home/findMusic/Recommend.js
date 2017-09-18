@@ -13,9 +13,9 @@ class Recommend extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      sheets: Array(10).fill(0).map((v, i) => i),
-      songs: Array(10).fill(0).map((v, i) => i),
-      singers: Array(10).fill(0).map((v, i) => i),
+      sheets: Array(10).fill(false),
+      songs: Array(10).fill(false),
+      singers: Array(10).fill(false),
     }
   }
 
@@ -42,6 +42,7 @@ class Recommend extends React.Component {
         <CardPane>
           {state.sheets.map(v =>
             <Card
+              primary={true}
               value={v.name}
               onClick={() => this.handleSheetClick(v.id)}
               src={v.src}/>
@@ -64,6 +65,7 @@ class Recommend extends React.Component {
         <CardPane>
           {state.singers.map(v =>
             <Card
+              primary={true}
               value={v.name}
               onClick={() => this.handleSheetClick(v.id)}
               src={v.src}/>

@@ -31,7 +31,7 @@ class Card extends React.Component {
           <img
             src={this.props.src || DEFAULT.src}
             style={assign({}, styles.image, props.imgStyle)}/>
-          { this.props.playIcon && this.state.hoverImg
+          { this.props.primary && this.state.hoverImg
           ? <Play style={styles.mask}/>
           : null}
         </div>

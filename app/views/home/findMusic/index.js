@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { Tabs, Tab } from 'material-ui/Tabs'
 import { cyan500 } from 'material-ui/styles/colors'
 
@@ -23,7 +24,7 @@ class FindMusic extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: 4,
+      value: 5,
       hover: -1,
     }
   }
@@ -54,9 +55,9 @@ class FindMusic extends React.Component {
 
 const styles = {
   tabItem: {
-    background: 'rgba(0,0,0,0)',
-    borderBottom: '2px solid #ccc'
-  }
+    background: '#fff0',
+    borderBottom: '2px solid #ccc',
+  },
 }
 
 export default FindMusic
