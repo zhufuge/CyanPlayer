@@ -23,7 +23,6 @@ class RecommendList extends React.Component {
       <div className="list">
       {props.items.map((v, i) =>
         <div
-          key={'recommend-songs-' + i + v.name}
           onClick={() => props.onClickItem(v.id)}
           onMouseOver={() => this.setState({ hover: i })}
           onMouseOut={() => this.setState({ hover: -1 })}
