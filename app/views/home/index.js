@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import Header from '../../components/Header'
-import Player from '../../components/Player'
+import Footer from '../../components/Footer'
 
 import Sider from './Sider'
 import FindMusic from './FindMusic'
@@ -66,7 +66,7 @@ class Home extends React.Component {
             })}/>
           </div>
         </div>
-        <Player />
+        <Footer />
       </div>
     )
   }
@@ -74,7 +74,7 @@ class Home extends React.Component {
 
 const styles = {
   container: {
-    margin: '54px 0 54px 240px',
+    margin: '54px 0 54px 220px',
     padding: 20,
     overflowX: 'hidden',
     overflowY: 'scroll',

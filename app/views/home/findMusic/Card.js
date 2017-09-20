@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Play from 'material-ui/svg-icons/av/play-circle-outline'
+import { curtail } from '../../../common/util'
 
 const DEFAULT = {
   src: '/img/0.png',
@@ -8,7 +9,6 @@ const DEFAULT = {
 }
 
 const assign = Object.assign
-const curtail = (s, l=21) => (s.l < l) ? s : s.slice(0, l - 1) + '...'
 
 class Card extends React.Component {
   constructor(props) {
@@ -45,7 +45,7 @@ class Card extends React.Component {
               styles.text,
               props.textStyle,
           )}>
-          {props.value ? curtail(props.value) : DEFAULT.value}
+          {props.value ? curtail(props.value, 21) : DEFAULT.value}
         </span>
       </div>
     )

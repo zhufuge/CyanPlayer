@@ -35,13 +35,12 @@ class Player extends React.Component {
     } else {
       this.state.audio.play()
       this.interval = setInterval(() => {
-        const time = this.state.time
-        if (time + 1 >= this.state.totalTime &&
+        if (this.state.time + 1 >= this.state.totalTime &&
             this.interval) {
           clearInterval(this.interval)
-          return
+        } else {
+          this.setState({ time: this.state.time + 1 })
         }
-        this.setState({ time: time + 1 })
       }, 1000)
     }
     this.setState({ playing: !playing, totalTime: this.state.audio.duration })
@@ -62,10 +61,10 @@ class Player extends React.Component {
         <Handles
           playing={this.state.playing}
           onClickPlay={() => this.changePlayState()} />
-        <div style={styles.slider}>
+        <div className="flex-c-c">
           <span style={styles.span}>{secFormat(state.time)}</span>
           <Slider
-            style={{ width: 500, height: 66 }}
+            style={{ width: 450, height: 66 }}
             defaultValue={0}
             value={Number.isNaN(process) ? 0 : process}
             onChange={(event, value) => this.handleProcess(event, value)}/>
@@ -82,17 +81,7 @@ class Player extends React.Component {
 
 const styles = {
   container: {
-    position: 'fixed',
-    zIndex: 100,
-    bottom: 0,
     height: 54,
-    width: '100%',
-    backgroundColor: '#fafafa',
-    borderTop: '1px solid #eaeaea',
-  },
-  slider: {
-    display: 'flex',
-    alignItems: 'center',
   },
   span: {
     color: '#666',
