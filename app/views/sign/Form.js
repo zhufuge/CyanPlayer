@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { signin } from '../../actions'
+import { setUsername } from '../../actions'
 import Ajax from '../../common/Ajax.js'
 
 import RaisedButton from 'material-ui/RaisedButton'
@@ -14,7 +14,7 @@ class Form extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isSignin: true,
+      isIn: true,
       username: '',
       password: '',
       warning: false,
@@ -23,11 +23,11 @@ class Form extends React.Component {
   handleClicked() {
     const state = this.state,
       username = state.username
-    if (!state.isSignin) {
+    if (!state.isIn) {
       this.props.setUsername(username)
       window.history.back(-1)
     } else {
-      Ajax('sign')(username, state.password, state.isSignin).then((res) => {
+      Ajax('sign')(username, state.password, state.isIn).then((res) => {
         if (res.ok) {
           this.props.setUsername(username)
           window.history.back(-1)
@@ -40,7 +40,7 @@ class Form extends React.Component {
 
   render() {
     const state = this.state,
-      isSignin = state.isSignin
+      isIn = state.isIn
     return (
       <div className="flex-c-c" style={styles.container}>
         <RadiusInput
@@ -55,7 +55,7 @@ class Form extends React.Component {
           switchWarning={() => this.switchWarning}
           getValue={(password) => this.setState({ password })}/>
         <RaisedButton
-          label={isSignin ? '登录' : '注册'}
+          label={isIn ? '登录' : '注册'}
           labelStyle={{ fontSize: 20 }}
           primary={true}
           onClick={() => this.handleClicked()}
@@ -64,9 +64,8 @@ class Form extends React.Component {
           overlayStyle={styles.submit}/>
         <br/>
         <Link
-          isSignin={isSignin}
-          switchSign={(isSignin) => this.setState({ isSignin })}
-        />
+          isSignin={isIn}
+          switchSign={(isIn) => this.setState({ isIn })} />
       </div>
     )
   }
@@ -85,7 +84,7 @@ const styles = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setUsername: (username) => dispatch(signin(username)),
+    setUsername: (username) => dispatch(setUsername(username)),
   }
 }
 

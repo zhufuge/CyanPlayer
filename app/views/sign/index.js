@@ -5,9 +5,12 @@ import Form from './Form'
 class Sign extends React.Component {
   render() {
     return (
-      <div className="flex-c-c" style={styles.container}>
+      <div className="flex-c-c" style={Object.assign({
+          height: window.innerHeight,
+          width: window.innerWidth,
+      }, styles.container)}>
         <div className="flex-c-c" style={styles.content}>
-          <h1 style={styles.h1}>欢迎进入</h1>
+          <h1 style={styles.h1}>欢迎进入我的世界</h1>
           <p style={styles.p}>
             人生的一切境界，上至高山之巅，下至低谷之地，
           </p>
@@ -23,8 +26,6 @@ class Sign extends React.Component {
 const styles = {
   container: {
     flexDirection: 'column',
-    height: window.innerHeight,
-    width: window.innerWidth,
     background: `no-repeat bottom url('../img/background.jpg')`,
   },
   content: {

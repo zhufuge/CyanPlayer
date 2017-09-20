@@ -22,29 +22,31 @@ class Card extends React.Component {
   render() {
     const props = this.props
     return (
-      <div style={assign({}, styles.container, props.style)}
-           onClick={() => this.props.onClick()}>
+      <div style={assign({}, styles.container, props.style)}>
         <div
           onMouseOver={() => this.setState({ hoverImg: true })}
           onMouseOut={() => this.setState({ hoverImg: false })}
-          style={{ position: 'relative' }}>
+          onClick={() => this.props.onClick()}
+          style={{ position: 'relative', cursor: 'pointer' }}>
           <img
             src={this.props.src || DEFAULT.src}
             style={assign({}, styles.image, props.imgStyle)}/>
           { this.props.primary && this.state.hoverImg
-          ? <Play style={styles.mask}/>
-          : null}
+            // FIXME hover bug
+            ? <Play style={styles.mask}/>
+            : null}
         </div>
-        <p
+        <span
           onMouseOver={() => this.setState({ hoverText: true })}
           onMouseOut={() => this.setState({ hoverText: false })}
+          onClick={() => this.props.onClick()}
           style={assign(
-          { color: this.state.hoverText ? '#333' : '#555' },
-          styles.text,
-          props.textStyle,
+              { color: this.state.hoverText ? '#333' : '#555' },
+              styles.text,
+              props.textStyle,
           )}>
           {props.value ? curtail(props.value) : DEFAULT.value}
-        </p>
+        </span>
       </div>
     )
   }
@@ -54,7 +56,6 @@ const styles = {
   container: {
     width: 178,
     height: 236,
-    cursor: 'pointer',
   },
   image: {
     width: 176,
@@ -68,10 +69,12 @@ const styles = {
     color: '#fffc',
     bottom: 12,
     right: 9,
+    zIndex: 100,
   },
   text: {
     margin: '5px 0',
     fontSize: 15,
+    cursor: 'pointer',
   }
 }
 

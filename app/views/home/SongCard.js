@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setPresentSongSrc } from '../../actions'
+import { setSrc } from '../../actions'
 import Ajax from '../../common/Ajax'
 
 import RaisedButton from 'material-ui/RaisedButton'
@@ -8,7 +8,7 @@ import Favorite from 'material-ui/svg-icons/action/favorite'
 import FileDownload from 'material-ui/svg-icons/file/file-download'
 import CreateNewFolder from 'material-ui/svg-icons/file/create-new-folder'
 
-const primary = {
+const DEFAULT = {
   name: 'Time to say goodbye',
   album: '...',
   singer: 'Lauren',
@@ -29,7 +29,7 @@ class SongCard extends React.Component {
   }
 
   componentWillMount() {
-    Ajax('song')(this.props.song).then(json => {
+    Ajax('song', this.props.song).then(json => {
       if (json) {
         this.setState({
           name: json.name,
@@ -38,7 +38,7 @@ class SongCard extends React.Component {
           img: json.img,
           audio: json.audio,
         })
-        this.props.setPresentSongSrc(json.audio)
+        this.props.setSrc(json.audio)
         return Ajax('lrc')(json.lrc)
       } else {
         return ''
@@ -70,12 +70,12 @@ class SongCard extends React.Component {
   }
 
   render() {
-    const song = (this.state.name) ? this.state : primary
+    const song = (this.state.name) ? this.state : DEFAULT
     return (
       <div style={styles.container}>
         <div style={styles.left}>
           <div className="flex-c-c" style={styles.imgContainer}>
-            <img alt="" src={this.state.img || primary.img}/>
+            <img alt="" src={this.state.img || DEFAULT.img}/>
           </div>
           <div style={styles.operation}>
             <RaisedButton
@@ -169,13 +169,13 @@ const styles = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    song: (ownProps.type === 'random') ? '0' : state.presentSong
+    song: (ownProps.type === 'random') ? '0' : state.song
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setPresentSongSrc: (src) => dispatch(setPresentSongSrc(src))
+    setSrc: (src) => dispatch(setSrc(src))
   }
 }
 

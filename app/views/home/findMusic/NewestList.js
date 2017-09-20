@@ -1,6 +1,7 @@
 import React from 'react'
 
 import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import Play from 'material-ui/svg-icons/av/play-circle-outline'
 import Collection from 'material-ui/svg-icons/file/create-new-folder'
 import { cyan500 } from 'material-ui/styles/colors'
@@ -28,16 +29,17 @@ class NewestList extends React.Component {
     const props = this.props
     return (
       <div className="list">
-      <div className="flex-c-c" style={styles.header}>
-      <div className="flex-c-c">
-      <Play color={cyan500}/>
-      <span style={styles.playAll}>播放全部</span>
-      </div>
-      <RaisedButton
-      label="收藏全部"
-      labelStyle={{ color: '#666', }}
-      icon={<Collection color={'#999'} style={{ width: 20, marginBottom: 3 }}/>}
-      style={styles.collect}/>
+        <div className="flex-c-c" style={styles.header}>
+          <FlatButton
+            label="播放全部"
+            labelStyle={{ color: '#666' }}
+            icon={<Play color={cyan500}/>}
+            style={{ height: 32, lineHeight: '32px' }}/>
+          <RaisedButton
+            label="收藏全部"
+            labelStyle={{ color: '#666', }}
+            icon={<Collection color={'#999'} style={{ width: 20, marginBottom: 3 }}/>}
+            style={{ height: 32 }}/>
         </div>
         {props.items.map((v, i) =>
           <div
@@ -83,14 +85,6 @@ const styles = {
     justifyContent: 'space-between',
     height: 48,
     padding: '0 12px',
-  },
-  playAll: {
-    marginLeft: 5,
-    color: '#555',
-    fontSize: 14,
-  },
-  collect: {
-    height: 26,
   },
   listItem: {
     display: 'grid',

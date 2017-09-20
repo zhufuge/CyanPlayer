@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setPresentSong, setPage } from '../../actions'
+import { setSong, setPage } from '../../actions'
 import Ajax from '../../common/Ajax'
 
 import {
@@ -31,7 +31,7 @@ class SongSheet extends React.Component {
   }
 
   componentWillMount() {
-    Ajax('songSheet')(this.props.sheet, this.props.username).then(json => {
+    Ajax('sheet', this.props.sheet, this.props.username).then(json => {
       if (json) {
         this.setState({
           name: json.name,
@@ -59,7 +59,7 @@ class SongSheet extends React.Component {
 
   handleRowSelected(selected) {
     const index = parseInt(selected.toString())
-    this.props.setPresentSong(this.state.songs[index].id)
+    this.props.setSong(this.state.songs[index].id)
     this.props.setPage('2')
   }
 
@@ -147,14 +147,14 @@ const styles = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    sheet: (ownProps.type === 'mine') ? '0' : state.songSheet,
+    sheet: (ownProps.type === 'mine') ? '0' : state.sheet,
     username: state.username,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setPresentSong: (song) => dispatch(setPresentSong(song)),
+    setSong: (song) => dispatch(setSong(song)),
     setPage: (page) => dispatch(setPage(page)),
   }
 }

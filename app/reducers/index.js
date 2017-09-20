@@ -7,38 +7,38 @@ const username = (state='登录', action) => {
   }
 }
 
-const presentSong = (state='001', action) => {
+const song = (state='001', action) => {
   switch (action.type) {
-  case 'SET_PRESENT_SONG': return action.song
+  case 'SET_SONG': return action.song
   default: return state
   }
 }
 
-const presentSongSrc = (state='/music/TimeToSayGoodbye.mp3', action) => {
+const src = (state='/music/TimeToSayGoodbye.mp3', action) => {
   switch (action.type) {
-  case 'SET_PRESENT_SONG_SRC': return action.src
+  case 'SET_SRC': return action.src
   default: return state
   }
 }
 
-const homeSubj = (state='0', action) => {
+const subj = (state='0', action) => {
   switch (action.type) {
-  case 'SET_HOME_SUBJ': return action.homeSubj
+  case 'SET_SUBJ': return action.subj
   default: return state
   }
 }
 
-const songSheet = (state='', action) => {
+const sheet = (state='', action) => {
   switch (action.type) {
-  case 'SET_SONG_SHEET': return action.sheet
+  case 'SET_SHEET': return action.sheet
   default: return state
   }
 }
 
 export default combineReducers({
   username,
-  presentSong,
-  presentSongSrc,
-  homeSubj,
-  songSheet,
+  song,
+  src,
+  subj,
+  sheet,
 })

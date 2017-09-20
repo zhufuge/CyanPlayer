@@ -2,19 +2,33 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import Header from '../../components/Header'
-import Sider from '../../components/Sider'
 import Player from '../../components/Player'
 
+import Sider from './Sider'
 import FindMusic from './FindMusic'
 import SongCard from './SongCard'
 import DownloadList from './DownloadList'
 import Upload from './Upload'
 import SongSheet from './SongSheet'
 
+const DEFAULT = {
+  subj: [
+    FindMusic,
+    SongCard,
+    SongCard,
+    Upload,
+    DownloadList,
+    SongSheet,
+  ],
+}
+
 class Home extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { innerHeight: window.innerHeight }
+    this.state = {
+      innerHeight: window.innerHeight,
+      scrollTop: false,
+    }
   }
 
   componentDidMount() {
@@ -25,32 +39,31 @@ class Home extends React.Component {
     window.removeEventListener('resize', this.updateDimensions.bind(this))
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    if (this.container &&
+        nextState.scrollTop !== this.state.scrollTop) {
+      this.container.scrollTop = 0
+    }
+  }
+
   updateDimensions() {
     this.setState({ innerHeight: window.innerHeight })
   }
 
-  subj() {
-    switch(this.props.subj) {
-    case '0': return <FindMusic />
-    case '1': return <SongCard key="songcard1" type="random"/>
-    case '2': return <SongCard key="songcard2"/>
-    case '3': return <Upload />
-    case '4': return <DownloadList />
-    case '5': return <SongSheet type="mine"/>
-    default: return <SongSheet />
-    }
-  }
-
   render() {
+    const Component = DEFAULT.subj[this.props.subj]
     return (
       <div>
         <Header />
         <Sider />
-        <div style={Object.assign({
-            height: this.state.innerHeight - 148,
-        }, styles.container) }>
+        <div
+          ref={ref => this.container = ref}
+          style={Object.assign({ height: this.state.innerHeight - 148, },
+              styles.container) }>
           <div style={{ margin: '0 auto', maxWidth: 980 }}>
-            {this.subj()}
+            <Component scrollTop={() => this.setState({
+                scrollTop: !this.state.scrollTop
+            })}/>
           </div>
         </div>
         <Player />
@@ -70,7 +83,7 @@ const styles = {
 
 const mapStateToProps = (state) => {
   return {
-    subj: state.homeSubj,
+    subj: state.subj,
   }
 }
 

@@ -20,42 +20,53 @@ class RecommendList extends React.Component {
   render() {
     const props = this.props
     return (
-      <div className="list">
-      {props.items.map((v, i) =>
-        <div
-          onClick={() => props.onClickItem(v.id)}
-          onMouseOver={() => this.setState({ hover: i })}
-          onMouseOut={() => this.setState({ hover: -1 })}
-          style={Object.assign(this.state.hover === i
-                             ? { background: '#eee' }
-                             : (i % 2 === 0 ? {} : { background: '#fafafa' }),
-              styles.listItem)}>
-          <div className="flex-c-c" style={styles.number}>
-            {(i + props.start).toString().padStart(2, '0')}
-          </div>
-          <div className="flex-c-c">
-            <img style={styles.img} src={DEFAULT.src} alt="" />
-            <Play style={styles.mask}/>
-          </div>
-          <div className="flex-c-c" style={styles.info}>
-            <div style={styles.name}>{v.name || DEFAULT.name}</div>
-            <div style={Object.assign(
-                { color: this.state.hover === i ? '#666' : '#999' },
-                styles.singer)}>
-              {v.singer || DEFAULT.singer}
+      <div className="flex-wrap" style={styles.container}>
+        {props.items.map((v, i) =>
+          <div
+            onDoubleClick={() => this.props.setSong(v.id || DEFAULT.id)}
+            onMouseOver={() => this.setState({ hover: i })}
+            onMouseOut={() => this.setState({ hover: -1 })}
+            style={Object.assign(
+                i < 5 ? {} : { borderLeft: '1px solid #eee' },
+                (i < 5 && i % 2 === 0) || (i >= 5 && i % 2 === 1)
+                ? {} : { background: '#fafafa' },
+                this.state.hover === i ? { background: '#eee' } : {},
+                styles.listItem)}>
+            <div className="flex-c-c" style={styles.number}>
+              {(i + 1).toString().padStart(2, '0')}
             </div>
-          </div>
-        </div>)}
+            <div
+              className="flex-c-c"
+              onClick={() => this.props.setSong(v.id || DEFAULT.id)}>
+              <img style={styles.img} src={DEFAULT.src} alt="" />
+              <Play style={styles.mask}/>
+            </div>
+            <div className="flex-c-c" style={styles.info}>
+              <div style={styles.name}>{v.name || DEFAULT.name}</div>
+              <div style={Object.assign(
+                  { color: this.state.hover === i ? '#666' : '#999' },
+                  styles.singer)}>
+                {v.singer || DEFAULT.singer}
+              </div>
+            </div>
+          </div>)}
       </div>
     )
   }
 }
 
 const styles = {
+  container: {
+    margin: '16px auto 36px',
+    flexDirection: 'column',
+    height: 320,
+    border: '1px solid #eee',
+  },
   listItem: {
     display: 'grid',
     gridTemplateColumns: '48px 64px 1fr',
     height: 64,
+    cursor: 'default',
   },
   number: {
     color: '#999',

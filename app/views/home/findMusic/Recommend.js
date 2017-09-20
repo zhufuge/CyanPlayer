@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setPresentSong, setHomeSubj, setSongSheet } from '../../../actions'
+import { setSong, setSubj, setSheet } from '../../../actions'
 import Ajax from '../../../common/Ajax'
 
 import Divider from 'material-ui/Divider'
@@ -24,13 +24,8 @@ class Recommend extends React.Component {
   }
 
   handleSheetClick(sheet='默认歌单') {
-    this.props.setSongSheet(sheet)
-    this.props.setHomeSubj('6')
-  }
-
-  handleSongClick(song) {
-    this.props.setPresentSong(song)
-    this.props.setHomeSubj('2')
+    this.props.setSheet(sheet)
+    this.props.setSubj('6')
   }
 
   render() {
@@ -48,19 +43,12 @@ class Recommend extends React.Component {
               src={v.src}/>
           )}
         </CardPane>
-        <Subheader title="最新音乐" onClick={() => this.props.setTab(5)}/>
+        <Subheader title="最新音乐" onClick={() => this.props.setTab(4)}/>
         <Divider />
-        <div style={styles.songs}>
-          <List
-            items={state.songs.filter((v, i, s) => i < s.length / 2)}
-            start={1}
-            onClickItem={(s) => this.handleSongClick(s)}/>
-          <List
-            items={state.songs.filter((v, i, s) => i >= s.length / 2)}
-            start={6}
-            onClickItem={(s) => this.handleSongClick(s)}/>
-        </div>
-        <Subheader title="推荐歌手" onClick={() => this.props.setTab(4)}/>
+        <List
+          items={state.songs}
+          setSong={(s) => this.props.setSong(s)}/>
+        <Subheader title="推荐歌手" onClick={() => this.props.setTab(3)}/>
         <Divider />
         <CardPane>
           {state.singers.map(v =>
@@ -80,18 +68,13 @@ const styles = {
   container: {
     marginTop: 26,
   },
-  songs: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    margin: '16px auto 36px',
-  },
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setPresentSong: (song) => dispatch(setPresentSong(song)),
-    setSongSheet: (sheet) => dispatch(setSongSheet(sheet)),
-    setHomeSubj: (subj) => dispatch(setHomeSubj(subj)),
+    setSong: (song) => dispatch(setSong(song)),
+    setSheet: (sheet) => dispatch(setSheet(sheet)),
+    setSubj: (subj) => dispatch(setSubj(subj)),
   }
 }
 

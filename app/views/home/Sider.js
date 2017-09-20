@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setHomeSubj } from '../actions'
+import { setSubj } from '../../actions'
 
 import { List, ListItem, makeSelectable } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
@@ -23,7 +23,7 @@ class Sider extends React.Component {
       <div style={ styles.container }>
         <SelectableList
           value={subj}
-          onChange={(event, index) => this.props.setHomeSubj(index)}>
+          onChange={(event, index) => this.props.setSubj(index)}>
           <Subheader>推荐</Subheader>
           <ListItem value="0" primaryText="发现音乐" leftIcon={<MusicNote />} />
           <ListItem value="1" primaryText="随机音乐" leftIcon={<MusicVideo />} />
@@ -86,7 +86,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setHomeSubj: (subj) => dispatch(setHomeSubj(subj)),
+    setSubj: (subj) => dispatch(setSubj(subj)),
   }
 }
 

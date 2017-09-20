@@ -1,20 +1,25 @@
 import React from 'react'
 
+import { cyan500, cyan700 } from 'material-ui/styles/colors'
+
 class CircleIconButton extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { hover: false }
+    this.state = {
+      hover: false,
+    }
   }
 
   render() {
-    const props = this.props,
-      backgroundColor = props.hover || styles.hover,
-      container = Object.assign(this.state.hover ? { backgroundColor } : {},
-        styles.container, props.style)
+    const props = this.props
     return (
       <div
+        title={props.title}
         className="flex-c-c"
-        style={container}
+        style={Object.assign(
+            { background: this.state.hover ? cyan700 : cyan500 },
+            styles.container,
+            props.style)}
         onMouseOver={() => this.setState({ hover: true })}
         onMouseOut={() => this.setState({ hover: false })}
         onClick={() => props.onClick.call(this) }>
@@ -28,11 +33,9 @@ const styles = {
   container: {
     width: 42,
     height: 42,
-    backgroundColor: '#666',
     borderRadius: 42,
     cursor: 'pointer',
   },
-  hover: '#333',
 }
 
 export default CircleIconButton
