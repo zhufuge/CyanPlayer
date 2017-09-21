@@ -6,6 +6,7 @@ import { List, ListItem, makeSelectable } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
 import Divider from 'material-ui/Divider'
 import IconButton from 'material-ui/IconButton'
+import SongPane from './SongPane'
 
 import MusicNote from 'material-ui/svg-icons/image/music-note'
 import MusicVideo from 'material-ui/svg-icons/av/music-video'
@@ -20,7 +21,7 @@ class Sider extends React.Component {
   render() {
     const subj = this.props.subj
     return (
-      <div style={ styles.container }>
+      <div style={Object.assign({}, this.props.style, styles.container)}>
         <SelectableList
           value={subj}
           onChange={(event, index) => this.props.setSubj(index)}>
@@ -53,6 +54,9 @@ class Sider extends React.Component {
              <ListItem value="5" primaryText="我喜欢的音乐" leftIcon={<QueueMusic />}/>
            </SelectableList>
         )}
+        <div style={styles.bottom}>
+          <SongPane />
+        </div>
       </div>
     )
   }
@@ -61,10 +65,7 @@ class Sider extends React.Component {
 const styles = {
   container: {
     position: 'fixed',
-    left: 0,
-    top: 54,
-    width: 220,
-    height: '100%',
+    width: 230,
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: 'rgb(217, 217, 217)',
@@ -74,8 +75,13 @@ const styles = {
     paddingRight: 20,
     display: 'flex',
     justifyContent: 'space-between',
-   }
- }
+  },
+  bottom: {
+    width: '100%',
+    position: 'absolute',
+    bottom: 0,
+  },
+}
 
 const mapStateToProps = (state) => {
   return {

@@ -52,15 +52,16 @@ class Home extends React.Component {
 
   render() {
     const Component = DEFAULT.subj[this.props.subj]
+    const height = this.state.innerHeight - 108
     return (
       <div>
         <Header />
-        <Sider />
         <div
           ref={ref => this.container = ref}
-          style={Object.assign({ height: this.state.innerHeight - 148, },
+          style={Object.assign({ height },
               styles.container) }>
-          <div style={{ margin: '0 auto', maxWidth: 980 }}>
+          <Sider style={{ height }}/>
+          <div style={styles.main}>
             <Component scrollTop={() => this.setState({
                 scrollTop: !this.state.scrollTop
             })}/>
@@ -74,11 +75,15 @@ class Home extends React.Component {
 
 const styles = {
   container: {
-    margin: '54px 0 54px 220px',
-    padding: 20,
+    margin: '54px 0',
     overflowX: 'hidden',
     overflowY: 'scroll',
   },
+  main: {
+    margin: '0 auto',
+    padding: '0 20px 0 250px',
+    maxWidth: 980,
+  }
 }
 
 const mapStateToProps = (state) => {
