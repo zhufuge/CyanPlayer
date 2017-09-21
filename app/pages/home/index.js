@@ -1,9 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
-
 import Sider from './Sider'
 import FindMusic from './FindMusic'
 import SongCard from './SongCard'
@@ -54,20 +51,16 @@ class Home extends React.Component {
     const Component = DEFAULT.subj[this.props.subj]
     const height = this.state.innerHeight - 108
     return (
-      <div>
-        <Header />
-        <div
-          ref={ref => this.container = ref}
-          style={Object.assign({ height },
-              styles.container) }>
-          <Sider style={{ height }}/>
-          <div style={styles.main}>
-            <Component scrollTop={() => this.setState({
-                scrollTop: !this.state.scrollTop
-            })}/>
-          </div>
+      <div
+        ref={ref => this.container = ref}
+        style={Object.assign({ height },
+            styles.container) }>
+        <Sider style={{ height }}/>
+        <div style={styles.main}>
+          <Component scrollTop={() => this.setState({
+              scrollTop: !this.state.scrollTop
+          })}/>
         </div>
-        <Footer />
       </div>
     )
   }

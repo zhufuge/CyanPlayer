@@ -31,10 +31,8 @@ class Card extends React.Component {
           <img
             src={this.props.src || DEFAULT.src}
             style={assign({}, styles.image, props.imgStyle)}/>
-          { this.props.primary && this.state.hoverImg
-            // FIXME hover bug
-            ? <Play style={styles.mask}/>
-            : null}
+          <Play style={assign(this.props.primary && this.state.hoverImg
+              ? {} : { display: 'none' }, styles.mask)} />
         </div>
         <span
           onMouseOver={() => this.setState({ hoverText: true })}
