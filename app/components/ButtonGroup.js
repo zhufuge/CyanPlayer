@@ -14,6 +14,7 @@ class ButtonGroup extends React.Component {
       <div style={styles.container}>
         {['新歌速递', '新碟上架'].map((v, i) =>
           <div
+            key={v}
             onMouseOver={() => this.setState({ hover: i })}
             onMouseOut={() => this.setState({ hover: -1 })}
             onClick={() => this.setState({ select: i })}

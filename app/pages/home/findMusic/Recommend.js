@@ -37,6 +37,7 @@ class Recommend extends React.Component {
         <CardPane>
           {state.sheets.map(v =>
             <Card
+              key={v.name}
               primary={true}
               value={v.name}
               onClick={() => this.handleSheetClick(v.id)}
@@ -53,6 +54,7 @@ class Recommend extends React.Component {
         <CardPane>
           {state.singers.map(v =>
             <Card
+              key={v.name}
               primary={true}
               value={v.name}
               onClick={() => this.handleSheetClick(v.id)}

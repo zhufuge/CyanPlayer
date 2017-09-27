@@ -44,6 +44,7 @@ class RankList extends React.Component {
         <div>
           {(this.props.items || DEFAULT.items).map((v, i) =>
             <div
+              key={'rank-list-' + v.name + i}
               onMouseOver={() => this.setState({ hoverItem: i })}
               onMouseOut={() => this.setState({ hoverItem: -1 })}
               className="flex-c-c"

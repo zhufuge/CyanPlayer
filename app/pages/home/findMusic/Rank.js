@@ -75,6 +75,7 @@ class RankingLists extends React.Component {
           style={styles.wrapper(Math.trunc(this.state.offsetWidth / 260))}>
           {DEFAULT.list.map((v, i) =>
             <List
+              key={'rank-list-' + v.title + i}
               title={v.title}
               headerStyle={{ background: v.color }} />
           )}
@@ -82,8 +83,9 @@ class RankingLists extends React.Component {
         <div style={styles.title}>全球榜</div>
         <Divider />
         <CardPane>
-          {this.state.sheets.map(v =>
+          {this.state.sheets.map((v, i) =>
             <Card
+              key={'rank-card-' + v.id + i}
               primary={true}
               value={v.name}
               onClick={() => v.id}

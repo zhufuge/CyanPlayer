@@ -23,6 +23,7 @@ class RecommendList extends React.Component {
       <div className="flex-wrap" style={styles.container}>
         {props.items.map((v, i) =>
           <div
+            key={'recommend-list-' + v.id + i}
             onDoubleClick={() => this.props.setSong(v.id || DEFAULT.id)}
             onMouseOver={() => this.setState({ hover: i })}
             onMouseOut={() => this.setState({ hover: -1 })}

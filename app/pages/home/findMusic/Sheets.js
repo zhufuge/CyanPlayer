@@ -50,8 +50,9 @@ class Sheets extends React.Component {
       items={DEFAULT.labels}/>
       </div>
       <CardPane>
-      {this.state.sheets.map(v =>
+      {this.state.sheets.map((v, i) =>
         <Card
+          key={'sheets-card-' + v.id + i}
           primary={true}
           value={v.name}
           onClick={() => this.handleSheetClick(v.id)}

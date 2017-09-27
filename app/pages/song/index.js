@@ -45,8 +45,8 @@ class Song extends React.Component {
     //const time = lrc.map(v => v.match(/\[(..:..\...)\]/)[1])
     lrc = lrc.map(v => (v.match(/\[.*\](.*)/) || [''])[1])
 
-    return lrc.map(v =>
-      <p style={styles.lrcp}>{v}</p>
+    return lrc.map((v, i) =>
+      <p key={v + i} style={styles.lrcp}>{v}</p>
     )
   }
 

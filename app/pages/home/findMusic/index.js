@@ -47,6 +47,7 @@ class FindMusic extends React.Component {
           onChange={value => this.setState({ value })}>
           {DEFAULT.labels.map((v, i) =>
             <Tab
+              key={'home-tab-' + v.label + i}
               onMouseOver={() => this.setState({ hover: i })}
               onMouseOut={() => this.setState({ hover: -1 })}
               label={v.label}

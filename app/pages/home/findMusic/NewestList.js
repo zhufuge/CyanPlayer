@@ -43,6 +43,7 @@ class NewestList extends React.Component {
         </div>
         {props.items.map((v, i) =>
           <div
+            key={'neweset-list-' + v.name + i}
             onClick={() => props.onClickItem(v.id)}
             onMouseOver={() => this.setState({ hover: i })}
             onMouseOut={() => this.setState({ hover: -1 })}

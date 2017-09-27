@@ -44,6 +44,7 @@ class NewestMusic extends React.Component {
           onChange={tab => this.setState({ tab })}>
           {DEFAULT.labels.map((v, i) =>
             <Tab
+              key={'newest-tab-' + v + i}
               onMouseOver={() => this.setState({ hoverTab: i })}
               onMouseOut={() => this.setState({ hoverTab: -1 })}
               label={

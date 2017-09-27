@@ -42,6 +42,7 @@ class SingerList extends React.Component {
       <div style={styles.container}>
         {DEFAULT.attributes.map((v, i) =>
           <LineSelector
+            key={'singers-selector-' + v.title + i}
             style={{ margin: '12px auto' }}
             title={v.title + '：'}
             activeStyle={{ borderRadius: 2, background: '#999', color: '#fff' }}
@@ -49,8 +50,9 @@ class SingerList extends React.Component {
         )}
         <Divider />
         <CardPane>
-          {this.state.singers.map(v =>
+          {this.state.singers.map((v, i) =>
             <Card
+              key={'singers-card-' + v.id + i}
               value={v.name}
               onClick={() => this.handleSingerClick(v.id)}
               playIcon={false}
