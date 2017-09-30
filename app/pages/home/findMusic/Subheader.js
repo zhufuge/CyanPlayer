@@ -1,4 +1,5 @@
 import React from 'react'
+import { MORE } from '../../../common/strings'
 
 class Subheader extends React.Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class Subheader extends React.Component {
           onClick={(event) => this.handleClick(event)}
           onMouseOver={() => this.setState({ hover: true })}
           onMouseOut={() => this.setState({ hover: false })}>
-          更多>
+          {MORE}>
         </a>
       </div>
     )

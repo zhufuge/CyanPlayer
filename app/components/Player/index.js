@@ -1,17 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { toTimeString } from '../../common/util'
 
 import Slider from 'material-ui/Slider'
 
 import Handles from './Handles'
 import Volume from './Volume'
-
-const trunc = Math.trunc
-const toTimeString = (n) => n < 10 ? '0' + n : n
-const secFormat = (sec) =>
-  (trunc(sec / 60 / 60) !== 0 ? toTimeString(trunc(sec / 60 / 60)) + ':' : '') +
-  toTimeString(trunc(sec / 60) % 60) + ':' +
-  toTimeString(trunc(sec) % 60)
 
 class Player extends React.Component {
   constructor(props) {
@@ -62,13 +56,13 @@ class Player extends React.Component {
           playing={this.state.playing}
           onClickPlay={() => this.changePlayState()} />
         <div className="flex-c-c">
-          <span style={styles.span}>{secFormat(state.time)}</span>
+          <span style={styles.span}>{toTimeString(state.time)}</span>
           <Slider
             style={{ width: 450, height: 66 }}
             defaultValue={0}
             value={Number.isNaN(process) ? 0 : process}
             onChange={(event, value) => this.handleProcess(event, value)}/>
-          <span style={styles.span}>{secFormat(state.totalTime)}</span>
+          <span style={styles.span}>{toTimeString(state.totalTime)}</span>
         </div>
         <Volume audio={this.state.audio}/>
         <audio

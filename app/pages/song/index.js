@@ -2,21 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setSrc } from '../../actions'
 import Ajax from '../../common/Ajax'
+import { SONG } from '../../common/strings'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import Favorite from 'material-ui/svg-icons/action/favorite'
 import FileDownload from 'material-ui/svg-icons/file/file-download'
 import CreateNewFolder from 'material-ui/svg-icons/file/create-new-folder'
-
-const DEFAULT = {
-  name: 'Time to say goodbye',
-  album: '...',
-  singer: 'Lauren',
-  lrc: '...',
-  img: '/img/0.png',
-  audio: '/music/TimeToSayGoodbye.mp3',
-}
-
 
 class Song extends React.Component {
   constructor(props) {
@@ -51,13 +42,13 @@ class Song extends React.Component {
   }
 
   render() {
-    const song = (this.state.name) ? this.state : DEFAULT
+    const song = (this.state.name) ? this.state : SONG
     return (
       <div style={styles.container}>
         <div style={styles.main}>
           <div style={styles.left}>
             <div className="flex-c-c" style={styles.imgContainer}>
-            <img alt="" src={this.state.img || DEFAULT.img}/>
+            <img alt="" src={this.state.img || SONG.img}/>
             </div>
             <div style={styles.operation}>
             <RaisedButton

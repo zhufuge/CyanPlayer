@@ -2,16 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setPresentSong, setHomeSubj } from '../../../actions'
 import Ajax from '../../../common/Ajax'
+import { LATEST } from '../../../common/strings'
 
 import { Tabs, Tab } from 'material-ui/Tabs'
 import ButtonGroup from '../../../components/ButtonGroup'
-import List from './NewestList'
+import List from './LatestList'
 
-const DEFAULT = {
-  labels: ['全部', '华语', '欧美', '韩国', '日本'],
-}
 
-class NewestMusic extends React.Component {
+class Latest extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -42,7 +40,7 @@ class NewestMusic extends React.Component {
           tabItemContainerStyle={{ background: '#fff0' }}
           value={this.state.tab}
           onChange={tab => this.setState({ tab })}>
-          {DEFAULT.labels.map((v, i) =>
+          {LATEST.LABELS.map((v, i) =>
             <Tab
               key={'newest-tab-' + v + i}
               onMouseOver={() => this.setState({ hoverTab: i })}
@@ -58,7 +56,6 @@ class NewestMusic extends React.Component {
             </Tab>
           )}
         </Tabs>
-
         <List
           items={this.state.songs}
           start={1}
@@ -91,4 +88,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(NewestMusic)
+export default connect(null, mapDispatchToProps)(Latest)

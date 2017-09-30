@@ -1,4 +1,5 @@
 import React from 'react'
+import { SONG, LATEST } from '../../../common/strings'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
@@ -6,18 +7,9 @@ import Play from 'material-ui/svg-icons/av/play-circle-outline'
 import Collection from 'material-ui/svg-icons/file/create-new-folder'
 import { cyan500 } from 'material-ui/styles/colors'
 
-const DEFAULT = {
-  id: '001',
-  name: "Time to say goodbye",
-  singer: "Lauren Aquilina",
-  album: 'AlbumX',
-  src: "./img/0.png",
-  time: '03:24',
-}
-
 const assign = Object.assign
 
-class NewestList extends React.Component {
+class LatestList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -31,12 +23,12 @@ class NewestList extends React.Component {
       <div className="list">
         <div className="flex-c-c" style={styles.header}>
           <FlatButton
-            label="播放全部"
+            label={LATEST.LIST_BUTTON[0]}
             labelStyle={{ color: '#666' }}
             icon={<Play color={cyan500}/>}
             style={{ height: 32, lineHeight: '32px' }}/>
           <RaisedButton
-            label="收藏全部"
+            label={LATEST.LIST_BUTTON[1]}
             labelStyle={{ color: '#666', }}
             icon={<Collection color={'#999'} style={{ width: 20, marginBottom: 3 }}/>}
             style={{ height: 32 }}/>
@@ -56,24 +48,24 @@ class NewestList extends React.Component {
               {(i + props.start).toString().padStart(2, '0')}
             </div>
             <div className="flex-c-c">
-              <img style={styles.img} src={DEFAULT.src} alt="" />
+              <img style={styles.img} src={SONG.IMG} alt="" />
               <Play style={styles.mask}/>
             </div>
             <div className="flex-c-c" style={styles.name}>
-              {v.name || DEFAULT.name}
+              {v.name || SONG.NAME}
             </div>
             <div className="flex-c-c" style={assign(
                 { color: this.state.hover === i ? '#666' : '#999' },
                 styles.singer)}>
-              {v.singer || DEFAULT.singer}
+              {v.singer || SONG.SINGER}
             </div>
             <div className="flex-c-c" style={assign(
                 { color: this.state.hover === i ? '#666' : '#999' },
                 styles.singer)}>
-              {v.album || DEFAULT.album}
+              {v.album || SONG.ALBUM}
             </div>
             <div className="flex-c-c" style={styles.time}>
-              {v.time || DEFAULT.time}
+              {v.time || SONG.TIME}
             </div>
           </div>)}
       </div>
@@ -128,4 +120,4 @@ const styles = {
   },
 }
 
-export default NewestList
+export default LatestList

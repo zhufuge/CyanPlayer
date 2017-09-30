@@ -11,7 +11,7 @@ import Home from './pages/home'
 import Sign from './pages/sign'
 import Song from './pages/song'
 
-const HFRoute = ({ component: Component, ...rest }) => (
+const WrapRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
     <div>
       <Header />
@@ -26,9 +26,10 @@ class AppRouter extends React.Component {
     return (
       <Router>
         <div>
-          <HFRoute exact path="/" component={Song}/>
+          <WrapRoute exact path="/" component={Home}/>
+          <WrapRoute path="/home" component={Home}/>
+          <WrapRoute path="/song" component={Song}/>
           <Route path="/sign" component={Sign}/>
-          <HFRoute path="/song" component={Song}/>
         </div>
       </Router>
     )

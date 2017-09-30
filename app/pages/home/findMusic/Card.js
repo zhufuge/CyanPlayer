@@ -1,12 +1,8 @@
 import React from 'react'
-
-import Play from 'material-ui/svg-icons/av/play-circle-outline'
 import { curtail } from '../../../common/util'
+import { SHEET } from '../../../common/strings'
 
-const DEFAULT = {
-  src: '/img/0.png',
-  value: '你打开苦难的里面，打开了我',
-}
+import PlayIcon from 'material-ui/svg-icons/av/play-circle-outline'
 
 const assign = Object.assign
 
@@ -26,25 +22,25 @@ class Card extends React.Component {
         <div
           onMouseOver={() => this.setState({ hoverImg: true })}
           onMouseOut={() => this.setState({ hoverImg: false })}
-          onClick={() => this.props.onClick()}
+          onClick={() => props.onClick()}
           style={{ position: 'relative', cursor: 'pointer' }}>
           <img
-            src={this.props.src || DEFAULT.src}
+            src={props.src || SHEET.SRC}
             style={assign({}, styles.image, props.imgStyle)}/>
-          <Play style={assign(this.props.primary && this.state.hoverImg
+          <PlayIcon style={assign(props.primary && this.state.hoverImg
               ? {} : { display: 'none' }, styles.mask)} />
         </div>
-        <span
+        <p
           onMouseOver={() => this.setState({ hoverText: true })}
           onMouseOut={() => this.setState({ hoverText: false })}
-          onClick={() => this.props.onClick()}
+          onClick={() => props.onClick()}
           style={assign(
               { color: this.state.hoverText ? '#333' : '#555' },
               styles.text,
               props.textStyle,
           )}>
-          {props.value ? curtail(props.value, 21) : DEFAULT.value}
-        </span>
+          {props.value ? props.value : SHEET.VALUE}
+        </p>
       </div>
     )
   }
@@ -73,7 +69,7 @@ const styles = {
     margin: '5px 0',
     fontSize: 15,
     cursor: 'pointer',
-  }
+  },
 }
 
 export default Card

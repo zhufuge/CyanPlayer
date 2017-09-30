@@ -27,7 +27,7 @@ class CardPane extends React.Component {
       <div
         ref={ref => this.container = ref}
         style={styles.container(repeat)}>
-        {this.props.children}
+        {props.children}
       </div>
     )
   }

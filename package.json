@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "koa": "^2.3.0",
+    "lodash": "^4.17.4",
     "material-ui": "^0.19.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",

@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setHomeSubj, setSongSheet } from '../../../actions'
 import Ajax from '../../../common/Ajax'
+import { SHEETS } from '../../../common/strings'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import Icon_DropDown from 'material-ui/svg-icons/Navigation/arrow-drop-down'
@@ -11,16 +12,11 @@ import CardPane from './CardPane'
 import Card from './Card'
 import LineSelector from './LineSelector'
 
-const DEFAULT = {
-  labels: [ '华语', '流行', '电子', '轻音乐', 'ACG', '怀旧'],
-  sheets: Array(20).fill(false).map((v, i) => i),
-}
-
 class Sheets extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      sheets: DEFAULT.sheets,
+      sheets: Array(20).fill(false).map((v, i) => i),
       hoverLabel: -1,
     }
   }
@@ -46,8 +42,8 @@ class Sheets extends React.Component {
             style={styles.button}
       />
       <LineSelector
-      title="热门标签："
-      items={DEFAULT.labels}/>
+      title={SHEETS.H_HOT_LABEL}
+      items={SHEETS.LABELS}/>
       </div>
       <CardPane>
       {this.state.sheets.map((v, i) =>

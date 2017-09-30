@@ -2,30 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setPresentSong, setHomeSubj, setSongSheet } from '../../../actions'
 import Ajax from '../../../common/Ajax'
+import { RANK } from '../../../common/strings'
 
 import Divider from 'material-ui/Divider'
-import {
-  blue500,
-  cyan400,
-  pink400,
-  red700,
-  deepPurple700,
-} from 'material-ui/styles/colors'
 import List from './RankList'
 import CardPane from './CardPane'
 import Card from './Card'
 
-const DEFAULT = {
-  list: [
-    { title: '飙升榜', color: blue500 },
-    { title: '新歌榜', color: cyan400 },
-    { title: '原创榜', color: pink400 },
-    { title: '热歌榜', color: red700 },
-    { title: '歌手榜', color: deepPurple700 },
-  ]
-}
-
-class RankingLists extends React.Component {
+class Rank extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -68,19 +52,19 @@ class RankingLists extends React.Component {
   render() {
     return (
       <div style={styles.container}>
-        <div style={styles.title}>官方榜</div>
+        <div style={styles.title}>{RANK.OFFICIAL}</div>
         <Divider />
         <div
           ref={ref => this.wrapper = ref}
           style={styles.wrapper(Math.trunc(this.state.offsetWidth / 260))}>
-          {DEFAULT.list.map((v, i) =>
+          {RANK.LIST.map((v, i) =>
             <List
               key={'rank-list-' + v.title + i}
               title={v.title}
               headerStyle={{ background: v.color }} />
           )}
         </div>
-        <div style={styles.title}>全球榜</div>
+        <div style={styles.title}>{RANK.GLOBAL}</div>
         <Divider />
         <CardPane>
           {this.state.sheets.map((v, i) =>
@@ -122,4 +106,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(RankingLists)
+export default connect(null, mapDispatchToProps)(Rank)

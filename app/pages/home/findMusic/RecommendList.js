@@ -1,13 +1,7 @@
 import React from 'react'
+import { SONG } from '../../../common/strings'
 
 import Play from 'material-ui/svg-icons/av/play-circle-outline'
-
-const DEFAULT = {
-  id: '001',
-  name: "Time to say goodbye",
-  singer: "Lauren Aquilina",
-  src: "./img/0.png",
-}
 
 class RecommendList extends React.Component {
   constructor(props) {
@@ -24,7 +18,7 @@ class RecommendList extends React.Component {
         {props.items.map((v, i) =>
           <div
             key={'recommend-list-' + v.id + i}
-            onDoubleClick={() => this.props.setSong(v.id || DEFAULT.id)}
+            onDoubleClick={() => this.props.setSong(v.id || SONG.ID)}
             onMouseOver={() => this.setState({ hover: i })}
             onMouseOut={() => this.setState({ hover: -1 })}
             style={Object.assign(
@@ -38,16 +32,16 @@ class RecommendList extends React.Component {
             </div>
             <div
               className="flex-c-c"
-              onClick={() => this.props.setSong(v.id || DEFAULT.id)}>
-              <img style={styles.img} src={DEFAULT.src} alt="" />
+              onClick={() => this.props.setSong(v.id || SONG.ID)}>
+              <img style={styles.img} src={SONG.IMG} alt="" />
               <Play style={styles.mask}/>
             </div>
             <div className="flex-c-c" style={styles.info}>
-              <div style={styles.name}>{v.name || DEFAULT.name}</div>
+              <div style={styles.name}>{v.name || SONG.NAME}</div>
               <div style={Object.assign(
                   { color: this.state.hover === i ? '#666' : '#999' },
                   styles.singer)}>
-                {v.singer || DEFAULT.singer}
+                {v.singer || SONG.SINGER}
               </div>
             </div>
           </div>)}

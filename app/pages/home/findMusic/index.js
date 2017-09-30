@@ -7,7 +7,7 @@ import Recommend from './Recommend'
 import Sheets from './Sheets'
 import Rank from './Rank'
 import Singers from './Singers'
-import Newest from './Newest'
+import Latest from './Latest'
 
 const DEFAULT = {
   labels: [
@@ -16,7 +16,7 @@ const DEFAULT = {
 //    { label: "主播电台", component: Sheets },
     { label: "排行榜", component: Rank },
     { label: "歌手", component: Singers },
-    { label: "最新音乐", component: Newest },
+    { label: "最新音乐", component: Latest },
   ]
 }
 

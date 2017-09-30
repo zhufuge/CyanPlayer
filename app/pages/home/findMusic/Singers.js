@@ -2,23 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setHomeSubj, setSongSheet } from '../../../actions'
 import Ajax from '../../../common/Ajax'
+import { SINGER } from '../../../common/strings'
 
 import Divider from 'material-ui/Divider'
 import LineSelector from './LineSelector'
 import CardPane from './CardPane'
 import Card from './Card'
-
-const DEFAULT = {
-  attributes: [
-    { title: '语种', items: ['全部', '华语', '欧美', '日本', '韩国', '其他'] },
-    { title: '分类', items: ['全部', '男歌手', '女歌手', '乐队组合'] },
-    { title: '筛选', items: [
-      '热门',
-      ...Array(26).fill(0).map((v, i) => String.fromCodePoint(i + 0x41)),
-      '#',
-    ] }
-  ]
-}
 
 class SingerList extends React.Component {
   constructor(props) {
@@ -40,7 +29,7 @@ class SingerList extends React.Component {
   render() {
     return (
       <div style={styles.container}>
-        {DEFAULT.attributes.map((v, i) =>
+        {SINGER.ATTRIBUTES.map((v, i) =>
           <LineSelector
             key={'singers-selector-' + v.title + i}
             style={{ margin: '12px auto' }}
@@ -69,7 +58,7 @@ const styles = {
     marginTop: 24,
   },
   wrapper: {
-    
+
   }
 }
 

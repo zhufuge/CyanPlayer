@@ -14,10 +14,14 @@ class LineSelector extends React.Component {
       <div className="flex-wrap" style={this.props.style}>
         <span style={{ color: '#555' }}>{this.props.title}</span>
         {this.props.items.map((v, i) => [
-           <span className="flex-c-c" style={{ color: '#777', fontSize: 12 }}>
+           <span
+             key={'line-selector-div-' + i}
+             className="flex-c-c"
+             style={{ color: '#777', fontSize: 12 }}>
              {i === 0 ? "" : "|"}
            </span>,
            <span
+             key={'line-selector-' + v}
              style={Object.assign({},
                  styles.label(this.state.hover === i),
                  this.state.active === i ? this.props.activeStyle : {}

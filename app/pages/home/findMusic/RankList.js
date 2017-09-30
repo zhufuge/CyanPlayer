@@ -1,14 +1,9 @@
 import React from 'react'
+import { RANK } from '../../../common/strings'
 
-import Play from 'material-ui/svg-icons/av/play-circle-outline'
+import PlayIcon from 'material-ui/svg-icons/av/play-circle-outline'
 
 const assign = Object.assign
-const DEFAULT = {
-  items: Array(8).fill(false).map((v, i) => i),
-  title: "什么榜",
-  name: "Time to say goodbye",
-  singer: "Lauren...",
-}
 
 class RankList extends React.Component {
   constructor(props) {
@@ -27,22 +22,18 @@ class RankList extends React.Component {
           className="flex-c-c"
           style={assign({}, this.props.headerStyle, styles.header)}>
           <div style={styles.title}>
-            <div style={styles.upper}>
-              {(this.props.title || DEFAULT.title)[0]}
-            </div>
-            <div style={styles.lower}>
-              {(this.props.title || DEFAULT.title).slice(1)}
-            </div>
-            <div style={styles.date}>09月17日更新</div>
+            <div style={styles.upper}>{this.props.title[0]}</div>
+            <div style={styles.lower}>{this.props.title.slice(1)}</div>
+            <div style={styles.date}>{RANK.LIST_INFO.DATE}</div>
           </div>
-          <Play
+          <PlayIcon
             onMouseOver={() => this.setState({ hoverPlay: true })}
             onMouseOut={() => this.setState({ hoverPlay: false })}
             style={assign({ color: this.state.hoverPlay ? '#fff' : '#fffa' },
                 styles.play)}/>
         </div>
         <div>
-          {(this.props.items || DEFAULT.items).map((v, i) =>
+          {(this.props.items || RANK.LIST_INFO.ITEMS).map((v, i) =>
             <div
               key={'rank-list-' + v.name + i}
               onMouseOver={() => this.setState({ hoverItem: i })}
@@ -59,8 +50,8 @@ class RankList extends React.Component {
             <span className="flex-c-c" style={{ width: 28, fontSize: 16 }}>
               -
             </span>
-            <span style={styles.name}>{(v.name || DEFAULT.name)}</span>
-            <span style={styles.info}>{(v.info || DEFAULT.singer)}</span>
+            <span style={styles.name}>{(v.name || RANK.LIST_INFO.NAME)}</span>
+            <span style={styles.info}>{(v.info || RANK.LIST_INFO.SINGER)}</span>
             </div>
           )}
         </div>
@@ -72,7 +63,7 @@ class RankList extends React.Component {
                 { color: this.state.hoverMore ? '#666' : '#888' },
                 styles.more
             )}>
-            查看全部>
+            {RANK.LOOK_AT_ALL}>
           </span>
         </div>
       </div>
