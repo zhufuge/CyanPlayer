@@ -1,0 +1,3 @@
+#+TITLE: CyanPlayer 文档
+
+CyanPlayer 是一个 Web 播放器，现在只是完成了小部分界面看而已。
