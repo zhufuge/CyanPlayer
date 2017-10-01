@@ -35,10 +35,26 @@ const sheet = (state='', action) => {
   }
 }
 
+const windowInnerWidth = (state=window.innerWidth, action) => {
+  switch (action.type) {
+  case 'WINDOW_INNER_WIDTH': return window.innerWidth
+  default: return state
+  }
+}
+
+const windowInnerHeight = (state=window.innerHeight, action) => {
+  switch (action.type) {
+  case 'WINDOW_INNER_WIDTH': return window.innerHeight
+  default: return state
+  }
+}
+
 export default combineReducers({
   username,
   song,
   src,
   subj,
   sheet,
+  windowInnerWidth,
+  windowInnerHeight,
 })

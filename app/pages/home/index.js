@@ -8,32 +8,21 @@ import DownloadList from './DownloadList'
 import Upload from './Upload'
 import SongSheet from './SongSheet'
 
-const DEFAULT = {
-  subj: [
-    FindMusic,
-    SongCard,
-    SongCard,
-    Upload,
-    DownloadList,
-    SongSheet,
-  ],
-}
+const Subject = [
+  FindMusic,
+  SongCard,
+  SongCard,
+  Upload,
+  DownloadList,
+  SongSheet,
+]
 
 class Home extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      innerHeight: window.innerHeight,
       scrollTop: false,
     }
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.updateDimensions.bind(this))
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions.bind(this))
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -43,13 +32,9 @@ class Home extends React.Component {
     }
   }
 
-  updateDimensions() {
-    this.setState({ innerHeight: window.innerHeight })
-  }
-
   render() {
-    const Component = DEFAULT.subj[this.props.subj]
-    const height = this.state.innerHeight - 108
+    const Component = Subject[this.props.subjectId]
+    const height = this.props.windowInnerHeight - 108
     return (
       <div
         ref={ref => this.container = ref}
@@ -81,7 +66,8 @@ const styles = {
 
 const mapStateToProps = (state) => {
   return {
-    subj: state.subj,
+    subjectId: state.subj,
+    windowInnerHeight: state.windowInnerHeight
   }
 }
 

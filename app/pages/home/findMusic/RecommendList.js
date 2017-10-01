@@ -1,7 +1,7 @@
 import React from 'react'
 import { SONG } from '../../../common/strings'
 
-import Play from 'material-ui/svg-icons/av/play-circle-outline'
+import PlayIcon from 'material-ui/svg-icons/av/play-circle-outline'
 
 class RecommendList extends React.Component {
   constructor(props) {
@@ -34,7 +34,7 @@ class RecommendList extends React.Component {
               className="flex-c-c"
               onClick={() => this.props.setSong(v.id || SONG.ID)}>
               <img style={styles.img} src={SONG.IMG} alt="" />
-              <Play style={styles.mask}/>
+              <PlayIcon style={styles.mask}/>
             </div>
             <div className="flex-c-c" style={styles.info}>
               <div style={styles.name}>{v.name || SONG.NAME}</div>
