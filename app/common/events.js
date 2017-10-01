@@ -1,3 +1,4 @@
+import debounce from 'lodash/debounce'
 import {
   updateWindowInnerWidth,
   updateWindowInnerHeight,
@@ -8,8 +9,6 @@ const handleResize = (store) => () => {
   store.dispatch(updateWindowInnerHeight())
 }
 
-const init = (store) => {
-  window.addEventListener('resize', handleResize(store))
+export default (store) => {
+  window.addEventListener('resize', debounce(handleResize(store), 150))
 }
-
-export default init

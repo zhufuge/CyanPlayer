@@ -1,4 +1,5 @@
 import React from 'react'
+import debounce from 'lodash/debounce'
 
 class CardPane extends React.Component {
   constructor(props) {
@@ -8,7 +9,10 @@ class CardPane extends React.Component {
 
   componentDidMount() {
     this.updateDimensions.call(this)
-    window.addEventListener('resize', this.updateDimensions.bind(this))
+    window.addEventListener('resize', debounce(
+      this.updateDimensions.bind(this),
+      150
+    ))
   }
 
   componentWillUnmount() {
@@ -16,7 +20,9 @@ class CardPane extends React.Component {
   }
 
   updateDimensions() {
-    this.setState({ offsetWidth: this.container.offsetWidth })
+    if (this.container) {
+      this.setState({ offsetWidth: this.container.offsetWidth })
+    }
   }
 
   render() {

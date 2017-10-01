@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { setPresentSong, setHomeSubj, setSongSheet } from '../../../actions'
 import Ajax from '../../../common/Ajax'
 import { RANK } from '../../../common/strings'
+import debounce from 'lodash/debounce'
 
 import Divider from 'material-ui/Divider'
 import List from './RankList'
@@ -26,19 +27,6 @@ class Rank extends React.Component {
     Ajax('rank').then(json => json && this.setState(Object.assign({}, json)))
   }
 
-  componentDidMount() {
-    this.updateDimensions.call(this)
-    window.addEventListener('resize', this.updateDimensions.bind(this))
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions.bind(this))
-  }
-
-  updateDimensions() {
-    this.setState({ offsetWidth: this.wrapper.offsetWidth })
-  }
-
   handleSongClick(song) {
     this.props.setPresentSong(song)
     this.props.setHomeSubj('2')
@@ -55,8 +43,7 @@ class Rank extends React.Component {
         <div style={styles.title}>{RANK.OFFICIAL}</div>
         <Divider />
         <div
-          ref={ref => this.wrapper = ref}
-          style={styles.wrapper(Math.trunc(this.state.offsetWidth / 260))}>
+          style={styles.wrapper}>
           {RANK.LIST.map((v, i) =>
             <List
               key={'rank-list-' + v.title + i}
@@ -90,12 +77,13 @@ const styles = {
     fontSize: 18,
     margin: '0 0 8px',
   },
-  wrapper: (n) => ({
+  wrapper: {
     display: 'grid',
-    gridTemplateColumns: `repeat(${n}, 1fr)`,
-    gridGap: '24px 12px',
+    gridTemplateAreas: '"a a a"',
+    gridAutoColumns: '32%',
+    gridGap: '24px 2%',
     margin: '12px auto 36px',
-  }),
+  },
 }
 
 const mapDispatchToProps = (dispatch) => {

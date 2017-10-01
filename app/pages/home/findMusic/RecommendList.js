@@ -22,23 +22,28 @@ class RecommendList extends React.Component {
             onMouseOver={() => this.setState({ hover: i })}
             onMouseOut={() => this.setState({ hover: -1 })}
             style={Object.assign(
-                i < 5 ? {} : { borderLeft: '1px solid #eee' },
-                (i < 5 && i % 2 === 0) || (i >= 5 && i % 2 === 1)
-                ? {} : { background: '#fafafa' },
-                this.state.hover === i ? { background: '#eee' } : {},
-                styles.listItem)}>
-            <div className="flex-c-c" style={styles.number}>
+                (i < 5 ? {} : { borderLeft: '1px solid #eee' }),
+                ((i < 5 && i % 2 === 0) || (i >= 5 && i % 2 === 1) ? {} : { background: '#fafafa' }),
+                (this.state.hover === i ? { background: '#eee' } : {}),
+                styles.listItem
+            )}>
+            <span className="flex-c-c" style={styles.number}>
               {(i + 1).toString().padStart(2, '0')}
-            </div>
+            </span>
             <div
               className="flex-c-c"
+              style={styles.icon}
               onClick={() => this.props.setSong(v.id || SONG.ID)}>
               <img style={styles.img} src={SONG.IMG} alt="" />
               <PlayIcon style={styles.mask}/>
             </div>
             <div className="flex-c-c" style={styles.info}>
-              <div style={styles.name}>{v.name || SONG.NAME}</div>
-              <div style={Object.assign(
+              <div className="text-ellipsis" style={styles.name}>
+                {v.name || SONG.NAME}
+              </div>
+              <div
+                className="text-ellipsis"
+                style={Object.assign(
                   { color: this.state.hover === i ? '#666' : '#999' },
                   styles.singer)}>
                 {v.singer || SONG.SINGER}
@@ -62,6 +67,7 @@ const styles = {
     gridTemplateColumns: '48px 64px 1fr',
     height: 64,
     cursor: 'default',
+    width: '50%',
   },
   number: {
     color: '#999',
@@ -83,16 +89,19 @@ const styles = {
   info: {
     flexDirection: 'column',
     alignItems: 'start',
-    marginLeft: 8,
+    padding: '0 12px 0 8px',
+    overflow: 'hidden',
   },
   name: {
     color: '#666',
     fontWeight: '400',
+    width: '100%',
   },
   singer: {
     fontWeight: '400',
     fontSize: 13,
     cursor: 'pointer',
+    width: '100%',
   },
 }
 

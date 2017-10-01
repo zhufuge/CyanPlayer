@@ -1,17 +1,9 @@
 import React from 'react'
+import { SONG } from '../../common/strings'
 
 import Spread from 'material-ui/svg-icons/action/open-in-new'
 import FavoBor from 'material-ui/svg-icons/action/favorite-border'
 import Share from 'material-ui/svg-icons/Social/share'
-import { curtail } from '../../common/util'
-
-const DEFAULT = {
-  id: '001',
-  name: "Time to say goodbye",
-  singer: "Lauren Aquilina",
-  src: "./img/0.png",
-  maximumLength: 18,
-}
 
 class SongPane extends React.Component {
   constructor(props) {
@@ -31,7 +23,7 @@ class SongPane extends React.Component {
         onMouseOut={() => this.setState({ hover: false })}
         style={styles.container}>
         <div className="flex-c-c">
-          <img style={styles.img} src={DEFAULT.src} alt="" />
+          <img style={styles.img} src={SONG.IMG} alt="" />
           <div
             className="flex-c-c"
             style={Object.assign({
@@ -45,10 +37,11 @@ class SongPane extends React.Component {
         </div>
         <div style={styles.grid}>
           <span
+            className="text-ellipsis"
             onMouseOver={() => this.setState({ hoverName: true })}
             onMouseOut={() => this.setState({ hoverName: false })}
             style={{ color: this.state.hoverName ? '#444' : '#666' }}>
-            {curtail(DEFAULT.name, DEFAULT.maximumLength)}
+            {SONG.NAME}
           </span>
           <FavoBor
             onMouseOver={() => this.setState({ hoverFavoBor: true })}
@@ -56,10 +49,11 @@ class SongPane extends React.Component {
             style={styles.icon}
             color={this.state.hoverFavoBor ? "#666" : "#999"}/>
           <span
+            className="text-ellipsis"
             onMouseOver={() => this.setState({ hoverSinger: true })}
             onMouseOut={() => this.setState({ hoverSinger: false })}
             style={{ color: this.state.hoverSinger ? '#666' : '#999' }}>
-            {curtail(DEFAULT.singer, DEFAULT.maximumLength)}
+            {SONG.SINGER}
           </span>
           <Share
             onMouseOver={() => this.setState({ hoverShare: true })}
@@ -102,6 +96,7 @@ const styles = {
     gridTemplateColumns: '5fr 1fr',
     gridTemplateRows: '1fr 1fr',
     fontSize: 14,
+    overflow: 'hidden',
   },
   icon: {
     height: 18,

@@ -34,25 +34,11 @@ class RankList extends React.Component {
         </div>
         <div>
           {(this.props.items || RANK.LIST_INFO.ITEMS).map((v, i) =>
-            <div
+            <Item
               key={'rank-list-' + v.name + i}
-              onMouseOver={() => this.setState({ hoverItem: i })}
-              onMouseOut={() => this.setState({ hoverItem: -1 })}
-              className="flex-c-c"
-              style={assign(
-                { background: this.state.hoverItem === i ? '#eee' :
-                              (i % 2 === 0 ? '#fafafa' : '#fff') },
-                styles.item
-              )}>
-            <span style={{ fontSize: 17, color: i < 3 ? '#d74d4d' : '#777', }}>
-              {i + 1}
-            </span>
-            <span className="flex-c-c" style={{ width: 28, fontSize: 16 }}>
-              -
-            </span>
-            <span style={styles.name}>{(v.name || RANK.LIST_INFO.NAME)}</span>
-            <span style={styles.info}>{(v.info || RANK.LIST_INFO.SINGER)}</span>
-            </div>
+              id={i}
+              value={v}
+            />
           )}
         </div>
         <div className="flex-c-c" style={styles.footer}>
@@ -64,6 +50,47 @@ class RankList extends React.Component {
                 styles.more
             )}>
             {RANK.LOOK_AT_ALL}>
+          </span>
+        </div>
+      </div>
+    )
+  }
+}
+
+class Item extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      hover: false
+    }
+  }
+
+  render() {
+    const i = this.props.id,
+      v = this.props.value
+    return (
+      <div
+        onMouseOver={() => this.setState({ hover: true })}
+        onMouseOut={() => this.setState({ hover: false })}
+        style={assign({
+            background: this.state.hover
+                      ? '#eee'
+                      : (i % 2 === 0 ? '#fafafa' : '#fff')
+        }, styles.item)}>
+        <span
+          className="flex-c-c"
+          style={{ fontSize: 17, color: i < 3 ? '#d74d4d' : '#777', }}>
+          {i + 1}
+        </span>
+        <span className="flex-c-c" style={{ fontSize: 16 }}>
+          -
+        </span>
+        <div className="flex-s-c" style={{ overflow: 'hidden' }}>
+          <span className="text-ellipsis" style={styles.name}>
+            {(v.name || RANK.LIST_INFO.NAME)}
+          </span>
+          <span className="text-ellipsis" style={styles.info}>
+            {(v.info || RANK.LIST_INFO.SINGER)}
           </span>
         </div>
       </div>
@@ -113,18 +140,20 @@ const styles = {
     height: 54,
   },
   item: {
+    display: 'grid',
+    gridTemplateColumns: '10px 28px 1fr',
     height: 34,
     justifyContent: 'start',
     padding: '0 8px 0 12px',
-    position: 'relative',
   },
   name: {
     fontSize: 14,
     color: '#555',
+    width: '70%',
+    paddingRight: 12,
   },
   info: {
-    position: 'absolute',
-    right: 10,
+    width: '30%',
   },
   footer: {
     justifyContent: 'end',

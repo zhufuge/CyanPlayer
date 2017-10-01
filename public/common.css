@@ -4,6 +4,12 @@
   align-items: center;
 }
 
+.flex-s-c {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
 .flex-wrap {
   display: flex;
   flex-wrap: wrap;
@@ -12,4 +18,10 @@
 .list {
   display: grid;
   border: 1px solid #eee;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

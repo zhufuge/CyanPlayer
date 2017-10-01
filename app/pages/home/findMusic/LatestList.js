@@ -12,9 +12,7 @@ const assign = Object.assign
 class LatestList extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      hover: -1,
-    }
+    this.state = {}
   }
 
   render() {
@@ -34,40 +32,62 @@ class LatestList extends React.Component {
             style={{ height: 32 }}/>
         </div>
         {props.items.map((v, i) =>
-          <div
+          <Item
             key={'neweset-list-' + v.name + i}
-            onClick={() => props.onClickItem(v.id)}
-            onMouseOver={() => this.setState({ hover: i })}
-            onMouseOut={() => this.setState({ hover: -1 })}
-            style={assign(
-                this.state.hover === i
-                ? { background: '#eee' }
-                : (i % 2 === 1 ? {} : { background: '#fafafa' }),
-                styles.listItem)}>
-            <div className="flex-c-c" style={styles.number}>
-              {(i + props.start).toString().padStart(2, '0')}
-            </div>
-            <div className="flex-c-c">
-              <img style={styles.img} src={SONG.IMG} alt="" />
-              <Play style={styles.mask}/>
-            </div>
-            <div className="flex-c-c" style={styles.name}>
-              {v.name || SONG.NAME}
-            </div>
-            <div className="flex-c-c" style={assign(
-                { color: this.state.hover === i ? '#666' : '#999' },
-                styles.singer)}>
-              {v.singer || SONG.SINGER}
-            </div>
-            <div className="flex-c-c" style={assign(
-                { color: this.state.hover === i ? '#666' : '#999' },
-                styles.singer)}>
-              {v.album || SONG.ALBUM}
-            </div>
-            <div className="flex-c-c" style={styles.time}>
-              {v.time || SONG.TIME}
-            </div>
-          </div>)}
+            id={i}
+            value={v}
+            onClick={() => props.onClickItem(v.id)}/>
+        )}
+      </div>
+    )
+  }
+}
+
+class Item extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      hover: false,
+    }
+  }
+  render() {
+    const props = this.props,
+      i = props.id,
+      v = props.value,
+      hover = this.state.hover
+    return (
+      <div
+        onClick={() => props.onClick()}
+        onMouseOver={() => this.setState({ hover: true })}
+        onMouseOut={() => this.setState({ hover: false })}
+        style={assign(
+            hover ? { background: '#eee' } : (
+              i % 2 === 1 ? {} : { background: '#fafafa' }
+            ),
+            styles.listItem)}>
+        <div className="flex-c-c" style={styles.number}>
+          {(i + 1).toString().padStart(2, '0')}
+        </div>
+        <div className="flex-c-c">
+          <img style={styles.img} src={SONG.IMG} alt="" />
+          <Play style={styles.mask}/>
+        </div>
+        <div className="flex-c-c" style={styles.name}>
+          <span className="text-ellipsis">{v.name || SONG.NAME}</span>
+        </div>
+        <div className="flex-c-c" style={assign(
+            { color: hover ? '#666' : '#999' },
+            styles.singer)}>
+          <span className="text-ellipsis">{v.singer || SONG.SINGER}</span>
+        </div>
+        <div className="flex-c-c" style={assign(
+            { color: hover ? '#666' : '#999' },
+            styles.album)}>
+          <span className="text-ellipsis">{v.album || SONG.ALBUM}</span>
+        </div>
+        <div className="flex-c-c" style={styles.time}>
+          {v.time || SONG.TIME}
+        </div>
       </div>
     )
   }
@@ -81,10 +101,11 @@ const styles = {
   },
   listItem: {
     display: 'grid',
-    gridTemplateColumns: '48px 64px 7fr 4fr 5fr 2fr',
+    gridTemplateColumns: '48px 64px 8fr 4fr 5fr 2fr',
     height: 64,
     fontSize: 16,
     color: '#666',
+    overflow: 'hidden',
   },
   number: {
     color: '#999',
@@ -104,16 +125,27 @@ const styles = {
     color: '#fffc',
   },
   name: {
-    marginLeft: 8,
+    padding: '0 8px',
     justifyContent: 'start',
     color: '#555',
+    overflow: 'hidden',
   },
   singer: {
+    padding: '0 8px',
     justifyContent: 'start',
     fontSize: 14,
     cursor: 'pointer',
+    overflow: 'hidden',
+  },
+  album: {
+    padding: '0 8px',
+    justifyContent: 'start',
+    fontSize: 14,
+    cursor: 'pointer',
+    overflow: 'hidden',
   },
   time: {
+    padding: '0 8px',
     justifyContent: 'start',
     fontWeight: '300',
     fontSize: 13,

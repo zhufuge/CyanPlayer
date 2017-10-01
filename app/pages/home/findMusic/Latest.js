@@ -58,7 +58,6 @@ class Latest extends React.Component {
         </Tabs>
         <List
           items={this.state.songs}
-          start={1}
           onClickItem={(s) => this.handleSongClick(s)}/>
       </div>
     )
