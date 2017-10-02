@@ -7,6 +7,17 @@ const toTimeString = (seconds) => [0, 0]
       .reverse()
       .join(':')
 
+const getFileName = (path) => path.slice(path.lastIndexOf('/') + 1)
+const splitLrcToStrings = (lrc) => {
+  lrc = lrc.toString().split('\r\n')
+  //const time = lrc.map(v => v.match(/\[(..:..\...)\]/)[1])
+  lrc = lrc.map(v => (v.match(/\[.*\](.*)/) || [''])[1])
+
+  return lrc
+}
+
 export {
   toTimeString,
+  getFileName,
+  splitLrcToStrings
 }
