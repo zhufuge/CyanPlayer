@@ -1,5 +1,7 @@
 import React from 'react'
-import { SONG } from '../../common/strings'
+import { connect } from 'react-redux'
+import Ajax from '../../common/Ajax'
+import { SONG } from '../../strings'
 
 import Spread from 'material-ui/svg-icons/action/open-in-new'
 import FavoBor from 'material-ui/svg-icons/action/favorite-border'
@@ -17,12 +19,28 @@ class SongPane extends React.Component {
     }
   }
 
+  componentWillMount() {
+    this.getData(this.props.song)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.getData(nextProps.song)
+  }
+
+  getData(songID) {
+    Ajax('songPane', songID).then(json => json && this.setState(
+      Object.assign({}, json)
+    ))
+    console.log('get song data')
+  }
+
   jumpToSongPage() {
     history.pushState({}, '', 'song')
     history.go()
   }
 
   render() {
+    console.log(this.props.song)
     return (
       <div
         onMouseOver={() => this.setState({ hover: true })}
@@ -32,7 +50,7 @@ class SongPane extends React.Component {
         <div
           className="flex-c-c"
           onClick={() => this.jumpToSongPage()} >
-          <img style={styles.img} src={SONG.IMG} alt="" />
+          <img style={styles.img} src={this.state.img || SONG.IMG} alt="" />
           <div
             className="flex-c-c"
             style={Object.assign({
@@ -51,7 +69,7 @@ class SongPane extends React.Component {
             onMouseOut={() => this.setState({ hoverName: false })}
             onClick={() => this.jumpToSongPage()}
             style={{ color: this.state.hoverName ? '#444' : '#666' }}>
-            {SONG.NAME}
+            {this.state.name || SONG.NAME}
           </span>
           <FavoBor
             onMouseOver={() => this.setState({ hoverFavoBor: true })}
@@ -63,7 +81,7 @@ class SongPane extends React.Component {
             onMouseOver={() => this.setState({ hoverSinger: true })}
             onMouseOut={() => this.setState({ hoverSinger: false })}
             style={{ color: this.state.hoverSinger ? '#666' : '#999' }}>
-            {SONG.SINGER}
+            {this.state.singer || SONG.SINGER}
           </span>
           <Share
             onMouseOver={() => this.setState({ hoverShare: true })}
@@ -115,4 +133,10 @@ const styles = {
   },
 }
 
-export default SongPane
+const mapStateToProps = (state) => {
+  return {
+    song: state.song
+  }
+}
+
+export default connect(mapStateToProps)(SongPane)

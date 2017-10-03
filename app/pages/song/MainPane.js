@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setSrc } from '../../actions'
 import Ajax from '../../common/Ajax'
-import { SONG } from '../../common/strings'
+import { SONG } from '../../strings'
 import { getFileName, splitLrcToStrings } from '../../common/util'
 
 import RaisedButton from 'material-ui/RaisedButton'

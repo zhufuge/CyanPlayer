@@ -14,7 +14,7 @@ const MORE = '更多'
 const SONG = {
   ALBUM: 'I don\'t know',
   AUDIO: '/music/TimeToSayGoodbye.mp3',
-  ID: '001',
+  ID: '000',
   IMG: IMG,
   LRC: '...',
   NAME: 'Time to say goodbye',
@@ -29,7 +29,7 @@ const SHEET = {
 }
 
 const RECOMMEND = {
-  SUBJECTS: ['推荐歌单', '最新音乐', '推荐歌手'],
+  SUBJECTS: ['推荐歌单', '最新音乐'],
 }
 
 const SHEETS = {

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setSong, setSubj, setSheet } from '../../../actions'
 import Ajax from '../../../common/Ajax'
-import { RECOMMEND } from '../../../common/strings'
+import { RECOMMEND } from '../../../strings'
 
 import Divider from 'material-ui/Divider'
 import Subheader from './Subheader'
@@ -16,12 +16,13 @@ class Recommend extends React.Component {
     this.state = {
       sheets: Array(10).fill(false),
       songs: Array(10).fill(false),
-      singers: Array(10).fill(false),
     }
   }
 
   componentWillMount() {
-    Ajax('recommend').then(json => json && this.setState(Object.assign({}, json)))
+    Ajax('recommend').then(json => json && this.setState(
+      Object.assign({}, json)
+    ))
   }
 
   handleSheetClick(sheet='默认歌单') {
@@ -53,21 +54,7 @@ class Recommend extends React.Component {
         <Divider />
         <List
           items={state.songs}
-          setSong={(s) => this.props.setSong(s)}/>
-        <Subheader
-          title={RECOMMEND.SUBJECTS[2]}
-          onClick={() => this.props.setTab(3)}/>
-        <Divider />
-        <CardPane>
-          {state.singers.map((v, i) =>
-            <Card
-              key={v.id + '-' + i}
-              primary={true}
-              value={v.name}
-              onClick={() => this.handleSheetClick(v.id)}
-              src={v.src}/>
-          )}
-        </CardPane>
+          setSong={(id) => this.props.setSong(id)}/>
       </div>
     )
   }

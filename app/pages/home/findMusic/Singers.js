@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setHomeSubj, setSongSheet } from '../../../actions'
 import Ajax from '../../../common/Ajax'
-import { SINGER } from '../../../common/strings'
+import { SINGER } from '../../../strings'
 
 import Divider from 'material-ui/Divider'
 import LineSelector from './LineSelector'

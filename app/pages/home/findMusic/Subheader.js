@@ -1,5 +1,5 @@
 import React from 'react'
-import { MORE } from '../../../common/strings'
+import { MORE } from '../../../strings'
 
 class Subheader extends React.Component {
   constructor(props) {

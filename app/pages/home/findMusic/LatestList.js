@@ -1,5 +1,5 @@
 import React from 'react'
-import { SONG, LATEST } from '../../../common/strings'
+import { SONG, LATEST } from '../../../strings'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'

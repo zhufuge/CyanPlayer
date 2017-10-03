@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { SUBJECTS } from '../../common/strings'
+import { SUBJECTS } from '../../strings'
 
 import Sider from './Sider'
 import FindMusic from './FindMusic'

@@ -27,16 +27,39 @@ function handleSign(ctx) {
   }).catch(err => console.log(err))
 }
 
-function sendSong(ctx) {
+function sendSongPane(ctx) {
   return Promise.resolve().then(() => {
     let json = {}
-    if (querystring.parse(url.parse(ctx.url).query).id === '002') {
+    if (querystring.parse(url.parse(ctx.url).query).id === '001') {
+      json = {
+        name: 'MyDestiny',
+        singer: 'LYn',
+        img: 'img/2.jpg',
+      }
+    } else {
+      json = {
+        name: 'TimeToSayGoodbye',
+        singer: 'Lauren',
+        img: 'img/0.png',
+      }
+    }
+
+    ctx.status = 200
+    ctx.set('Content-Type', 'application/json')
+    ctx.body = JSON.stringify(json)
+  }).catch(err => console.log(err))
+}
+
+function sendSongAll(ctx) {
+  return Promise.resolve().then(() => {
+    let json = {}
+    if (querystring.parse(url.parse(ctx.url).query).id === '001') {
       json = {
         name: 'MyDestiny',
         album: '来自星星的你',
         singer: 'LYn',
         lrc: 'MyDestiny',
-        img: 'img/2.jpg',
+        img: '/img/2.jpg',
         audio: 'music/MyDestiny.mp3'
       }
     } else {
@@ -45,7 +68,7 @@ function sendSong(ctx) {
         album: '...',
         singer: 'Lauren',
         lrc: 'TimeToSayGoodbye',
-        img: 'img/0.png',
+        img: '/img/0.png',
         audio: 'music/TimeToSayGoodbye.mp3'
       }
     }
@@ -97,6 +120,7 @@ function sendFile(ctx, file) {
   })
 }
 
+
 async function router(ctx, next) {
   const ctxUrl = url.parse(ctx.url),
         pathname = ctxUrl.pathname
@@ -104,8 +128,11 @@ async function router(ctx, next) {
   case '/sign':
     await handleSign(ctx)
     break
-  case '/song':
-    await sendSong(ctx)
+  case '/songPane':
+    await sendSongPane(ctx)
+    break
+  case '/songAll':
+    await sendSongAll(ctx)
     break
   case '/lrc':
     await sendLrc(ctx)

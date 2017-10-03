@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setPresentSong, setHomeSubj } from '../../../actions'
 import Ajax from '../../../common/Ajax'
-import { LATEST } from '../../../common/strings'
+import { LATEST } from '../../../strings'
 
 import { Tabs, Tab } from 'material-ui/Tabs'
 import ButtonGroup from '../../../components/ButtonGroup'

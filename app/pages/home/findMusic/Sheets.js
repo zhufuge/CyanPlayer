@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setHomeSubj, setSongSheet } from '../../../actions'
 import Ajax from '../../../common/Ajax'
-import { SHEETS } from '../../../common/strings'
+import { SHEETS } from '../../../strings'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import Icon_DropDown from 'material-ui/svg-icons/Navigation/arrow-drop-down'

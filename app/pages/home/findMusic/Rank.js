@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setPresentSong, setHomeSubj, setSongSheet } from '../../../actions'
 import Ajax from '../../../common/Ajax'
-import { RANK } from '../../../common/strings'
+import { RANK } from '../../../strings'
 import debounce from 'lodash/debounce'
 
 import Divider from 'material-ui/Divider'

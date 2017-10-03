@@ -1,5 +1,5 @@
 import React from 'react'
-import { RANK } from '../../../common/strings'
+import { RANK } from '../../../strings'
 
 import PlayIcon from 'material-ui/svg-icons/av/play-circle-outline'
 

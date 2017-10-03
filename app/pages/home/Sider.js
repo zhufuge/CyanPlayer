@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { setSubj } from '../../actions'
-import { SUBJECTS } from '../../common/strings'
+import { SUBJECTS } from '../../strings'
 
 import { List, ListItem, makeSelectable } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'

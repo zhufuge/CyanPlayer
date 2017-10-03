@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { SONG, SUBJECTS } from '../common/strings'
+import { SONG, SUBJECTS } from '../strings'
 
 const username = (state='登录', action) => {
   switch (action.type) {

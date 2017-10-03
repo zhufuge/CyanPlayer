@@ -1,6 +1,6 @@
 import React from 'react'
 import { curtail } from '../../../common/util'
-import { SHEET } from '../../../common/strings'
+import { SHEET } from '../../../strings'
 
 import PlayIcon from 'material-ui/svg-icons/av/play-circle-outline'
 
