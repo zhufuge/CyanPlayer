@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { setSubj } from '../../actions'
+import { SUBJECTS } from '../../common/strings'
 
 import { List, ListItem, makeSelectable } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
@@ -25,38 +26,47 @@ class Sider extends React.Component {
         <SelectableList
           value={subj}
           onChange={(event, index) => this.props.setSubj(index)}>
-          <Subheader>推荐</Subheader>
-          <ListItem value="0" primaryText="发现音乐" leftIcon={<MusicNote />} />
-          <ListItem value="1" primaryText="随机音乐" leftIcon={<MusicVideo />} />
+          <Subheader>{SUBJECTS[0].HEADER}</Subheader>
+          {SUBJECTS[0].ITEMS.map((v) =>
+            <ListItem
+              key={'sider-' + v}
+              value={v}
+              primaryText={v}
+              leftIcon={<MusicNote />} />
+          )}
         </SelectableList>
         <Divider />
         <SelectableList
           value={ subj }
-          onChange={ this.handleRequestChange }>
-          <Subheader>我的音乐</Subheader>
-          <ListItem value="2" primaryText="当前音乐" leftIcon={ <MusicNote /> }/>
-          {(this.props.username === '登录') ? null : ([
-             <ListItem value="3" primaryText="上传音乐" leftIcon={<Upload />}/>,
-             <ListItem value="4" primaryText="历史下载" leftIcon={<Restore />}/>
-          ])}
+          onChange={(event, index) => this.props.setSubj(index)}>
+          <Subheader>{SUBJECTS[1].HEADER}</Subheader>
+          {SUBJECTS[1].ITEMS.map((v) =>
+            <ListItem
+              key={'sider-' + v}
+              value={v}
+              primaryText={v}
+              leftIcon={<Upload />}/>
+          )}
         </SelectableList>
         <Divider />
-        {(this.props.username === '登录') ? null : (
-           <SelectableList
-             value={ subj }
-             onChange={ this.handleRequestChange }>
-             <Subheader style={ styles.createHeader }>
-               创建的歌单
-               <IconButton tooltip="创建">
-                 <AddCircle color="#aaa" hoverColor="#666" />
-               </IconButton>
-             </Subheader>
-             <ListItem value="5" primaryText="我喜欢的音乐" leftIcon={<QueueMusic />}/>
-           </SelectableList>
-        )}
-        <div style={styles.bottom}>
-          <SongPane />
-        </div>
+        <SelectableList
+          value={ subj }
+          onChange={(event, index) => this.props.setSubj(index)}>
+          <Subheader style={ styles.createHeader }>
+            {SUBJECTS[2].HEADER}
+            <IconButton tooltip="创建">
+              <AddCircle color="#aaa" hoverColor="#666" />
+            </IconButton>
+          </Subheader>
+          {SUBJECTS[2].ITEMS.map((v) =>
+            <ListItem
+              key={'sider-' + v}
+              value={v}
+              primaryText={v}
+              leftIcon={<QueueMusic />}/>
+          )}
+        </SelectableList>
+        <div style={styles.bottom}><SongPane /></div>
       </div>
     )
   }

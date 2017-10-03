@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { SONG, SUBJECTS } from '../common/strings'
 
 const username = (state='登录', action) => {
   switch (action.type) {
@@ -7,21 +8,21 @@ const username = (state='登录', action) => {
   }
 }
 
-const song = (state='001', action) => {
+const song = (state=SONG.ID, action) => {
   switch (action.type) {
   case 'SET_SONG': return action.song
   default: return state
   }
 }
 
-const src = (state='/music/TimeToSayGoodbye.mp3', action) => {
+const src = (state=SONG.AUDIO, action) => {
   switch (action.type) {
   case 'SET_SRC': return action.src
   default: return state
   }
 }
 
-const subj = (state='0', action) => {
+const subj = (state=SUBJECTS[0].ITEMS[0], action) => {
   switch (action.type) {
   case 'SET_SUBJ': return action.subj
   default: return state

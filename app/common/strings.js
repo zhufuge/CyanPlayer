@@ -73,6 +73,12 @@ const LATEST = {
   LIST_BUTTON: ['播放全部', '收藏全部'],
 }
 
+const SUBJECTS = [
+  { HEADER: '推荐', ITEMS: ['发现音乐'] },
+  { HEADER: '我的音乐', ITEMS: ['上传音乐', '下载历史'] },
+  { HEADER: '创建的歌单', ITEMS: ['我喜欢的音乐'] },
+]
+
 export {
   SONG,
   SHEET,
@@ -82,4 +88,5 @@ export {
   RANK,
   LATEST,
   MORE,
+  SUBJECTS,
 }

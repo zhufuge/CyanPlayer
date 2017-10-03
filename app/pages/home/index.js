@@ -1,21 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { SUBJECTS } from '../../common/strings'
 
 import Sider from './Sider'
 import FindMusic from './FindMusic'
-import SongCard from './SongCard'
 import DownloadList from './DownloadList'
 import Upload from './Upload'
 import SongSheet from './SongSheet'
 
-const Subject = [
-  FindMusic,
-  SongCard,
-  SongCard,
-  Upload,
-  DownloadList,
-  SongSheet,
-]
+const Subject = {
+  [SUBJECTS[0].ITEMS[0]]: FindMusic,
+  [SUBJECTS[1].ITEMS[0]]: Upload,
+  [SUBJECTS[1].ITEMS[1]]: DownloadList,
+  [SUBJECTS[2].ITEMS[0]]: SongSheet,
+}
 
 class Home extends React.Component {
   constructor(props) {

@@ -9,6 +9,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import Favorite from 'material-ui/svg-icons/action/favorite'
 import FileDownload from 'material-ui/svg-icons/file/file-download'
 import CreateNewFolder from 'material-ui/svg-icons/file/create-new-folder'
+import Share from 'material-ui/svg-icons/Social/share'
 
 class MainPane extends React.Component {
   constructor(props) {
@@ -51,6 +52,11 @@ class MainPane extends React.Component {
               download={getFileName(this.state.audio || SONG.AUDIO)}
               label="下载"
               icon={<FileDownload />}/>
+            <RaisedButton
+              href={this.state.audio || SONG.AUDIO}
+              download={getFileName(this.state.audio || SONG.AUDIO)}
+              label="分享"
+              icon={<Share />}/>
           </div>
         </div>
         <div style={styles.right}>
@@ -98,15 +104,13 @@ const styles = {
     display: 'flex',
     margin: '42px auto 0',
     maxWidth: 980,
+    height: 500,
   },
   left: {
-    flexDirection: 'column',
     width: '50%',
-  },
-  right: {
-    display: 'flex',
     flexDirection: 'column',
-    width: '50%',
+    justifyContent: 'space-between',
+    margin: '32px auto 18px',
   },
   img: {
     width: 240,
@@ -115,9 +119,15 @@ const styles = {
   },
   operation: {
     display: 'flex',
-    justifyContent: 'space-around',
-    margin: '20px 0',
+    justifyContent: 'space-between',
     width: '80%',
+  },
+  right: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '50%',
+    margin: '0 12px 0 64px',
+    overflow: 'hidden',
   },
   songName: {
     fontSize: 26,
@@ -133,13 +143,13 @@ const styles = {
     fontSize: 14,
   },
   lrc: {
-    width: '100%',
-    height: 420,
+    width: '90%',
+    height: 410,
     overflowY: 'scroll',
     overflowX: 'hidden',
   },
   lrcp: {
-    textAlign: 'center',
+//    textAlign: 'center',
   },
 }
 

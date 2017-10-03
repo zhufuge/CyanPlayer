@@ -16,13 +16,22 @@ class SongPane extends React.Component {
       hoverShare: false,
     }
   }
+
+  jumpToSongPage() {
+    history.pushState({}, '', 'song')
+    history.go()
+  }
+
   render() {
     return (
       <div
         onMouseOver={() => this.setState({ hover: true })}
         onMouseOut={() => this.setState({ hover: false })}
+        onClick={() => this.jumpToSongPage()}
         style={styles.container}>
-        <div className="flex-c-c">
+        <div
+          className="flex-c-c"
+          onClick={() => this.jumpToSongPage()} >
           <img style={styles.img} src={SONG.IMG} alt="" />
           <div
             className="flex-c-c"
@@ -40,6 +49,7 @@ class SongPane extends React.Component {
             className="text-ellipsis"
             onMouseOver={() => this.setState({ hoverName: true })}
             onMouseOut={() => this.setState({ hoverName: false })}
+            onClick={() => this.jumpToSongPage()}
             style={{ color: this.state.hoverName ? '#444' : '#666' }}>
             {SONG.NAME}
           </span>
