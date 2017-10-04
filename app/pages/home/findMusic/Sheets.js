@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setHomeSubj, setSongSheet } from '../../../actions'
+import { setSubj, setSheet } from '../../../actions'
 import Ajax from '../../../common/Ajax'
-import { SHEETS } from '../../../strings'
+import { SHEETS, SUBJECTS } from '../../../strings'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import Icon_DropDown from 'material-ui/svg-icons/Navigation/arrow-drop-down'
@@ -26,8 +26,7 @@ class Sheets extends React.Component {
   }
 
   handleSheetClick(sheet) {
-    this.props.setSongSheet(sheet)
-    this.props.setHomeSubj('6')
+    this.props.setSubj(SUBJECTS.SHEET)
   }
 
   render() {
@@ -76,8 +75,8 @@ const styles = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setHomeSubj: (subj) => dispatch(setHomeSubj(subj)),
-    setSongSheet: (sheet) => dispatch(setSongSheet(sheet)),
+    setSubj: (subj) => dispatch(setSubj(subj)),
+    setSheet: (sheet) => dispatch(setSheet(sheet)),
   }
 }
 

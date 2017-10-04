@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setSong, setSubj, setSheet } from '../../../actions'
 import Ajax from '../../../common/Ajax'
-import { RECOMMEND } from '../../../strings'
+import { RECOMMEND, SUBJECTS } from '../../../strings'
 
 import Divider from 'material-ui/Divider'
 import Subheader from './Subheader'
@@ -25,9 +25,8 @@ class Recommend extends React.Component {
     ))
   }
 
-  handleSheetClick(sheet='默认歌单') {
-    this.props.setSheet(sheet)
-    this.props.setSubj('6')
+  handleSheetClick(sheet) {
+    this.props.setSubj(SUBJECTS.SHEET)
   }
 
   render() {

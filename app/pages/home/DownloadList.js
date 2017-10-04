@@ -3,14 +3,6 @@ import { connect } from 'react-redux'
 import { setPresentSong, setPage } from '../../actions'
 import Ajax from '../../common/Ajax'
 
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-} from 'material-ui/Table'
 import Divider from 'material-ui/Divider'
 import Subheader from 'material-ui/Subheader'
 
@@ -41,28 +33,7 @@ class DownloadList extends React.Component {
 				<div style={styles.downloadList}>
 					<Subheader style={{ fontSize: 20 }}>已下载的单曲</Subheader>
 					<Divider />
-					<Table onRowSelection={(selected) => this.handleRowSelected(selected)}>
-            <TableHeader
-              displaySelectAll={false}
-              adjustForCheckbox={false}>
-              <TableRow>
-                {['序号', '音乐标题', '歌手', '专辑', '时长', '下载时间'].map(v =>
-                  <TableHeaderColumn key={v}>{v}</TableHeaderColumn>
-                )}
-              </TableRow>
-            </TableHeader>
-            <TableBody
-              showRowHover={true}
-              displayRowCheckbox={false}>
-              {this.state.songs.map((v, i) =>
-                <TableRow key={ v.id }>
-                  {[i + 1, v.name, v.singer, v.album, v.time, v.date].map(v =>
-                    <TableRowColumn key={v}>{v}</TableRowColumn>
-                  )}
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+          {/* ['序号', '音乐标题', '歌手', '专辑', '时长', '下载时间'] */}
         </div>
 			</div>
     )

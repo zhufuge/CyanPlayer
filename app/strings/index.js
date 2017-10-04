@@ -24,8 +24,11 @@ const SONG = {
 
 // support a default sheet
 const SHEET = {
-  SRC: IMG,
-  VALUE: '你打开苦难的里面，打开了我',
+  IMG: IMG,
+  NAME: '你打开苦难的里面，打开了我',
+  CREATOR: '__jln',
+  DATE: '2016-12-17',
+  DESCRIPTION: '山不在高，有仙则灵。水不在深，有龙则灵。',
 }
 
 const RECOMMEND = {
@@ -73,10 +76,16 @@ const LATEST = {
   LIST_BUTTON: ['播放全部', '收藏全部'],
 }
 
-const SUBJECTS = [
-  { HEADER: '推荐', ITEMS: ['发现音乐'] },
-  { HEADER: '我的音乐', ITEMS: ['上传音乐', '下载历史'] },
-  { HEADER: '创建的歌单', ITEMS: ['我喜欢的音乐'] },
+const SUBJECTS = {
+  HEADERS: ['推荐', '我的音乐', '创建的歌单'],
+  FINDMUSIC: '发现音乐',
+  SHEET: '歌单',
+  UPLOAD: '上传音乐',
+  HISTORY: '下载历史',
+}
+
+const SHEETLIST = [
+  '我喜欢的音乐',
 ]
 
 export {
@@ -89,4 +98,5 @@ export {
   LATEST,
   MORE,
   SUBJECTS,
+  SHEETLIST,
 }

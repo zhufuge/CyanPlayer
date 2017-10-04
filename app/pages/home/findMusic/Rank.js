@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setPresentSong, setHomeSubj, setSongSheet } from '../../../actions'
+import { setSong, setSubj, setSheet } from '../../../actions'
 import Ajax from '../../../common/Ajax'
-import { RANK } from '../../../strings'
+import { RANK, SUBJECTS } from '../../../strings'
 import debounce from 'lodash/debounce'
 
 import Divider from 'material-ui/Divider'
@@ -27,14 +27,8 @@ class Rank extends React.Component {
     Ajax('rank').then(json => json && this.setState(Object.assign({}, json)))
   }
 
-  handleSongClick(song) {
-    this.props.setPresentSong(song)
-    this.props.setHomeSubj('2')
-  }
-
-  handleSingerClick(singer) {
-    this.props.setSongSheet(singer)
-    this.props.setHomeSubj('6')
+  handleSheetClick(sheet) {
+    this.props.setSubj(SUBJECTS.SHEET)
   }
 
   render() {
@@ -59,7 +53,7 @@ class Rank extends React.Component {
               key={'rank-card-' + v.id + i}
               primary={true}
               value={v.name}
-              onClick={() => v.id}
+              onClick={() => this.handleSheetClick()}
               src={v.src}/>
           )}
         </CardPane>
@@ -88,9 +82,9 @@ const styles = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setPresentSong: (song) => dispatch(setPresentSong(song)),
-    setHomeSubj: (subj) => dispatch(setHomeSubj(subj)),
-    setSongSheet: (sheet) => dispatch(setSongSheet(sheet)),
+    setSong: (song) => dispatch(setSong(song)),
+    setSubj: (subj) => dispatch(setSubj(subj)),
+    setSheet: (sheet) => dispatch(setSheet(sheet)),
   }
 }
 

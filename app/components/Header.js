@@ -35,7 +35,7 @@ class Header extends React.Component {
       <div style={styles.container}>
         <div style={styles.section}>
           <MusicNote style={styles.album} color="white"/>
-          <h1 style={styles.h1}>EL</h1>
+          <h1 style={styles.h1}>CyanPlayer</h1>
         </div>
         <div style={styles.section}>
           {(this.props.username === '登录') ? (

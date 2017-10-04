@@ -31,7 +31,6 @@ class SongPane extends React.Component {
     Ajax('songPane', songID).then(json => json && this.setState(
       Object.assign({}, json)
     ))
-    console.log('get song data')
   }
 
   jumpToSongPage() {
@@ -40,7 +39,6 @@ class SongPane extends React.Component {
   }
 
   render() {
-    console.log(this.props.song)
     return (
       <div
         onMouseOver={() => this.setState({ hover: true })}

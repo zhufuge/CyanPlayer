@@ -1,5 +1,4 @@
 import React from 'react'
-import { curtail } from '../../../common/util'
 import { SHEET } from '../../../strings'
 
 import PlayIcon from 'material-ui/svg-icons/av/play-circle-outline'
@@ -25,7 +24,7 @@ class Card extends React.Component {
           onClick={() => props.onClick()}
           style={{ position: 'relative', cursor: 'pointer' }}>
           <img
-            src={props.src || SHEET.SRC}
+            src={props.src || SHEET.IMG}
             style={assign({}, styles.image, props.imgStyle)}/>
           <PlayIcon style={assign(props.primary && this.state.hoverImg
               ? {} : { display: 'none' }, styles.mask)} />
@@ -39,7 +38,7 @@ class Card extends React.Component {
               styles.text,
               props.textStyle,
           )}>
-          {props.value ? props.value : SHEET.VALUE}
+          {props.value || SHEET.NAME}
         </p>
       </div>
     )

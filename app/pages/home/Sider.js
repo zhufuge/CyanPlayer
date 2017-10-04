@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { setSubj } from '../../actions'
-import { SUBJECTS } from '../../strings'
+import { SUBJECTS, SHEETLIST } from '../../strings'
 
 import { List, ListItem, makeSelectable } from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
@@ -26,39 +26,35 @@ class Sider extends React.Component {
         <SelectableList
           value={subj}
           onChange={(event, index) => this.props.setSubj(index)}>
-          <Subheader>{SUBJECTS[0].HEADER}</Subheader>
-          {SUBJECTS[0].ITEMS.map((v) =>
-            <ListItem
-              key={'sider-' + v}
-              value={v}
-              primaryText={v}
-              leftIcon={<MusicNote />} />
-          )}
+          <Subheader>{SUBJECTS.HEADERS[0]}</Subheader>
+          <ListItem
+            key={'sider-' + SUBJECTS.FINDMUSIC}
+            value={SUBJECTS.FINDMUSIC}
+            primaryText={SUBJECTS.FINDMUSIC}
+            leftIcon={<MusicNote />} />
         </SelectableList>
         <Divider />
         <SelectableList
           value={ subj }
           onChange={(event, index) => this.props.setSubj(index)}>
-          <Subheader>{SUBJECTS[1].HEADER}</Subheader>
-          {SUBJECTS[1].ITEMS.map((v) =>
-            <ListItem
-              key={'sider-' + v}
-              value={v}
-              primaryText={v}
-              leftIcon={<Upload />}/>
-          )}
+          <Subheader>{SUBJECTS.HEADERS[1]}</Subheader>
+          <ListItem
+            key={'sider-' + SUBJECTS.UPLOAD}
+            value={SUBJECTS.UPLOAD}
+            primaryText={SUBJECTS.UPLOAD}
+            leftIcon={<Upload />}/>
         </SelectableList>
         <Divider />
         <SelectableList
           value={ subj }
           onChange={(event, index) => this.props.setSubj(index)}>
           <Subheader style={ styles.createHeader }>
-            {SUBJECTS[2].HEADER}
+            {SUBJECTS.HEADERS[2]}
             <IconButton tooltip="创建">
               <AddCircle color="#aaa" hoverColor="#666" />
             </IconButton>
           </Subheader>
-          {SUBJECTS[2].ITEMS.map((v) =>
+          {SHEETLIST.map((v) =>
             <ListItem
               key={'sider-' + v}
               value={v}

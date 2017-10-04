@@ -6,13 +6,13 @@ import Sider from './Sider'
 import FindMusic from './FindMusic'
 import DownloadList from './DownloadList'
 import Upload from './Upload'
-import SongSheet from './SongSheet'
+import Sheet from './Sheet'
 
 const Subject = {
-  [SUBJECTS[0].ITEMS[0]]: FindMusic,
-  [SUBJECTS[1].ITEMS[0]]: Upload,
-  [SUBJECTS[1].ITEMS[1]]: DownloadList,
-  [SUBJECTS[2].ITEMS[0]]: SongSheet,
+  [SUBJECTS.FINDMUSIC]: FindMusic,
+  [SUBJECTS.SHEET]: Sheet,
+  [SUBJECTS.UPLOAD]: Upload,
+  [SUBJECTS.HISTORY]: DownloadList,
 }
 
 class Home extends React.Component {

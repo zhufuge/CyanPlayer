@@ -1,26 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setSong, setPage } from '../../actions'
+import { setSong, setSubj } from '../../actions'
 import Ajax from '../../common/Ajax'
+import { SHEET } from '../../strings'
 
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-} from 'material-ui/Table'
 import Divider from 'material-ui/Divider'
 import Subheader from 'material-ui/Subheader'
-
-const df = {
-  name: '默认歌单',
-  img: '/img/0.png',
-  creator: '__jln',
-  date: '2016-12-17',
-  description: '山不在高，有仙则灵。水不在深，有龙则灵。',
-}
 
 class SongSheet extends React.Component {
   constructor(props) {
@@ -31,18 +16,9 @@ class SongSheet extends React.Component {
   }
 
   componentWillMount() {
-    Ajax('sheet', this.props.sheet, this.props.username).then(json => {
-      if (json) {
-        this.setState({
-          name: json.name,
-          img: json.img,
-          creator: json.creator,
-          date: json.date,
-          description: json.description,
-          songs: json.songs
-        })
-      }
-    })
+    Ajax('sheet', this.props.sheet, this.props.username).then(
+      json => json && this.setState(Object({}, json))
+    )
   }
 
   tableRow() {
@@ -60,47 +36,31 @@ class SongSheet extends React.Component {
   handleRowSelected(selected) {
     const index = parseInt(selected.toString())
     this.props.setSong(this.state.songs[index].id)
-    this.props.setPage('2')
+    this.props.setSubj('2')
   }
 
   render() {
-    const sheet = (this.state.name) ? this.state : df
     return (
       <div style={styles.container}>
         <div style={styles.info}>
           <div className="flex-c-c" style={styles.imgContainer}>
-            <img alt="" src={sheet.img}/>
+            <img alt="" src={this.state.img || SHEET.IMG}/>
           </div>
           <div style={styles.descriptionBox}>
-            <div style={{ fontSize: 26 }}>{sheet.name}</div>
+            <div style={{ fontSize: 26 }}>{this.state.name || SHEET.NAME}</div>
             <div style={styles.creator}>
-              {sheet.creator}&nbsp;&nbsp;&nbsp;
-              {sheet.date}创建
+              {this.state.creator || SHEET.CREATOR}&nbsp;&nbsp;&nbsp;
+              {this.state.date || SHEET.DATE}创建
             </div>
             <div style={styles.description}>
-              简介：{sheet.description}
+              简介：{this.state.description || SHEET.DESCRIPTION}
             </div>
           </div>
         </div>
         <div style={styles.songList}>
           <Subheader>歌曲列表</Subheader>
           <Divider />
-					<Table onRowSelection={(s) => this.handleRowSelected(s)}>
-            <TableHeader
-              displaySelectAll={false}
-              adjustForCheckbox={false}>
-              <TableRow>
-                {['序号', '音乐标题', '歌手', '专辑', '时长'].map((v) =>
-                  <TableHeaderColumn key={v}>{v}</TableHeaderColumn>
-                )}
-              </TableRow>
-            </TableHeader>
-            <TableBody
-              showRowHover={true}
-              displayRowCheckbox={false}>
-              {this.tableRow()}
-            </TableBody>
-          </Table>
+          ['序号', '音乐标题', '歌手', '专辑', '时长']
         </div>
       </div>
     )
@@ -108,26 +68,17 @@ class SongSheet extends React.Component {
 }
 
 const styles = {
-  container: {
-    width: 820,
-    height: 600,
-    backgroundColor: '#f6f6f6',
-    overflowX: 'hidden',
-    overflowY: 'scroll',
-  },
+  container: {},
   info: {
-    width: 770,
-    height: 200,
-    margin: 20,
+    height: 250,
+    margin: '32px 0 28px',
     display: 'flex',
   },
   songList: {
-    width: '100%',
-    marginTop: 20,
   },
   imgContainer: {
-    width: 196,
-    height: 196,
+    width: 226,
+    height: 226,
     marginTop: 1,
     border: '1px solid #ccc',
     overflow: 'hidden',
@@ -155,7 +106,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setSong: (song) => dispatch(setSong(song)),
-    setPage: (page) => dispatch(setPage(page)),
+    setSubj: (subject) => dispatch(setSubj(subject)),
   }
 }
 

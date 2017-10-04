@@ -1,5 +1,7 @@
 import React from 'react'
-import { RANK } from '../../../strings'
+import { connect } from 'react-redux'
+import { setSong, setSheet, setSubj } from '../../../actions'
+import { RANK, SUBJECTS } from '../../../strings'
 
 import PlayIcon from 'material-ui/svg-icons/av/play-circle-outline'
 
@@ -35,6 +37,7 @@ class RankList extends React.Component {
         <div>
           {(this.props.items || RANK.LIST_INFO.ITEMS).map((v, i) =>
             <Item
+              onDoubleClick={() => this.props.setSong(v.id || v.ID)}
               key={'rank-list-' + v.name + i}
               id={i}
               value={v}
@@ -45,6 +48,7 @@ class RankList extends React.Component {
           <span
             onMouseOver={() => this.setState({ hoverMore: true })}
             onMouseOut={() => this.setState({ hoverMore: false })}
+            onClick={() => this.props.setSubj(SUBJECTS.SHEET)}
             style={assign(
                 { color: this.state.hoverMore ? '#666' : '#888' },
                 styles.more
@@ -166,4 +170,12 @@ const styles = {
   },
 }
 
-export default RankList
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setSong: (id) => dispatch(setSong(id)),
+    setSheet: (sheet) => dispatch(setSheet(sheet)),
+    setSubj: (subject) => dispatch(setSubj(subject))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(RankList)
