@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Ajax from '../../common/Ajax'
-import { SONG } from '../../strings'
+import Ajax from '../../../common/Ajax'
+import { SONG } from '../../../strings'
 
 import Spread from 'material-ui/svg-icons/action/open-in-new'
 import FavoBor from 'material-ui/svg-icons/action/favorite-border'

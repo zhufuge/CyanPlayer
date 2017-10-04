@@ -22,7 +22,7 @@ const src = (state=SONG.AUDIO, action) => {
   }
 }
 
-const subj = (state=SUBJECTS.SHEET, action) => {
+const subj = (state=SUBJECTS.FINDMUSIC, action) => {
   switch (action.type) {
   case 'SET_SUBJ': return action.subj
   default: return state
