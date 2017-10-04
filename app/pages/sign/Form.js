@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setUsername } from '../../actions'
 import Ajax from '../../common/Ajax.js'
@@ -23,19 +24,14 @@ class Form extends React.Component {
   handleClicked() {
     const state = this.state,
       username = state.username
-    if (!state.isIn) {
-      this.props.setUsername(username)
-      window.history.back(-1)
-    } else {
-      Ajax('sign')(username, state.password, state.isIn).then((res) => {
-        if (res.ok) {
-          this.props.setUsername(username)
-          window.history.back(-1)
-        } else if (res.status == 401) {
-          this.setState({ warning: true })
-        }
-      })
-    }
+    Ajax('sign', username, state.password, state.isIn).then((res) => {
+      if (res.ok) {
+        this.props.setUsername(username)
+        this.props.history.push('/')
+      } else if (res.status == 401) {
+        this.setState({ warning: true })
+      }
+    })
   }
 
   render() {
@@ -88,4 +84,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Form)
+export default connect(null, mapDispatchToProps)(withRouter(Form))

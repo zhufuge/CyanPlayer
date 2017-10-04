@@ -73,6 +73,9 @@ const styles = {
     borderColor: 'rgb(217, 217, 217)',
     overflow: 'hidden',
   },
+  section: {
+    margin: '0 0 8px',
+  },
   bottom: {
     width: '100%',
     position: 'absolute',

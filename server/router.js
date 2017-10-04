@@ -1,113 +1,15 @@
 const fs = require('fs'),
-      util = require('util'),
       path = require('path'),
       url = require('url'),
       querystring = require('querystring')
+const Router = require('koa-router')
+const serve = require('koa-static')
 
-const readFileAsync = util.promisify(fs.readFile)
+const readFileAsync = require('util').promisify(fs.readFile)
+const { contentType, readPostBody } = require('./helper')
+const handleError = (err) => console.log(err)
 
-const {
-  contentType,
-  readPostBody,
-} = require('./helper')
-
-function handleSign(ctx) {
-  return readPostBody(ctx.req).then(data => {
-    const { username, password, isSignin } = querystring.parse(data)
-    console.log(username, password, isSignin)
-    if (username !== '321' &&
-        password !== '321' &&
-        isSignin === 'true') {
-      ctx.status = 200
-      console.log('200')
-    } else {
-      ctx.status = 401
-      console.log('401')
-    }
-  }).catch(err => console.log(err))
-}
-
-function sendSongPane(ctx) {
-  return Promise.resolve().then(() => {
-    let json = {}
-    if (querystring.parse(url.parse(ctx.url).query).id === '001') {
-      json = {
-        name: 'MyDestiny',
-        singer: 'LYn',
-        img: 'img/2.jpg',
-      }
-    } else {
-      json = {
-        name: 'TimeToSayGoodbye',
-        singer: 'Lauren',
-        img: 'img/0.png',
-      }
-    }
-
-    ctx.status = 200
-    ctx.set('Content-Type', 'application/json')
-    ctx.body = JSON.stringify(json)
-  }).catch(err => console.log(err))
-}
-
-function sendSongAll(ctx) {
-  return Promise.resolve().then(() => {
-    let json = {}
-    if (querystring.parse(url.parse(ctx.url).query).id === '001') {
-      json = {
-        name: 'MyDestiny',
-        album: '来自星星的你',
-        singer: 'LYn',
-        lrc: 'MyDestiny',
-        img: '/img/2.jpg',
-        audio: 'music/MyDestiny.mp3'
-      }
-    } else {
-      json = {
-        name: 'TimeToSayGoodbye',
-        album: '...',
-        singer: 'Lauren',
-        lrc: 'TimeToSayGoodbye',
-        img: '/img/0.png',
-        audio: 'music/TimeToSayGoodbye.mp3'
-      }
-    }
-
-    ctx.status = 200
-    ctx.set('Content-Type', 'application/json')
-    ctx.body = JSON.stringify(json)
-  }).catch(err => console.log(err))
-}
-
-function sendLrc(ctx) {
-  return Promise.resolve().then(() => {
-    ctx.status = 200
-    ctx.body = `[00:00:00]你打开苦难的里面
-[00:00:01]打开了我`
-  })
-}
-
-function sendSongSheet(ctx) {
-  return Promise.resolve().then(() => {
-    console.log(querystring.parse(url.parse(ctx.url).query))
-    return readFileAsync(path.join('./server/json/songSheet.json'))
-  }).then(data => {
-    ctx.status = 200
-    ctx.set('Content-Type', 'application/json')
-    ctx.body = data
-  }).catch(err => console.log(err))
-}
-
-function sendDownloadList(ctx) {
-  return Promise.resolve().then(() => {
-    console.log(querystring.parse(url.parse(ctx.url).query))
-    return readFileAsync(path.join('./server/json/downloadList.json'))
-  }).then(data => {
-    ctx.status = 200
-    ctx.set('Content-Type', 'application/json')
-    ctx.body = data
-  }).catch(err => console.log(err))
-}
+const router = new Router()
 
 function sendFile(ctx, file) {
   return readFileAsync(file).then(data => {
@@ -119,48 +21,106 @@ function sendFile(ctx, file) {
     console.log(err)
   })
 }
-
-
-async function router(ctx, next) {
-  const ctxUrl = url.parse(ctx.url),
-        pathname = ctxUrl.pathname
-  switch(pathname) {
-  case '/sign':
-    await handleSign(ctx)
-    break
-  case '/songPane':
-    await sendSongPane(ctx)
-    break
-  case '/songAll':
-    await sendSongAll(ctx)
-    break
-  case '/lrc':
-    await sendLrc(ctx)
-    break
-  case '/songSheet':
-    await sendSongSheet(ctx)
-    break
-  case '/downloadList':
-    await sendDownloadList(ctx)
-    break
-  case '/recommend':
-  case '/songSheets':
-  case '/rank':
-  case '/singers':
-  case '/newest':
-    await sendFile(ctx, path.join(
-      __dirname, './json/',
-      path.basename(pathname) + '.json'
-    ))
-    break
-  default:
-    await sendFile(ctx, path.join(
-      './public', (pathname === '/')
-        ? '/index.html'
-        : pathname
-    ))
+const home = (ctx) => sendFile(ctx, path.join('./public', '/index.html'))
+const sign = (ctx) => readPostBody(ctx.req).then(data => {
+  const { username, password, isSignin } = querystring.parse(data)
+  console.log(username, password, isSignin)
+  if (username !== '321' &&
+      password !== '321' &&
+      isSignin === 'true') {
+    ctx.status = 200
+    console.log('200')
+  } else {
+    ctx.status = 401
+    console.log('401')
   }
-  await next()
-}
+}).catch(handleError)
+const songPane = (ctx) => Promise.resolve().then(() => {
+  ctx.status = 200
+  ctx.set('Content-Type', 'application/json')
+  ctx.body = JSON.stringify(
+    Number.parseInt(querystring.parse(url.parse(ctx.url).query).id) % 2 === 0
+      ? {
+        name: 'MyDestiny',
+        singer: 'LYn',
+        img: 'img/2.jpg',
+      } : {
+        name: 'TimeToSayGoodbye',
+        singer: 'Lauren',
+        img: 'img/0.png',
+      }
+  )
+}).catch(handleError)
+const song = (ctx) => Promise.resolve().then(() => {
+  ctx.status = 200
+  ctx.set('Content-Type', 'application/json')
+  ctx.body = JSON.stringify(
+    querystring.parse(url.parse(ctx.url).query).id === '001'
+      ? {
+        name: 'MyDestiny',
+        album: '来自星星的你',
+        singer: 'LYn',
+        lrc: 'MyDestiny',
+        img: '/img/2.jpg',
+        audio: 'music/MyDestiny.mp3'
+      } : {
+        name: 'TimeToSayGoodbye',
+        album: '...',
+        singer: 'Lauren',
+        lrc: 'TimeToSayGoodbye',
+        img: '/img/0.png',
+        audio: 'music/TimeToSayGoodbye.mp3'
+      }
+  )
+}).catch(handleError)
+const lrc = (ctx) => Promise.resolve().then(() => {
+  ctx.status = 200
+  ctx.body = `[00:00:00]你打开苦难的里面
+[00:00:01]打开了我`
+}).catch(handleError)
+const sheet = (ctx) => Promise.resolve().then(() => {
+  console.log(querystring.parse(url.parse(ctx.url).query))
+  return readFileAsync(path.join('./server/json/songSheet.json'))
+}).then(data => {
+  ctx.status = 200
+  ctx.set('Content-Type', 'application/json')
+  ctx.body = data
+}).catch(handleError)
+const downloadList = (ctx) => Promise.resolve().then(() => {
+  console.log(querystring.parse(url.parse(ctx.url).query))
+  return readFileAsync(path.join('./server/json/downloadList.json'))
+}).then(data => {
+  ctx.status = 200
+  ctx.set('Content-Type', 'application/json')
+  ctx.body = data
+}).catch(handleError)
+const jsonFile = (ctx) => sendFile(ctx, path.join(
+  __dirname,
+  './json/',
+  path.basename(url.parse(ctx.url).pathname) + '.json'
+))
 
-module.exports = router
+const staticFile = (ctx) => sendFile(
+  ctx,
+  path.join('./public' + url.parse(ctx.url).pathname)
+)
+
+router
+  .get('/', home)
+  .get('/page/:id', home)
+  .get('/songPane', songPane)
+  .get('/song', song)
+  .get('/lrc', lrc)
+  .get('/sheet', sheet)
+  .get('/downloadList', downloadList)
+  .get('/recommend', jsonFile)
+  .get('/songSheets', jsonFile)
+  .get('/rank', jsonFile)
+  .get('/singers', jsonFile)
+  .get('/newest', jsonFile)
+  .post('/sign', sign)
+  .all('*', serve(path.join('./public')))
+
+module.exports = (app) => app
+  .use(router.routes())
+  .use(router.allowedMethods())

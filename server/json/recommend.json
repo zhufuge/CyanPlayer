@@ -4,19 +4,15 @@
     {"id": "002", "name": "MyDestiny", "src": "/img/0.png"}
   ],
   "songs": [
-    {"id": "000", "name": "MyDestiny", "singer": "LYn", "img": "/img/0.png" },
-    {"id": "001", "name": "TimeToSayGoodbye", "singer": "Lauren", "img": "/img/2.jpg"},
-    {"id": "002", "name": "MyDestiny", "singer": "LYn", "img": "/img/0.png" },
-    {"id": "003", "name": "TimeToSayGoodbye", "singer": "Lauren", "img": "/img/2.jpg"},
+    {"id": "000", "name": "MyDestiny", "singer": "LYn", "img": "/img/2.jpg"},
+    {"id": "001", "name": "TimeToSayGoodbye", "singer": "Lauren", "img": "/img/0.png" },
+    {"id": "002", "name": "MyDestiny", "singer": "LYn", "img": "/img/2.jpg"},
+    {"id": "003", "name": "TimeToSayGoodbye", "singer": "Lauren", "img": "/img/0.png" },
     {"id": "004", "name": "MyDestiny", "singer": "LYn", "img": "/img/0.png" },
     {"id": "005", "name": "TimeToSayGoodbye", "singer": "Lauren", "img": "/img/2.jpg"},
     {"id": "006", "name": "MyDestiny", "singer": "LYn", "img": "/img/0.png" },
     {"id": "007", "name": "TimeToSayGoodbye", "singer": "Lauren", "img": "/img/2.jpg"},
     {"id": "008", "name": "MyDestiny", "singer": "LYn", "img": "/img/0.png" },
     {"id": "009", "name": "TimeToSayGoodbye", "singer": "Lauren", "img": "/img/2.jpg"}
-  ],
-  "singers": [
-    {"id": "001", "name": "Lauren", "src": "/img/0.png"},
-    {"id": "002", "name": "LYn", "src": "/img/0.png"}
   ]
 }

@@ -39,7 +39,7 @@ class Header extends React.Component {
         </div>
         <div style={styles.section}>
           {(this.props.username === '登录') ? (
-             <Link to="/sign">
+             <Link to="/page/sign">
                <Avatar size={32}>L</Avatar>
                <FlatButton
                  target="_blank"
@@ -49,8 +49,9 @@ class Header extends React.Component {
                />
              </Link>
           ) : ([
-             <Avatar size={32}>L</Avatar>,
+             <Avatar key="header-avatar" size={32}>L</Avatar>,
              <FlatButton
+               key="header-flatbutton"
                target="_blank"
                labelPosition="before"
                label={this.props.username}
@@ -59,6 +60,7 @@ class Header extends React.Component {
                onClick={e => this.handleClick(e)}
              />,
              <Popover
+               key="header-popover"
                open={this.state.openMenu}
                anchorEl={this.state.anchorEl}
                anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}

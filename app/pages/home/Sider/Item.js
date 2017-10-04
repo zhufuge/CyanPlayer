@@ -19,7 +19,7 @@ class Item extends React.Component {
         onMouseOut={() => this.setState({ hover: false })}
         onClick={() => this.props.onClick()}
         style={Object.assign(
-            this.props.selected ? { background: '#eee' } : {},
+            this.props.selected ? { background: '#f0f0f0' } : {},
             styles.container
         )}
       >

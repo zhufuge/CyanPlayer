@@ -12,7 +12,7 @@ const sign = (username, password, isSignin) => fetch('/sign', {
   body: `username=${username}&password=${password}&isSignin=${isSignin}`,
 }).catch(fetchError)
 
-const song = (id) => fetch(`/songAll?id=${id}`, { method: 'GET' })
+const song = (id) => fetch(`/song?id=${id}`, { method: 'GET' })
       .then(toJSON)
       .catch(fetchError)
 
@@ -42,12 +42,12 @@ const fetchGet = (type) => fetch('/' + type, { method: 'GET' })
 
 export default function Ajax(type, ...args) {
   switch(type) {
-  case 'sign': return sign(args)
-  case 'song': return song(args)
-  case 'lrc': return lrc(args)
-  case 'sheet': return sheet(args)
-  case 'downloadList': return downloadList(args)
-  case 'songPane': return songPane(args)
+  case 'sign': return sign(...args)
+  case 'song': return song(...args)
+  case 'lrc': return lrc(...args)
+  case 'sheet': return sheet(...args)
+  case 'downloadList': return downloadList(...args)
+  case 'songPane': return songPane(...args)
   default: return fetchGet(type)
   }
 }

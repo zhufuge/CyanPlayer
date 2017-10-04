@@ -28,8 +28,8 @@ class AppRouter extends React.Component {
         <div>
           <WrapRoute exact path="/" component={Home}/>
           <WrapRoute path="/home" component={Home}/>
-          <WrapRoute path="/song" component={Song}/>
-          <Route path="/sign" component={Sign}/>
+          <WrapRoute path="/page/song" component={Song}/>
+          <Route path="/page/sign" component={Sign}/>
         </div>
       </Router>
     )

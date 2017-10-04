@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Ajax from '../../../common/Ajax'
 import { SONG } from '../../../strings'
@@ -33,9 +34,9 @@ class SongPane extends React.Component {
     ))
   }
 
-  jumpToSongPage() {
-    history.pushState({}, '', 'song')
-    history.go()
+  jumpToSongPage(event) {
+    this.props.history.push('/page/song')
+    event.stopPropagation()
   }
 
   render() {
@@ -43,11 +44,11 @@ class SongPane extends React.Component {
       <div
         onMouseOver={() => this.setState({ hover: true })}
         onMouseOut={() => this.setState({ hover: false })}
-        onClick={() => this.jumpToSongPage()}
+        onClick={(e) => this.jumpToSongPage(e)}
         style={styles.container}>
         <div
           className="flex-c-c"
-          onClick={() => this.jumpToSongPage()} >
+          onClick={(e) => this.jumpToSongPage(e)} >
           <img style={styles.img} src={this.state.img || SONG.IMG} alt="" />
           <div
             className="flex-c-c"
@@ -65,7 +66,7 @@ class SongPane extends React.Component {
             className="text-ellipsis"
             onMouseOver={() => this.setState({ hoverName: true })}
             onMouseOut={() => this.setState({ hoverName: false })}
-            onClick={() => this.jumpToSongPage()}
+            onClick={(e) => this.jumpToSongPage(e)}
             style={{ color: this.state.hoverName ? '#444' : '#666' }}>
             {this.state.name || SONG.NAME}
           </span>
@@ -137,4 +138,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(SongPane)
+export default connect(mapStateToProps)(withRouter(SongPane))
