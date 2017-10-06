@@ -32,7 +32,14 @@ class Latest extends React.Component {
     return (
       <div style={styles.container}>
         <div className="flex-c-c">
-          <ButtonGroup />
+          <ButtonGroup
+            style={{ margin: 8 }}
+            select={LATEST.CONTENT[0]}
+          >
+            {LATEST.CONTENT.map((v) =>
+              <span key={v} value={v} style={{ margin: '0 60px' }}>{v}</span>
+            )}
+          </ButtonGroup>
         </div>
         <Tabs
           style={styles.tabs}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { signin } from '../actions'
+import { setUsername } from '../actions'
 
 import Popover from 'material-ui/Popover'
 import Menu from 'material-ui/Menu'
@@ -68,7 +68,9 @@ class Header extends React.Component {
                onRequestClose={() => this.setState({ openMenu: false })} >
                <Menu>
                  <MenuItem value="1" primaryText="其他" />
-                 <Link to="/sign"><MenuItem value="switch" primaryText="切换帐号" /></Link>
+                 <Link to="/page/sign">
+                   <MenuItem value="switch" primaryText="切换帐号" />
+                 </Link>
                  <MenuItem
                    value="quit"
                    onClick={() => this.props.quit('登录')}
@@ -128,7 +130,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    quit: (username) => dispatch(signin(username)),
+    quit: (username) => dispatch(setUsername(username)),
   }
 }
 

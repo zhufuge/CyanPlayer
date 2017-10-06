@@ -18,7 +18,7 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server",
-    "go": "node index.js"
+    "go": "webpack & node index.js"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { toTimeString } from '../../common/util'
+import { SONG } from '../../strings'
 
 import Slider from 'material-ui/Slider'
 
@@ -67,7 +68,7 @@ class Player extends React.Component {
         <Volume audio={this.state.audio}/>
         <audio
           ref="audio"
-          src={this.props.src || '/music/TimeToSayGoodbye.mp3'}></audio>
+          src={'../' + (this.props.src || SONG.AUDIO)}></audio>
       </div>
     )
   }

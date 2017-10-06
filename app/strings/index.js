@@ -13,7 +13,7 @@ const MORE = '更多'
 // support a default song infomations
 const SONG = {
   ALBUM: 'I don\'t know',
-  AUDIO: '/music/TimeToSayGoodbye.mp3',
+  AUDIO: 'music/TimeToSayGoodbye.mp3',
   ID: '000',
   IMG: IMG,
   LRC: '...',
@@ -72,6 +72,7 @@ const RANK = {
 }
 
 const LATEST = {
+  CONTENT: ['新歌速递', '新碟上架'],
   LABELS: ['全部', '华语', '欧美', '韩国', '日本'],
   LIST_BUTTON: ['播放全部', '收藏全部'],
 }

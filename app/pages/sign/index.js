@@ -1,36 +1,14 @@
 ﻿import React from 'react'
+import { connect } from 'react-redux'
 
 import Form from './Form'
 
 class Sign extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      height: window.innerHeight,
-      width: window.innerWidth,
-    }
-  }
-
-  updateWindow() {
-    this.setState({
-      height: window.innerHeight,
-      width: window.innerWidth,
-    })
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.updateWindow.bind(this))
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindow.bind(this))
-  }
-
   render() {
     return (
       <div className="flex-c-c" style={Object.assign({
-          height: this.state.height,
-          width: this.state.width,
+          height: this.props.height,
+          width: this.props.width,
       }, styles.container)}>
         <div className="flex-c-c" style={styles.content}>
           <h1 style={styles.h1}>欢迎进入我的世界</h1>
@@ -70,4 +48,11 @@ const styles = {
   },
 }
 
-export default Sign
+const mapStateToProps = (state) => {
+  return {
+    width: state.windowInnerWidth,
+    height: state.windowInnerHeight,
+  }
+}
+
+export default connect(mapStateToProps)(Sign)
