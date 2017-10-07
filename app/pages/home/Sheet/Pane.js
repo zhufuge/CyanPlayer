@@ -37,8 +37,17 @@ class Pane extends React.Component {
           </div>
           <div className="flex-s-c" style={styles.buttons}>
             <ButtonGroup>
-              <div style={{ margin: '0 12px' }}value="playAll">播放全部</div>
-              <div style={{ margin: '0 12px' }}value="add">+</div>
+              <div style={styles.bText} value="playAll">播放全部</div>
+              <div style={styles.bText} value="add">+</div>
+            </ButtonGroup>
+            <ButtonGroup style={{ marginLeft: 12 }} >
+              <div style={styles.bText} value="collect">收藏</div>
+            </ButtonGroup>
+            <ButtonGroup style={{ marginLeft: 12 }} >
+              <div style={styles.bText} value="share">分享</div>
+            </ButtonGroup>
+            <ButtonGroup style={{ marginLeft: 12 }} >
+              <div style={styles.bText} value="downloadAll">下载全部</div>
             </ButtonGroup>
           </div>
           <div style={styles.tags}>
@@ -88,6 +97,9 @@ const styles = {
   },
   buttons: {
     height: 42,
+  },
+  bText: {
+    margin: '0 12px',
   },
   tags: {
     fontSize: 14,

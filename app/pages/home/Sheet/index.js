@@ -1,23 +1,28 @@
 import React from 'react'
 
 import Pane from './Pane'
+import Tabs from './RectTabs'
+
+const TABS = ['歌曲列表', '评论(0)', '收藏者']
 
 class Sheet extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      songs: []
-    }
   }
 
   render() {
     return (
       <div style={styles.container}>
         <Pane />
-        <div style={styles.songList}>
-          <div>歌曲列表</div>
-          ['序号', '音乐标题', '歌手', '专辑', '时长']
-        </div>
+        <Tabs value={TABS[0]}>
+          {TABS.map((v, i) =>
+            <div
+              key={'sheet-tabs-' + v + i}
+              value={v}>
+              {v}
+            </div>
+          )}
+        </Tabs>
       </div>
     )
   }

@@ -17,7 +17,11 @@ class ButtonGroup extends React.Component {
   render() {
     return (
       <div style={Object.assign({}, this.props.style, styles.container)}>
-        {this.props.children.map((node, i) =>
+        {(
+           Array.isArray(this.props.children)
+           ? this.props.children
+           : [this.props. children]
+        ).map((node, i) =>
           <div
             key={node.props.value}
             onMouseOver={() => this.setState({ hover: i })}
