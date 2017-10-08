@@ -2,6 +2,7 @@ import React from 'react'
 
 import Pane from './Pane'
 import Tabs from './RectTabs'
+import Table from './Table'
 
 const TABS = ['歌曲列表', '评论(0)', '收藏者']
 
@@ -23,6 +24,7 @@ class Sheet extends React.Component {
             </div>
           )}
         </Tabs>
+        <Table />
       </div>
     )
   }
