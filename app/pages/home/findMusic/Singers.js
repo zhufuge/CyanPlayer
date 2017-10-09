@@ -4,7 +4,6 @@ import { setHomeSubj, setSongSheet } from '../../../actions'
 import Ajax from '../../../common/Ajax'
 import { SINGER } from '../../../strings'
 
-import Divider from 'material-ui/Divider'
 import LineSelector from './LineSelector'
 import CardPane from './CardPane'
 import Card from './Card'
@@ -32,20 +31,23 @@ class SingerList extends React.Component {
         {SINGER.ATTRIBUTES.map((v, i) =>
           <LineSelector
             key={'singers-selector-' + v.title + i}
-            style={{ margin: '12px auto' }}
             title={v.title + '：'}
             activeStyle={{ borderRadius: 2, background: '#999', color: '#fff' }}
             items={v.items}/>
         )}
-        <Divider />
-        <CardPane>
+        <div style={styles.divider}></div>
+        <CardPane itemWidth={150}>
           {this.state.singers.map((v, i) =>
             <Card
               key={'singers-card-' + v.id + i}
-              value={v.name}
+              value={v.name || SINGER.NAME}
               onClick={() => this.handleSingerClick(v.id)}
               playIcon={false}
-              src={v.src}/>
+              src={v.src || SINGER.IMG}
+              style={{ width: 150, height: 200 }}
+              imgStyle={{ width: 148, height: 148 }}
+              textStyle={{ fontSize: 14 }}
+            />
           )}
         </CardPane>
       </div>
@@ -55,11 +57,14 @@ class SingerList extends React.Component {
 
 const styles = {
   container: {
-    marginTop: 24,
+    marginTop: 16,
   },
-  wrapper: {
-
-  }
+  divider: {
+    margin: '24px 0',
+    width: '100%',
+    height: 2,
+    background: '#eee',
+  },
 }
 
 const mapDispatchToProps = (dispatch) => {

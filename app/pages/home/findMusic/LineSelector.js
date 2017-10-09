@@ -12,12 +12,12 @@ class LineSelector extends React.Component {
   render() {
     return (
       <div className="flex-wrap" style={this.props.style}>
-        <span style={{ color: '#555' }}>{this.props.title}</span>
+        <span style={{ color: '#555', margin: '6px 0' }}>{this.props.title}</span>
         {this.props.items.map((v, i) => [
            <span
              key={'line-selector-div-' + i}
              className="flex-c-c"
-             style={{ color: '#777', fontSize: 12 }}>
+             style={{ color: '#ddd', fontSize: 11 }}>
              {i === 0 ? "" : "|"}
            </span>,
            <span
@@ -39,10 +39,10 @@ class LineSelector extends React.Component {
 
 const styles = {
   label: (hover) => ({
-    margin: '0 15px',
+    margin: '6px 12px',
     color: (hover ? '#444' : '#777'),
     cursor: 'pointer',
-    padding: '1px 3px',
+    padding: '1px 6px',
   }),
 }
 

@@ -27,8 +27,7 @@ class CardPane extends React.Component {
 
   render() {
     const props = this.props
-    const repeat = Math.trunc(this.state.offsetWidth /
-      (props.itemStyle ? props.itemStyle.width || 183 : 183))
+    const repeat = Math.trunc(this.state.offsetWidth / (props.itemWidth || 183))
     return (
       <div
         ref={ref => this.container = ref}

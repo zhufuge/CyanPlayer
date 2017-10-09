@@ -57,9 +57,8 @@ const styles = {
   },
   main: {
     margin: '0 auto',
-    padding: '0 20px 0 250px',
-    maxWidth: 980,
-  }
+    padding: '0 0 0 230px',
+  },
 }
 
 const mapStateToProps = (state) => {

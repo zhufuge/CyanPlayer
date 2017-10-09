@@ -66,6 +66,9 @@ class FindMusic extends React.Component {
 const styles = {
   container: {
     position: 'relative',
+    maxWidth: 980,
+    margin: '0 auto',
+    padding: '0 20px',
   },
   tabItem: {
     background: '#fff0',

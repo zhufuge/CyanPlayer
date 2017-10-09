@@ -19,20 +19,15 @@ const SONG = [
 
 class Table extends React.Component {
   render() {
-    console.log(WIDTHS.join('fr '));
     return (
       <div style={styles.container}>
         <div style={Object.assign({}, styles.rows(WIDTHS), styles.headers)}>
           {HEADERS.map((v, i) =>
-            <div
-              key={'table-' + v + i}
-              className="flex-s-c"
-              style={Object.assign(
-                  (i !== 0 ? { borderLeft: '1px solid #ddd' } : {}),
-                  styles.col,
-              )}>
-              {v}
-            </div>
+            <Header
+              key={'table-header-' + v + i}
+              id={i}
+              value={v}
+            />
           )}
         </div>
         <div style={styles.body}>
@@ -41,6 +36,31 @@ class Table extends React.Component {
           )}
 
         </div>
+      </div>
+    )
+  }
+}
+
+class Header extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      hover: false,
+    }
+  }
+
+  render() {
+    return (
+      <div
+        onMouseOver={() => this.setState({ hover: true })}
+        onMouseOut={() => this.setState({ hover: false })}
+        className="flex-s-c"
+        style={Object.assign(
+            (this.state.hover ? { background: '#eee' } : {}),
+            (this.props.id !== 0 ? { borderLeft: '1px solid #ddd' } : {}),
+            styles.col,
+        )}>
+        {this.props.value}
       </div>
     )
   }

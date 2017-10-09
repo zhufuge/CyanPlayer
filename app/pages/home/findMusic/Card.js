@@ -26,8 +26,19 @@ class Card extends React.Component {
           <img
             src={props.src || SHEET.IMG}
             style={assign({}, styles.image, props.imgStyle)}/>
-          <PlayIcon style={assign(props.primary && this.state.hoverImg
-              ? {} : { display: 'none' }, styles.mask)} />
+          <PlayIcon style={assign(
+              (props.primary && this.state.hoverImg)
+              ? {}
+              : { display: 'none' },
+              styles.mask,
+          )} />
+          <div style={assign(
+              (props.primary && this.state.hoverImg)
+              ? {}
+              : { display: 'none' },
+              styles.maskbg,
+          )}>
+          </div>
         </div>
         <p
           onMouseOver={() => this.setState({ hoverText: true })}
@@ -63,6 +74,16 @@ const styles = {
     bottom: 12,
     right: 9,
     zIndex: 100,
+  },
+  maskbg: {
+    width: 25,
+    height: 25,
+    position: 'absolute',
+    bottom: 15,
+    right: 12,
+    zIndex: 99,
+    background: '#0006',
+    borderRadius: 25,
   },
   text: {
     margin: '5px 0',

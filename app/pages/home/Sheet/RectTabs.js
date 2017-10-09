@@ -71,7 +71,7 @@ const styles = {
 
   },
   tabs: {
-
+    margin: '0 32px',
   },
   item: {
     border: '1px solid #ddd',

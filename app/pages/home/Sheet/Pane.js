@@ -65,7 +65,7 @@ class Pane extends React.Component {
 const styles = {
   container: {
     height: 240,
-    margin: '32px 0 28px',
+    margin: 32,
     display: 'flex',
   },
   imgContainer: {

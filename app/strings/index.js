@@ -41,6 +41,8 @@ const SHEETS = {
 }
 
 const SINGER = {
+  NAME: SONG.SINGER,
+  IMG: SONG.IMG,
   ATTRIBUTES: [
     { title: '语种', items: ['全部', '华语', '欧美', '日本', '韩国', '其他'] },
     { title: '分类', items: ['全部', '男歌手', '女歌手', '乐队组合'] },
